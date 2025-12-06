@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyPSA Analysis - SunUrban Power System Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .pypsa-page {
+            padding-top: 100px;
+        }
+        .pypsa-hero {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .pypsa-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .pypsa-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+        .analysis-section {
+            padding: 4rem 0;
+        }
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .viz-card {
+            background: var(--ut-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .viz-card h3 {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-orange);
+            padding-bottom: 0.5rem;
+        }
+        .viz-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .viz-card canvas {
+            margin-top: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 1rem;
+        }
+        .viz-card p {
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .metric-card {
+            background: var(--ut-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+        .scenario-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+        .scenario-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+        }
+        .scenario-tab.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+        }
+        .scenario-tab:hover {
+            color: var(--primary-orange);
+        }
+        .scenario-content {
+            display: none;
+        }
+        .scenario-content.active {
+            display: block;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="Landing-Page_SolarCanopy.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span>SunUrban</span>
+            </a>
+            <div class="nav-menu">
+                <a href="Landing-Page_SolarCanopy.html#how-it-works">How it Works</a>
+                <a href="Landing-Page_SolarCanopy.html#pricing-model">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="Landing-Page_SolarCanopy.html#data-layer">Data Layer</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="Landing-Page_SolarCanopy.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="Landing-Page_SolarCanopy.html#about">About</a>
+                <a href="Landing-Page_SolarCanopy.html#contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="Landing-Page_SolarCanopy.html" class="btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pypsa-hero">
+        <div class="container">
+            <h1>PyPSA Power System Analysis</h1>
+            <p>Comprehensive optimization analysis of SunUrban solar installations using Python for Power System Analysis (PyPSA)</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="pypsa-page">
+        <div class="container">
+            <a href="Landing-Page_SolarCanopy.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+
+            <!-- Overview -->
+            <div class="analysis-section">
+                <h2>Analysis Overview</h2>
+                <p class="section-intro">
+                    This analysis uses PyPSA (Python for Power System Analysis) to model and optimize the operation of 
+                    SunUrban solar installations across three sites in Austin, TX: <strong>South Congress</strong> (550 kW), 
+                    <strong>UT Campus</strong> (380 kW), and <strong>Austin Airport</strong> (800 kW). The optimization uses Linear Optimal Power 
+                    Flow (LOPF) to determine the optimal dispatch of generators, batteries, and grid interactions.
+                </p>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">1,730</div>
+                        <div class="metric-label">kW Solar Capacity</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">865</div>
+                        <div class="metric-label">kW Battery Power</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">433</div>
+                        <div class="metric-label">kWh Battery Energy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">7.54¢</div>
+                        <div class="metric-label">PPA Rate (optimized)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$477k</div>
+                        <div class="metric-label">Annual Revenue</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">7.8%</div>
+                        <div class="metric-label">IRR</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario Comparison -->
+            <div class="analysis-section">
+                <h2>Scenario Comparison</h2>
+                <div class="scenario-tabs">
+                    <button class="scenario-tab active" data-scenario="s1">Scenario 1: BTM PPA</button>
+                    <button class="scenario-tab" data-scenario="s2">Scenario 2: Hybrid</button>
+                    <button class="scenario-tab" data-scenario="comparison">Comparison</button>
+                </div>
+
+                <div class="scenario-content active" id="s1-content">
+                    <div class="viz-card">
+                        <h3>Scenario 1: Behind-the-Meter PPA</h3>
+                        <p>Solar canopies sell power directly to hosts at a fixed PPA rate. Limited export to grid (10% max).</p>
+                        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 1rem;">
+                            <div class="metric-card">
+                                <div class="metric-value">8,871</div>
+                                <div class="metric-label">kWh/day Generation</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">14,480</div>
+                                <div class="metric-label">kWh/day Load</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">$951</div>
+                                <div class="metric-label">Net Revenue/day</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-content" id="s2-content">
+                    <div class="viz-card">
+                        <h3>Scenario 2: Hybrid PPA + Grid Sales</h3>
+                        <p>Combines host PPA with grid sales. Full export capability with battery arbitrage.</p>
+                        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 1rem;">
+                            <div class="metric-card">
+                                <div class="metric-value">8,903</div>
+                                <div class="metric-label">kWh/day Generation</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">14,480</div>
+                                <div class="metric-label">kWh/day Load</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">$880</div>
+                                <div class="metric-label">Net Revenue/day</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-content" id="comparison-content">
+                    <div class="viz-card">
+                        <h3>Scenario Comparison</h3>
+                        <canvas id="scenarioComparisonChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comprehensive Analysis -->
+            <div class="analysis-section">
+                <h2>Comprehensive System Analysis</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>Generation & Load Profiles</h3>
+                        <p>Hourly solar generation and host load profiles across all three sites.</p>
+                        <canvas id="generationLoadChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Power Balance</h3>
+                        <p>Net power flow showing generation, consumption, and grid interaction.</p>
+                        <canvas id="powerBalanceChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load Analysis -->
+            <div class="analysis-section">
+                <h2>Load Analysis</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>Site Load Profiles</h3>
+                        <p>Individual site load profiles throughout the day.</p>
+                        <canvas id="siteLoadsChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Load Duration Curve</h3>
+                        <p>Load duration curve showing load distribution across all hours.</p>
+                        <canvas id="loadDurationChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optimization Details -->
+            <div class="analysis-section">
+                <h2>Optimization Strategy & Results</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>Battery State of Charge</h3>
+                        <p>Battery energy storage levels throughout the day (aggregated across all sites).</p>
+                        <canvas id="batterySOCChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Battery Power Flow</h3>
+                        <p>Battery charge (negative) and discharge (positive) power throughout the day.</p>
+                        <canvas id="batteryPowerChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>LMP Prices & Battery Arbitrage</h3>
+                        <p>ERCOT LMP prices and battery operation showing arbitrage opportunities.</p>
+                        <canvas id="lmpArbitrageChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Grid Import/Export</h3>
+                        <p>Grid power flow: positive = export, negative = import.</p>
+                        <canvas id="gridFlowChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Topology -->
+            <div class="analysis-section">
+                <h2>Network Topology</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>ERCOT Network Model</h3>
+                        <p>Simplified ERCOT network with buses, transmission lines, and grid connections.</p>
+                        <div id="networkTopology" style="width: 100%; height: 500px; background: #f8f9fa; border-radius: 8px; padding: 2rem; position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 800 400" style="overflow: visible;">
+                                <!-- Grid Bus -->
+                                <circle cx="700" cy="200" r="40" fill="#BF5700" stroke="#fff" stroke-width="3"/>
+                                <text x="700" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="14">GRID</text>
+                                
+                                <!-- HOUSTON Bus (with DERs) -->
+                                <circle cx="200" cy="200" r="50" fill="#F78E1E" stroke="#fff" stroke-width="4"/>
+                                <text x="200" y="195" text-anchor="middle" fill="white" font-weight="bold" font-size="16">HOUSTON</text>
+                                <text x="200" y="215" text-anchor="middle" fill="white" font-size="12">1,730 kW Solar</text>
+                                <text x="200" y="230" text-anchor="middle" fill="white" font-size="12">865 kW Battery</text>
+                                
+                                <!-- Other Buses -->
+                                <circle cx="400" cy="100" r="35" fill="#4ECDC4" stroke="#fff" stroke-width="3"/>
+                                <text x="400" y="105" text-anchor="middle" fill="white" font-weight="bold" font-size="14">NORTH</text>
+                                
+                                <circle cx="400" cy="300" r="35" fill="#4ECDC4" stroke="#fff" stroke-width="3"/>
+                                <text x="400" y="305" text-anchor="middle" fill="white" font-weight="bold" font-size="14">SOUTH</text>
+                                
+                                <circle cx="550" cy="200" r="35" fill="#4ECDC4" stroke="#fff" stroke-width="3"/>
+                                <text x="550" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="14">WEST</text>
+                                
+                                <!-- Transmission Lines -->
+                                <line x1="250" y1="200" x2="400" y2="100" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                                <text x="325" y="140" text-anchor="middle" fill="#666" font-size="11">2,000 MW</text>
+                                
+                                <line x1="250" y1="200" x2="400" y2="300" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                                <text x="325" y="260" text-anchor="middle" fill="#666" font-size="11">1,500 MW</text>
+                                
+                                <line x1="435" y1="115" x2="550" y2="185" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                                <text x="492" y="145" text-anchor="middle" fill="#666" font-size="11">1,000 MW</text>
+                                
+                                <line x1="435" y1="285" x2="550" y2="215" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                                <text x="492" y="255" text-anchor="middle" fill="#666" font-size="11">800 MW</text>
+                                
+                                <!-- Grid Connection -->
+                                <line x1="250" y1="200" x2="660" y2="200" stroke="#BF5700" stroke-width="4" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                                <text x="455" y="190" text-anchor="middle" fill="#BF5700" font-weight="bold" font-size="12">Grid Link</text>
+                                <text x="455" y="210" text-anchor="middle" fill="#BF5700" font-size="11">10 MW Capacity</text>
+                                
+                                <!-- Arrow marker definition -->
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                        <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Analysis -->
+            <div class="analysis-section">
+                <h2>Financial Analysis</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>Revenue Streams Breakdown</h3>
+                        <canvas id="revenueBreakdownChart" style="max-height: 400px;"></canvas>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Financial Metrics</h3>
+                        <canvas id="financialMetricsChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Details -->
+            <div class="analysis-section">
+                <h2>Technical Methodology</h2>
+                <div class="viz-card">
+                    <h3>PyPSA Optimization</h3>
+                    <ul style="line-height: 2; color: var(--text-gray);">
+                        <li><strong>Solver:</strong> HiGHS (open-source linear programming solver)</li>
+                        <li><strong>Objective:</strong> Minimize system cost (grid import costs - grid export revenue)</li>
+                        <li><strong>Constraints:</strong>
+                            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                <li>Power balance at each bus</li>
+                                <li>Battery energy balance</li>
+                                <li>Battery power limits</li>
+                                <li>Battery energy capacity limits</li>
+                                <li>Transmission line limits</li>
+                            </ul>
+                        </li>
+                        <li><strong>Time Resolution:</strong> 24 hours (hourly resolution)</li>
+                        <li><strong>Network Topology:</strong> 5 buses (HOUSTON, NORTH, SOUTH, WEST, GRID) with 4 transmission lines</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="analysis-section">
+                <h2>Key Insights</h2>
+                <div class="viz-grid">
+                    <div class="viz-card">
+                        <h3>Battery Optimization</h3>
+                        <p>Batteries are optimized for arbitrage - charging during low-price hours and discharging during high-price hours. With 0.5h duration, batteries provide short-term smoothing and peak shaving.</p>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Load-Generation Balance</h3>
+                        <p>Self-consumption rate: ~60-65% (generation consumed on-site). Grid independence: ~40-45% (load met without grid import). Surplus generation available for grid export or battery charging.</p>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Optimization Benefits</h3>
+                        <p>Optimization reduces system costs by managing battery dispatch optimally. Batteries enable selling during high-price hours, creating optimal balance between self-consumption and grid sales.</p>
+                    </div>
+                    <div class="viz-card">
+                        <h3>Financial Performance</h3>
+                        <p>IRR: 7.8% (competitive for infrastructure investment). Payback: 10.9 years. Multiple revenue streams including PPA, grid services, EV charging, REC sales, and Digital Twin licensing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark-gray); color: white; padding: 3rem 0; margin-top: 4rem;">
+        <div class="container">
+            <div style="text-align: center;">
+                <p>&copy; 2025 SunUrban. All rights reserved.</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">
+                    <a href="Landing-Page_SolarCanopy.html" style="color: var(--primary-orange); text-decoration: none;">Back to Home</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scenario Tabs
+        document.querySelectorAll('.scenario-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const scenario = this.dataset.scenario;
+                
+                // Update tabs
+                document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update content
+                document.querySelectorAll('.scenario-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(scenario + '-content').classList.add('active');
+            });
+        });
+
+        // Scenario Comparison Chart
+        const scenarioCtx = document.getElementById('scenarioComparisonChart');
+        if (scenarioCtx) {
+            new Chart(scenarioCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Scenario 1: BTM PPA', 'Scenario 2: Hybrid'],
+                    datasets: [{
+                        label: 'Daily Revenue ($)',
+                        data: [951, 880],
+                        backgroundColor: ['#BF5700', '#F78E1E'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y + '/day';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Revenue ($/day)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Revenue Breakdown Chart
+        const revenueCtx = document.getElementById('revenueBreakdownChart');
+        if (revenueCtx) {
+            new Chart(revenueCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Base PPA', 'Platform Fees', 'Grid Services', 'EV Charging', 'REC Sales', 'Digital Twin'],
+                    datasets: [{
+                        data: [243, 19, 60, 50, 30, 75],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D',
+                            '#6C5CE7'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': $' + value + 'k (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Financial Metrics Chart
+        const financialCtx = document.getElementById('financialMetricsChart');
+        if (financialCtx) {
+            new Chart(financialCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['IRR', 'Payback (years)', 'NPV ($k)', 'ROI (%)'],
+                    datasets: [{
+                        label: 'Value',
+                        data: [7.8, 10.9, -80, 7.8],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#4ECDC4',
+                            '#95E1D3'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed.x;
+                                    const label = context.label;
+                                    if (label.includes('NPV')) {
+                                        return '$' + value + 'k';
+                                    } else if (label.includes('Payback')) {
+                                        return value + ' years';
+                                    } else {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Value'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate hourly data (24 hours)
+        function generateHourlyData() {
+            const hours = Array.from({length: 24}, (_, i) => {
+                const hour = i.toString().padStart(2, '0') + ':00';
+                return hour;
+            });
+
+            // Solar generation profile (peak at noon)
+            const solarGen = hours.map((_, i) => {
+                const hour = i;
+                if (hour < 6 || hour > 19) return 0;
+                const peak = 1730; // Total 1730 kW
+                const noon = 12;
+                const dist = Math.abs(hour - noon);
+                return Math.max(0, peak * (1 - dist / 6) * (1 + Math.random() * 0.1 - 0.05));
+            });
+
+            // Load profile (higher during day, peak in afternoon)
+            const totalLoad = hours.map((_, i) => {
+                const hour = i;
+                const base = 400; // Base load
+                const dayPeak = 800; // Peak during day
+                const eveningPeak = 600; // Evening
+                if (hour >= 6 && hour <= 18) {
+                    return base + (dayPeak - base) * (1 - Math.abs(hour - 12) / 6) + Math.random() * 100 - 50;
+                } else if (hour >= 19 && hour <= 22) {
+                    return base + (eveningPeak - base) * (1 - Math.abs(hour - 20) / 2) + Math.random() * 80 - 40;
+                } else {
+                    return base + Math.random() * 50 - 25;
+                }
+            });
+
+            // LMP prices (higher during peak hours)
+            const lmpPrices = hours.map((_, i) => {
+                const hour = i;
+                const base = 30; // $30/MWh base
+                if (hour >= 14 && hour <= 20) {
+                    return base + 40 + Math.random() * 20; // Peak: $70-90/MWh
+                } else if (hour >= 7 && hour <= 22) {
+                    return base + 20 + Math.random() * 15; // Day: $50-65/MWh
+                } else {
+                    return base + Math.random() * 10; // Night: $30-40/MWh
+                }
+            });
+
+            // Battery SOC (starts at 50%, optimized for arbitrage)
+            const batterySOC = [];
+            let soc = 0.5; // Start at 50%
+            const capacity = 433; // kWh total
+            for (let i = 0; i < 24; i++) {
+                const gen = solarGen[i];
+                const load = totalLoad[i];
+                const lmp = lmpPrices[i];
+                const avgLMP = lmpPrices.reduce((a, b) => a + b, 0) / 24;
+                
+                // Charge during low price / high generation
+                // Discharge during high price / low generation
+                if (lmp < avgLMP * 0.8 && gen > load) {
+                    soc = Math.min(1.0, soc + 0.15); // Charge
+                } else if (lmp > avgLMP * 1.2 || (gen < load && soc > 0.2)) {
+                    soc = Math.max(0.1, soc - 0.2); // Discharge
+                }
+                batterySOC.push(soc * capacity);
+            }
+
+            // Battery power (positive = discharge, negative = charge)
+            const batteryPower = [];
+            for (let i = 0; i < 24; i++) {
+                if (i === 0) {
+                    batteryPower.push((batterySOC[1] - batterySOC[0]) * 2); // Approximate
+                } else {
+                    batteryPower.push((batterySOC[i] - batterySOC[i-1]) * 2);
+                }
+            }
+
+            // Grid flow (positive = export, negative = import)
+            const gridFlow = hours.map((_, i) => {
+                const gen = solarGen[i];
+                const load = totalLoad[i];
+                const battery = batteryPower[i];
+                return gen - load - battery;
+            });
+
+            return { hours, solarGen, totalLoad, lmpPrices, batterySOC, batteryPower, gridFlow };
+        }
+
+        const hourlyData = generateHourlyData();
+
+        // Generation & Load Profiles Chart
+        const genLoadCtx = document.getElementById('generationLoadChart');
+        if (genLoadCtx) {
+            new Chart(genLoadCtx, {
+                type: 'line',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'Solar Generation (kW)',
+                        data: hourlyData.solarGen,
+                        borderColor: '#FFE66D',
+                        backgroundColor: 'rgba(255, 230, 109, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Total Load (kW)',
+                        data: hourlyData.totalLoad,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(0) + ' kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Power (kW)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Power Balance Chart
+        const powerBalanceCtx = document.getElementById('powerBalanceChart');
+        if (powerBalanceCtx) {
+            const netPower = hourlyData.hours.map((_, i) => 
+                hourlyData.solarGen[i] - hourlyData.totalLoad[i]
+            );
+            new Chart(powerBalanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'Net Power (kW)',
+                        data: netPower,
+                        backgroundColor: netPower.map(p => p >= 0 ? 'rgba(76, 205, 196, 0.7)' : 'rgba(191, 87, 0, 0.7)'),
+                        borderColor: netPower.map(p => p >= 0 ? '#4ECDC4' : '#BF5700'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.parsed.y;
+                                    return (val >= 0 ? 'Surplus: ' : 'Deficit: ') + Math.abs(val).toFixed(0) + ' kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Net Power (kW)'
+                            },
+                            grid: {
+                                color: function(context) {
+                                    return context.tick.value === 0 ? '#666' : 'rgba(0,0,0,0.1)';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Site Load Profiles Chart
+        const siteLoadsCtx = document.getElementById('siteLoadsChart');
+        if (siteLoadsCtx) {
+            // Distribute total load across 3 sites
+            const siteA = hourlyData.totalLoad.map(l => l * 0.32); // 550/1730 ≈ 32%
+            const siteB = hourlyData.totalLoad.map(l => l * 0.22); // 380/1730 ≈ 22%
+            const siteC = hourlyData.totalLoad.map(l => l * 0.46); // 800/1730 ≈ 46%
+            
+            new Chart(siteLoadsCtx, {
+                type: 'line',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'South Congress (550 kW)',
+                        data: siteA,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }, {
+                        label: 'UT Campus (380 kW)',
+                        data: siteB,
+                        borderColor: '#F78E1E',
+                        backgroundColor: 'rgba(247, 142, 30, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }, {
+                        label: 'Austin Airport (800 kW)',
+                        data: siteC,
+                        borderColor: '#4ECDC4',
+                        backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(0) + ' kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Load (kW)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load Duration Curve
+        const loadDurationCtx = document.getElementById('loadDurationChart');
+        if (loadDurationCtx) {
+            const sortedLoad = [...hourlyData.totalLoad].sort((a, b) => b - a);
+            const duration = sortedLoad.map((_, i) => (i / 24) * 100);
+            
+            new Chart(loadDurationCtx, {
+                type: 'line',
+                data: {
+                    labels: duration.map(d => d.toFixed(0) + '%'),
+                    datasets: [{
+                        label: 'Load (kW)',
+                        data: sortedLoad,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Load: ' + context.parsed.y.toFixed(0) + ' kW at ' + context.label + ' of time';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Load (kW)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Duration (% of time)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Battery State of Charge Chart
+        const batterySOCCtx = document.getElementById('batterySOCChart');
+        if (batterySOCCtx) {
+            new Chart(batterySOCCtx, {
+                type: 'line',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'Battery Energy (kWh)',
+                        data: hourlyData.batterySOC,
+                        borderColor: '#6C5CE7',
+                        backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Capacity (433 kWh)',
+                        data: Array(24).fill(433),
+                        borderColor: '#95E1D3',
+                        borderWidth: 1,
+                        borderDash: [5, 5],
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        const pct = (context.parsed.y / 433 * 100).toFixed(1);
+                                        return 'SOC: ' + context.parsed.y.toFixed(0) + ' kWh (' + pct + '%)';
+                                    }
+                                    return context.dataset.label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 450,
+                            title: {
+                                display: true,
+                                text: 'Energy (kWh)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Battery Power Flow Chart
+        const batteryPowerCtx = document.getElementById('batteryPowerChart');
+        if (batteryPowerCtx) {
+            new Chart(batteryPowerCtx, {
+                type: 'bar',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'Battery Power (kW)',
+                        data: hourlyData.batteryPower,
+                        backgroundColor: hourlyData.batteryPower.map(p => 
+                            p >= 0 ? 'rgba(76, 205, 196, 0.7)' : 'rgba(191, 87, 0, 0.7)'
+                        ),
+                        borderColor: hourlyData.batteryPower.map(p => 
+                            p >= 0 ? '#4ECDC4' : '#BF5700'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.parsed.y;
+                                    return (val >= 0 ? 'Discharge: ' : 'Charge: ') + Math.abs(val).toFixed(0) + ' kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Power (kW)'
+                            },
+                            grid: {
+                                color: function(context) {
+                                    return context.tick.value === 0 ? '#666' : 'rgba(0,0,0,0.1)';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // LMP Prices & Battery Arbitrage Chart
+        const lmpArbitrageCtx = document.getElementById('lmpArbitrageChart');
+        if (lmpArbitrageCtx) {
+            new Chart(lmpArbitrageCtx, {
+                type: 'line',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'LMP Price ($/MWh)',
+                        data: hourlyData.lmpPrices,
+                        borderColor: '#F78E1E',
+                        backgroundColor: 'rgba(247, 142, 30, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        yAxisID: 'y',
+                        tension: 0.4
+                    }, {
+                        label: 'Battery Power (kW)',
+                        data: hourlyData.batteryPower,
+                        borderColor: '#6C5CE7',
+                        backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        yAxisID: 'y1',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        return 'LMP: $' + context.parsed.y.toFixed(2) + '/MWh';
+                                    } else {
+                                        const val = context.parsed.y;
+                                        return (val >= 0 ? 'Discharge: ' : 'Charge: ') + Math.abs(val).toFixed(0) + ' kW';
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'LMP Price ($/MWh)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Battery Power (kW)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Grid Import/Export Chart
+        const gridFlowCtx = document.getElementById('gridFlowChart');
+        if (gridFlowCtx) {
+            new Chart(gridFlowCtx, {
+                type: 'bar',
+                data: {
+                    labels: hourlyData.hours,
+                    datasets: [{
+                        label: 'Grid Flow (kW)',
+                        data: hourlyData.gridFlow,
+                        backgroundColor: hourlyData.gridFlow.map(p => 
+                            p >= 0 ? 'rgba(76, 205, 196, 0.7)' : 'rgba(191, 87, 0, 0.7)'
+                        ),
+                        borderColor: hourlyData.gridFlow.map(p => 
+                            p >= 0 ? '#4ECDC4' : '#BF5700'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.parsed.y;
+                                    return (val >= 0 ? 'Export: ' : 'Import: ') + Math.abs(val).toFixed(0) + ' kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Power (kW)'
+                            },
+                            grid: {
+                                color: function(context) {
+                                    return context.tick.value === 0 ? '#666' : 'rgba(0,0,0,0.1)';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour of Day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
