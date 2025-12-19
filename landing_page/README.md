@@ -12,6 +12,9 @@ This is the SunUrban landing page website, deployed via GitHub Pages.
 - `pricing.html` - Pricing page
 - `contact.html` - Contact page
 - `financials.html` - Financials page
+- `parkurban-financials.html` - ParkUrban Financial Projections
+- `chargeurban-financials.html` - ChargeUrban Financial Projections
+- `parkurban-dashboard.html` - ParkUrban Operator Dashboard
 - `data-layer.html` - Data Layer analysis page
 - `energy-dashboard.html` - Energy Dashboard page
 - `pypsa-analysis.html` - PyPSA Analysis page
@@ -37,4 +40,5 @@ npx serve
 ```
 
 Then navigate to `http://localhost:8000` in your browser.
+
 

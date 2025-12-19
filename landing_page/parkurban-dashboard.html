@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ParkUrban Operator Dashboard | SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #BF5700, #F78E1E);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+        .metric-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 0.25rem;
+        }
+        .metric-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .metric-change {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .metric-change.positive {
+            color: #28A745;
+        }
+        .metric-change.negative {
+            color: #DC3545;
+        }
+        .chart-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .chart-container h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-bar {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: #BF5700;
+            color: #fff;
+            border-color: #BF5700;
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: #BF5700;
+            color: #BF5700;
+        }
+        .heatmap-cell {
+            width: 100%;
+            min-height: 50px;
+            aspect-ratio: 1;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.75rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .heatmap-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .heatmap-cell .hour-label {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+        .heatmap-cell .util-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+        .heatmap-legend {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 1200px) {
+            .heatmap-container {
+                grid-column: 1 / -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #peakTimesHeatmap {
+                min-width: 720px;
+                gap: 0.3rem;
+            }
+            .heatmap-cell {
+                min-height: 40px;
+                font-size: 0.65rem;
+            }
+        }
+        .heatmap-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .zone-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid #BF5700;
+        }
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .zone-name {
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+        .zone-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-value {
+            font-weight: 700;
+            color: #BF5700;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.75rem;
+        }
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #d4edda;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #155724;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #28A745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .export-btn {
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        .export-btn:hover {
+            background: #BF5700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="parkurban-financials.html">ParkUrban Financials</a>
+                        <a href="chargeurban-financials.html">ChargeUrban Financials</a>
+                        <a href="parkurban-dashboard.html" style="color: #BF5700;">ParkUrban Dashboard</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section style="padding-top: 120px; padding-bottom: 2rem; background: #f8f9fa;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div class="dashboard-header">
+                <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h1 style="font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem;">
+                            ParkUrban Operator Dashboard
+                        </h1>
+                        <p style="opacity: 0.95; font-size: 1rem;">Comprehensive analytics for UT Campus parking operations</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            <span>LIVE</span>
+                        </div>
+                        <button class="export-btn" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalSpots">2,847</div>
+                    <div class="metric-label">Total Spots</div>
+                    <div class="metric-change positive">+12 spots this month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="currentOccupancy">68%</div>
+                    <div class="metric-label">Current Occupancy</div>
+                    <div class="metric-change positive">+3% vs yesterday</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="avgUtilization">72%</div>
+                    <div class="metric-label">Avg Utilization (24h)</div>
+                    <div class="metric-change positive">+2% vs last week</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="avgDwellTime">2.4h</div>
+                    <div class="metric-label">Avg Dwell Time</div>
+                    <div class="metric-change negative">-0.2h vs last week</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="peakHour">10:00 AM</div>
+                    <div class="metric-label">Peak Hour</div>
+                    <div class="metric-change">Today</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="totalSessions">1,247</div>
+                    <div class="metric-label">Sessions Today</div>
+                    <div class="metric-change positive">+8% vs yesterday</div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <span style="font-weight: 600; color: #1A1A1A;">Time Range:</span>
+                <button class="filter-btn active" data-range="today" onclick="setTimeRange('today')">Today</button>
+                <button class="filter-btn" data-range="week" onclick="setTimeRange('week')">Last 7 Days</button>
+                <button class="filter-btn" data-range="month" onclick="setTimeRange('month')">Last 30 Days</button>
+                <button class="filter-btn" data-range="quarter" onclick="setTimeRange('quarter')">Last 90 Days</button>
+                <span style="margin-left: auto; font-weight: 600; color: #1A1A1A;">Lot:</span>
+                <select id="lotFilter" style="padding: 0.5rem; border: 1px solid #e0e0e0; border-radius: 6px; background: #fff;" onchange="updateDashboard()">
+                    <option value="all">All Lots</option>
+                    <option value="lot1">Lot 1 - Speedway</option>
+                    <option value="lot2">Lot 2 - San Jacinto</option>
+                    <option value="lot3">Lot 3 - East Campus</option>
+                    <option value="lot4">Lot 4 - West Campus</option>
+                    <option value="lot5">Lot 5 - Stadium</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Content -->
+    <section style="padding: 2rem 0; background: #f8f9fa;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <!-- Utilization Over Time -->
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-line"></i> Utilization Rate Over Time</h3>
+                    <canvas id="utilizationChart"></canvas>
+                </div>
+                
+                <!-- Current Status by Lot -->
+                <div class="chart-container">
+                    <h3><i class="fas fa-map-marker-alt"></i> Current Status by Lot</h3>
+                    <canvas id="lotStatusChart"></canvas>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <!-- Peak Times Heatmap -->
+                <div class="chart-container heatmap-container" style="overflow: hidden;">
+                    <h3><i class="fas fa-clock"></i> Peak Times Heatmap</h3>
+                    <div style="width: 100%; overflow-x: auto; margin-top: 1rem; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem;">
+                        <div id="peakTimesHeatmap" style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 0.4rem; min-width: 900px; padding: 0.5rem; box-sizing: border-box; width: 100%;">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="heatmap-legend" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; flex-wrap: wrap;">
+                        <span style="font-weight: 600; color: #666;">Utilization:</span>
+                        <div class="heatmap-legend-item">
+                            <div style="width: 24px; height: 24px; background: #e3f2fd; border-radius: 4px; border: 1px solid #ccc;"></div>
+                            <span>&lt;30%</span>
+                        </div>
+                        <div class="heatmap-legend-item">
+                            <div style="width: 24px; height: 24px; background: #64b5f6; border-radius: 4px; border: 1px solid #ccc;"></div>
+                            <span>30-50%</span>
+                        </div>
+                        <div class="heatmap-legend-item">
+                            <div style="width: 24px; height: 24px; background: #1976d2; border-radius: 4px; border: 1px solid #ccc;"></div>
+                            <span>50-70%</span>
+                        </div>
+                        <div class="heatmap-legend-item">
+                            <div style="width: 24px; height: 24px; background: #0d47a1; border-radius: 4px; border: 1px solid #ccc;"></div>
+                            <span>70-90%</span>
+                        </div>
+                        <div class="heatmap-legend-item">
+                            <div style="width: 24px; height: 24px; background: #000051; border-radius: 4px; border: 1px solid #ccc;"></div>
+                            <span>&gt;90%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dwell Time Distribution -->
+                <div class="chart-container">
+                    <h3><i class="fas fa-hourglass-half"></i> Dwell Time Distribution</h3>
+                    <canvas id="dwellTimeChart"></canvas>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <!-- Weekly Pattern -->
+                <div class="chart-container">
+                    <h3><i class="fas fa-calendar-week"></i> Weekly Utilization Pattern</h3>
+                    <canvas id="weeklyPatternChart"></canvas>
+                </div>
+
+                <!-- Zone Distribution -->
+                <div class="chart-container">
+                    <h3><i class="fas fa-th"></i> Zone Utilization Distribution</h3>
+                    <canvas id="zoneDistributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Zone Analytics -->
+            <div class="chart-container">
+                <h3><i class="fas fa-layer-group"></i> Zone Analytics</h3>
+                <div id="zoneAnalytics">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Historical Trends -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-area"></i> 30-Day Trend</h3>
+                    <canvas id="trendChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-exchange-alt"></i> Turnover Rate</h3>
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="parkurban-dashboard.html">ParkUrban Dashboard</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    let currentTimeRange = 'today';
+    let currentLot = 'all';
+    let charts = {};
+
+    // Generate sample data
+    function generateHourlyData() {
+        const data = [];
+        for (let hour = 0; hour < 24; hour++) {
+            // Simulate peak hours (8-10 AM, 12-2 PM, 5-7 PM)
+            let utilization = 0.3 + Math.random() * 0.2;
+            if (hour >= 8 && hour <= 10) utilization = 0.75 + Math.random() * 0.2;
+            if (hour >= 12 && hour <= 14) utilization = 0.65 + Math.random() * 0.2;
+            if (hour >= 17 && hour <= 19) utilization = 0.7 + Math.random() * 0.2;
+            if (hour >= 22 || hour <= 6) utilization = 0.1 + Math.random() * 0.15;
+            data.push(Math.min(100, Math.max(0, utilization * 100)));
+        }
+        return data;
+    }
+
+    function generateDailyData(days) {
+        const data = [];
+        const labels = [];
+        const today = new Date();
+        for (let i = days - 1; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            // Simulate weekday/weekend patterns
+            const dayOfWeek = date.getDay();
+            let baseUtilization = 0.6;
+            if (dayOfWeek === 0 || dayOfWeek === 6) baseUtilization = 0.3; // Weekend
+            data.push(baseUtilization * 100 + (Math.random() - 0.5) * 20);
+        }
+        return { labels, data };
+    }
+
+    function generateDwellTimeData() {
+        return {
+            '< 30 min': 15,
+            '30 min - 1h': 25,
+            '1h - 2h': 30,
+            '2h - 4h': 20,
+            '4h - 6h': 7,
+            '> 6h': 3
+        };
+    }
+
+    function generateZoneData() {
+        return [
+            { name: 'Zone A - North Entrance', utilization: 78, avgDwell: 2.1, sessions: 342, turnover: 4.2 },
+            { name: 'Zone B - Central', utilization: 65, avgDwell: 2.8, sessions: 289, turnover: 3.1 },
+            { name: 'Zone C - South End', utilization: 72, avgDwell: 2.3, sessions: 312, turnover: 3.8 },
+            { name: 'Zone D - East Wing', utilization: 58, avgDwell: 3.2, sessions: 198, turnover: 2.5 },
+            { name: 'Zone E - West Wing', utilization: 81, avgDwell: 1.9, sessions: 406, turnover: 4.8 }
+        ];
+    }
+
+    function generateLotStatusData() {
+        return {
+            labels: ['Lot 1', 'Lot 2', 'Lot 3', 'Lot 4', 'Lot 5'],
+            utilization: [72, 68, 75, 65, 70],
+            available: [280, 320, 250, 350, 300]
+        };
+    }
+
+    // Initialize charts
+    function initCharts() {
+        // Utilization Over Time
+        const utilizationCtx = document.getElementById('utilizationChart');
+        if (utilizationCtx) {
+            const dailyData = generateDailyData(currentTimeRange === 'today' ? 24 : currentTimeRange === 'week' ? 7 : currentTimeRange === 'month' ? 30 : 90);
+            charts.utilization = new Chart(utilizationCtx, {
+                type: 'line',
+                data: {
+                    labels: dailyData.labels,
+                    datasets: [{
+                        label: 'Utilization Rate (%)',
+                        data: dailyData.data,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Utilization: ' + context.parsed.y.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Utilization (%)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Lot Status Chart
+        const lotStatusCtx = document.getElementById('lotStatusChart');
+        if (lotStatusCtx) {
+            const lotData = generateLotStatusData();
+            charts.lotStatus = new Chart(lotStatusCtx, {
+                type: 'bar',
+                data: {
+                    labels: lotData.labels,
+                    datasets: [{
+                        label: 'Utilization (%)',
+                        data: lotData.utilization,
+                        backgroundColor: ['#BF5700', '#F78E1E', '#28A745', '#6C5CE7', '#00B894']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Utilization (%)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Peak Times Heatmap
+        const hourlyData = generateHourlyData();
+        const heatmapContainer = document.getElementById('peakTimesHeatmap');
+        if (heatmapContainer) {
+            heatmapContainer.innerHTML = '';
+            hourlyData.forEach((util, hour) => {
+                const cell = document.createElement('div');
+                cell.className = 'heatmap-cell';
+                
+                // Determine color based on utilization
+                let color, textColor = '#fff';
+                if (util < 30) {
+                    color = '#e3f2fd';
+                    textColor = '#1976d2';
+                } else if (util < 50) {
+                    color = '#64b5f6';
+                    textColor = '#fff';
+                } else if (util < 70) {
+                    color = '#1976d2';
+                    textColor = '#fff';
+                } else if (util < 90) {
+                    color = '#0d47a1';
+                    textColor = '#fff';
+                } else {
+                    color = '#000051';
+                    textColor = '#fff';
+                }
+                
+                cell.style.background = color;
+                cell.style.color = textColor;
+                
+                // Format hour display
+                const hourDisplay = hour === 0 ? '12AM' : hour < 12 ? `${hour}AM` : hour === 12 ? '12PM' : `${hour-12}PM`;
+                
+                // Create cell content
+                cell.innerHTML = `
+                    <div class="hour-label">${hourDisplay}</div>
+                    <div class="util-value">${Math.round(util)}%</div>
+                `;
+                
+                cell.title = `${hourDisplay} - ${util.toFixed(1)}% utilization`;
+                heatmapContainer.appendChild(cell);
+            });
+        }
+
+        // Dwell Time Distribution
+        const dwellTimeCtx = document.getElementById('dwellTimeChart');
+        if (dwellTimeCtx) {
+            const dwellData = generateDwellTimeData();
+            charts.dwellTime = new Chart(dwellTimeCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dwellData),
+                    datasets: [{
+                        label: 'Percentage of Sessions',
+                        data: Object.values(dwellData),
+                        backgroundColor: '#BF5700',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + '% of sessions';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Percentage (%)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Weekly Pattern
+        const weeklyCtx = document.getElementById('weeklyPatternChart');
+        if (weeklyCtx) {
+            const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const weekData = [72, 75, 78, 76, 74, 35, 28];
+            charts.weekly = new Chart(weeklyCtx, {
+                type: 'bar',
+                data: {
+                    labels: weekDays,
+                    datasets: [{
+                        label: 'Avg Utilization (%)',
+                        data: weekData,
+                        backgroundColor: weekData.map(v => v > 60 ? '#BF5700' : '#F78E1E')
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Utilization (%)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Zone Distribution
+        const zoneDistCtx = document.getElementById('zoneDistributionChart');
+        if (zoneDistCtx) {
+            const zoneData = generateZoneData();
+            charts.zoneDist = new Chart(zoneDistCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: zoneData.map(z => z.name.split(' - ')[1]),
+                    datasets: [{
+                        data: zoneData.map(z => z.utilization),
+                        backgroundColor: ['#BF5700', '#F78E1E', '#28A745', '#6C5CE7', '#00B894']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Zone Analytics
+        const zoneAnalyticsContainer = document.getElementById('zoneAnalytics');
+        if (zoneAnalyticsContainer) {
+            const zoneData = generateZoneData();
+            zoneAnalyticsContainer.innerHTML = zoneData.map(zone => `
+                <div class="zone-card">
+                    <div class="zone-header">
+                        <div class="zone-name">${zone.name}</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; color: #BF5700;">${zone.utilization}%</div>
+                    </div>
+                    <div class="zone-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${zone.avgDwell}h</div>
+                            <div class="stat-label">Avg Dwell</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${zone.sessions}</div>
+                            <div class="stat-label">Sessions</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${zone.turnover}x</div>
+                            <div class="stat-label">Turnover</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Trend Chart
+        const trendCtx = document.getElementById('trendChart');
+        if (trendCtx) {
+            const trendData = generateDailyData(30);
+            charts.trend = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: trendData.labels,
+                    datasets: [{
+                        label: 'Utilization',
+                        data: trendData.data,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Utilization (%)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Turnover Rate
+        const turnoverCtx = document.getElementById('turnoverChart');
+        if (turnoverCtx) {
+            const turnoverData = generateDailyData(30);
+            charts.turnover = new Chart(turnoverCtx, {
+                type: 'bar',
+                data: {
+                    labels: turnoverData.labels,
+                    datasets: [{
+                        label: 'Turnover Rate',
+                        data: turnoverData.data.map(v => (v / 100) * 3.5 + Math.random() * 0.5),
+                        backgroundColor: '#4ECDC4',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Turnovers per Spot' }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Update dashboard
+    function updateDashboard() {
+        currentLot = document.getElementById('lotFilter').value;
+        // Destroy existing charts
+        Object.values(charts).forEach(chart => {
+            if (chart && chart.destroy) chart.destroy();
+        });
+        charts = {};
+        // Reinitialize
+        initCharts();
+    }
+
+    // Set time range
+    function setTimeRange(range) {
+        currentTimeRange = range;
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.range === range) {
+                btn.classList.add('active');
+            }
+        });
+        updateDashboard();
+    }
+
+    // Export data
+    function exportData() {
+        alert('Exporting dashboard data...\n\nThis would generate a CSV/PDF report with all current analytics.');
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', function() {
+        initCharts();
+        
+        // Update metrics periodically (simulate live data)
+        setInterval(() => {
+            const occupancy = 65 + Math.random() * 10;
+            document.getElementById('currentOccupancy').textContent = Math.round(occupancy) + '%';
+        }, 5000);
+    });
+    </script>
+</body>
+</html>
+

@@ -48,6 +48,7 @@
                     <div class="dropdown-menu">
                         <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
                         <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
                     </div>
                 </div>
                 <a href="how-it-works.html">How it Works</a>
@@ -347,37 +348,6 @@
                     </div>
                 </div>
                 
-                <!-- Moat 4 -->
-                <div>
-                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap-reverse;">
-                        <div style="flex: 1; min-width: 300px; background: linear-gradient(135deg, #F5F5F5, #E8E8E8); border-radius: 16px; padding: 3rem;">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                    <polyline points="10 9 9 9 8 9"/>
-                                </svg>
-                                <span style="font-weight: 600; color: #1A1A1A;">Research Partnerships</span>
-                            </div>
-                            <p style="font-size: 1rem; color: #666; line-height: 1.6;">
-                                Joint development with UT Austin's CAEE lab. Publishing peer-reviewed methods. Credible, validated algorithms.
-                            </p>
-                        </div>
-                        <div style="flex: 1; min-width: 300px;">
-                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
-                                Moat 4
-                            </div>
-                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
-                                Academic Credibility
-                            </h3>
-                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
-                                Grid operators and utilities demand validated methods. Our <strong style="color: #BF5700;">NSF I-Corps</strong> research lineage and published algorithms create trust that startups can't fake.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -618,92 +588,93 @@
     </section>
 
     <!-- Pricing Section -->
-    <section style="padding: 6rem 0; background: #F5F5F5;">
+    <section style="padding: 4rem 0; background: #F5F5F5;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">
                     Flexible Pricing
                 </h2>
-                <p style="font-size: 1.2rem; color: #666; text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 1rem; color: #666;">
                     Aligned with your success — we earn when you earn
                 </p>
+            </div>
+            
+            <!-- 3x3 Grid Layout -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                <!-- Tier 1 -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(191,87,0,0.15)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Starter</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For pilot deployments</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">Free</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">Up to 100 kW capacity</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Flexibility estimation
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Basic dashboard
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Email support
+                        </li>
+                    </ul>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Start Pilot</button>
+                </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <!-- Tier 1 -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
-                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
-                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Starter</h3>
-                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For pilot deployments</div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Free</div>
-                        <div style="font-size: 0.9rem; color: #666;">Up to 100 kW capacity</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Flexibility estimation
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Basic dashboard
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Email support
-                            </li>
-                        </ul>
-                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Start Pilot</button>
+                <!-- Tier 2 - Featured -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative;">
+                    <div style="position: absolute; top: -10px; right: 1.5rem; background: #BF5700; color: #fff; padding: 0.4rem 0.875rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
+                        Most Popular
                     </div>
-                    
-                    <!-- Tier 2 - Featured -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative; transform: scale(1.05);">
-                        <div style="position: absolute; top: -12px; right: 2rem; background: #BF5700; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
-                            Most Popular
-                        </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Growth</h3>
-                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For scaling VPP operations</div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">15%</div>
-                        <div style="font-size: 0.9rem; color: #666;">Of grid services revenue</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Everything in Starter
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> ERCOT market integration
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Multi-timescale dispatch
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> API access
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Priority support
-                            </li>
-                        </ul>
-                        <button class="btn-primary" style="width: 100%;" onclick="window.location.href='contact.html'">Schedule Demo</button>
-                    </div>
-                    
-                    <!-- Tier 3 -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
-                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
-                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
-                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For utility-scale deployments</div>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
-                        <div style="font-size: 0.9rem; color: #666;">Volume-based pricing</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Everything in Growth
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> White-label option
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> On-prem deployment
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Dedicated CSM
-                            </li>
-                        </ul>
-                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
-                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Growth</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For scaling VPP operations</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">15%</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">Of grid services revenue</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Everything in Starter
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> ERCOT market integration
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Multi-timescale dispatch
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> API access
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Priority support
+                        </li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Schedule Demo</button>
+                </div>
+                
+                <!-- Tier 3 -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(191,87,0,0.15)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For utility-scale deployments</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">Custom</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">Volume-based pricing</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Everything in Growth
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> White-label option
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> On-prem deployment
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Dedicated CSM
+                        </li>
+                    </ul>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Contact Sales</button>
                 </div>
             </div>
         </div>
@@ -755,6 +726,7 @@
                     <ul>
                         <li><a href="parkurban.html">ParkUrban</a></li>
                         <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
                         <li><a href="how-it-works.html">Solar Canopies</a></li>
                         <li><a href="data-layer.html">Data Layer</a></li>
                     </ul>

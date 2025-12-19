@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ParkUrban Financial Projections | SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .metric-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(191,87,0,0.15);
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #BF5700;
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 0.25rem;
+        }
+        .metric-note {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .chart-container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        .chart-container h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 1.5rem;
+        }
+        .projection-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .projection-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #1A1A1A;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .projection-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+        }
+        .projection-table tr:hover {
+            background: #fafafa;
+        }
+        .projection-table .positive {
+            color: #28A745;
+            font-weight: 600;
+        }
+        .projection-table .negative {
+            color: #DC3545;
+            font-weight: 600;
+        }
+        .assumption-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .assumption-card i {
+            color: #BF5700;
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+        .scenario-tab {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .scenario-tab.active {
+            background: #BF5700;
+            border-color: #BF5700;
+            color: #fff;
+        }
+        .scenario-tab:hover:not(.active) {
+            border-color: #BF5700;
+            color: #BF5700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="parkurban-financials.html" style="color: #BF5700;">ParkUrban Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section style="padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #fff 0%, #f8f9fa 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(191,87,0,0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1.5rem;">
+                    <span style="font-size: 1.25rem;">🅿️</span>
+                    <span style="font-size: 0.9rem; font-weight: 600; color: #BF5700;">ParkUrban Financials</span>
+                </div>
+                <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Financial <span style="color: #BF5700;">Projections</span>
+                </h1>
+                <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto;">
+                    5-year financial outlook for ParkUrban's smart parking intelligence platform at UT Austin and beyond.
+                </p>
+            </div>
+            
+            <!-- Key Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div class="metric-card">
+                    <div class="metric-value">$1.8M</div>
+                    <div class="metric-label">Year 5 ARR</div>
+                    <div class="metric-note">Annual Recurring Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Gross Margin</div>
+                    <div class="metric-note">SaaS industry standard</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">18</div>
+                    <div class="metric-label">Months</div>
+                    <div class="metric-note">To profitability</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$54k</div>
+                    <div class="metric-label">Avg Contract</div>
+                    <div class="metric-note">Per lot annually</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section style="padding: 4rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center;">
+                Business Model
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <!-- Revenue Model -->
+                <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 20px; padding: 2rem; color: #fff;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Revenue Streams</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 12px;">
+                            <div style="font-size: 1.5rem; font-weight: 700;">70%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">SaaS Subscriptions</div>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">$2,500-4,500/lot/month</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 12px;">
+                            <div style="font-size: 1.5rem; font-weight: 700;">20%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Data Licensing</div>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">Urban planners, researchers</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 12px;">
+                            <div style="font-size: 1.5rem; font-weight: 700;">10%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Event Surge Pricing</div>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">Football games, concerts</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unit Economics -->
+                <div style="background: #1A1A1A; border-radius: 20px; padding: 2rem; color: #fff;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Unit Economics</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="opacity: 0.8;">Average Contract Value (ACV)</span>
+                            <span style="font-weight: 700; color: #BF5700;">$54,000/yr</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="opacity: 0.8;">Customer Acquisition Cost (CAC)</span>
+                            <span style="font-weight: 700;">$15,000</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="opacity: 0.8;">LTV:CAC Ratio</span>
+                            <span style="font-weight: 700; color: #28A745;">10.8x</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="opacity: 0.8;">Payback Period</span>
+                            <span style="font-weight: 700;">3.3 months</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="opacity: 0.8;">Net Revenue Retention</span>
+                            <span style="font-weight: 700; color: #28A745;">115%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Growth Section -->
+    <section style="padding: 4rem 0; background: #f8f9fa;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; text-align: center;">
+                Customer Growth Projection
+            </h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Starting with UT Austin pilot, expanding to Texas universities and municipalities</p>
+            
+            <!-- Scenario Tabs -->
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap;">
+                <button class="scenario-tab active" data-scenario="base" onclick="switchScenario('base')">Base Case</button>
+                <button class="scenario-tab" data-scenario="conservative" onclick="switchScenario('conservative')">Conservative</button>
+                <button class="scenario-tab" data-scenario="aggressive" onclick="switchScenario('aggressive')">Aggressive</button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Customer Growth Chart -->
+                <div class="chart-container">
+                    <h3>Parking Lots Under Management</h3>
+                    <canvas id="customerGrowthChart"></canvas>
+                </div>
+                
+                <!-- ARR Growth Chart -->
+                <div class="chart-container">
+                    <h3>Annual Recurring Revenue ($k)</h3>
+                    <canvas id="arrGrowthChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Growth Milestones -->
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2rem;">
+                <div style="background: #fff; border-radius: 12px; padding: 1.25rem; text-align: center; border-left: 4px solid #BF5700;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Year 1</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">3 lots</div>
+                    <div style="font-size: 0.85rem; color: #BF5700; font-weight: 600;">UT Pilot</div>
+                </div>
+                <div style="background: #fff; border-radius: 12px; padding: 1.25rem; text-align: center; border-left: 4px solid #F78E1E;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Year 2</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">8 lots</div>
+                    <div style="font-size: 0.85rem; color: #F78E1E; font-weight: 600;">UT Expansion</div>
+                </div>
+                <div style="background: #fff; border-radius: 12px; padding: 1.25rem; text-align: center; border-left: 4px solid #28A745;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Year 3</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">15 lots</div>
+                    <div style="font-size: 0.85rem; color: #28A745; font-weight: 600;">Texas A&M</div>
+                </div>
+                <div style="background: #fff; border-radius: 12px; padding: 1.25rem; text-align: center; border-left: 4px solid #6C5CE7;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Year 4</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">25 lots</div>
+                    <div style="font-size: 0.85rem; color: #6C5CE7; font-weight: 600;">Multi-Campus</div>
+                </div>
+                <div style="background: #fff; border-radius: 12px; padding: 1.25rem; text-align: center; border-left: 4px solid #00B894;">
+                    <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Year 5</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">35 lots</div>
+                    <div style="font-size: 0.85rem; color: #00B894; font-weight: 600;">Municipal</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Projections Section -->
+    <section style="padding: 4rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center;">
+                5-Year Financial Projections
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                <!-- Revenue & Expenses Chart -->
+                <div class="chart-container">
+                    <h3>Revenue vs Operating Expenses</h3>
+                    <canvas id="revenueExpensesChart"></canvas>
+                </div>
+                
+                <!-- Profitability Chart -->
+                <div class="chart-container">
+                    <h3>Net Income Margin</h3>
+                    <canvas id="profitabilityChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Financial Summary Table -->
+            <div class="chart-container">
+                <h3>Detailed Financial Summary</h3>
+                <div style="overflow-x: auto;">
+                    <table class="projection-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Year 1</th>
+                                <th>Year 2</th>
+                                <th>Year 3</th>
+                                <th>Year 4</th>
+                                <th>Year 5</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cost Structure Section -->
+    <section style="padding: 4rem 0; background: #f8f9fa;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center;">
+                Cost Structure
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Cost Breakdown Chart -->
+                <div class="chart-container">
+                    <h3>Operating Cost Breakdown (Year 3)</h3>
+                    <canvas id="costBreakdownChart"></canvas>
+                </div>
+                
+                <!-- Cost Details -->
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Initial Investment (Year 1)</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Sensor Hardware (3 lots)</span>
+                                <span style="font-weight: 600;">$45,000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Software Development</span>
+                                <span style="font-weight: 600;">$120,000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Installation & Integration</span>
+                                <span style="font-weight: 600;">$30,000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid #e0e0e0;">
+                                <span style="font-weight: 700; color: #1A1A1A;">Total Initial CAPEX</span>
+                                <span style="font-weight: 700; color: #BF5700;">$195,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Recurring Costs (Per Lot/Month)</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Cloud Infrastructure</span>
+                                <span style="font-weight: 600;">$150</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Connectivity (IoT)</span>
+                                <span style="font-weight: 600;">$75</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;">Maintenance & Support</span>
+                                <span style="font-weight: 600;">$100</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid #e0e0e0;">
+                                <span style="font-weight: 700; color: #1A1A1A;">Total COGS/Lot</span>
+                                <span style="font-weight: 700; color: #BF5700;">$325/mo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Assumptions Section -->
+    <section style="padding: 4rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center;">
+                Key Assumptions
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Pricing Tiers</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">Campus Core: $2,500/lot/mo, Ops Pro: $4,500/lot/mo, Enterprise: Custom</p>
+                    </div>
+                </div>
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Customer Mix</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">60% Ops Pro tier, 30% Campus Core, 10% Enterprise</p>
+                    </div>
+                </div>
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Churn Rate</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">5% annual churn (B2B SaaS benchmark for sticky products)</p>
+                    </div>
+                </div>
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Expansion Revenue</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">20% annual upsell from tier upgrades and additional lots</p>
+                    </div>
+                </div>
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Hardware Cost</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">$15,000 per lot (sensors, installation, integration)</p>
+                    </div>
+                </div>
+                <div class="assumption-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong style="color: #1A1A1A;">Gross Margin</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">85% (typical for B2B SaaS with hardware component)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Opportunity Section -->
+    <section style="padding: 4rem 0; background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 2rem; text-align: center;">
+                Market Opportunity
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 3rem; font-weight: 700;">$5.2B</div>
+                    <div style="font-size: 1rem; opacity: 0.9;">Smart Parking Market (2025)</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 700;">12.5%</div>
+                    <div style="font-size: 1rem; opacity: 0.9;">CAGR Growth Rate</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 700;">500+</div>
+                    <div style="font-size: 1rem; opacity: 0.9;">US University Campuses</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 700;">$180M</div>
+                    <div style="font-size: 1rem; opacity: 0.9;">TAM (University Segment)</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <p style="font-size: 1.1rem; opacity: 0.95; max-width: 700px; margin: 0 auto;">
+                    ParkUrban's unique positioning with SunUrban solar canopy integration provides a competitive moat that pure software competitors cannot replicate.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 4rem 0; background: #1A1A1A; color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">
+                    Ready to learn more?
+                </h2>
+                <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 2rem;">
+                    Get the full financial model and discuss partnership opportunities.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary" onclick="window.location.href='contact.html'" style="padding: 1rem 2rem;">
+                        Request Full Model
+                    </button>
+                    <button class="btn-outline" onclick="window.location.href='parkurban.html'" style="padding: 1rem 2rem; border-color: rgba(255,255,255,0.5); color: #fff;">
+                        Back to ParkUrban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="parkurban-financials.html">ParkUrban Financials</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Financial Data - Base Case
+        const scenarios = {
+            base: {
+                lots: [3, 8, 15, 25, 35],
+                arr: [162, 432, 810, 1350, 1890],
+                revenue: [162, 432, 810, 1350, 1890],
+                cogs: [24, 65, 122, 203, 284],
+                grossProfit: [138, 367, 688, 1147, 1606],
+                opex: [180, 250, 350, 450, 550],
+                netIncome: [-42, 117, 338, 697, 1056]
+            },
+            conservative: {
+                lots: [2, 5, 10, 18, 25],
+                arr: [108, 270, 540, 972, 1350],
+                revenue: [108, 270, 540, 972, 1350],
+                cogs: [16, 41, 81, 146, 203],
+                grossProfit: [92, 229, 459, 826, 1147],
+                opex: [180, 230, 300, 380, 450],
+                netIncome: [-88, -1, 159, 446, 697]
+            },
+            aggressive: {
+                lots: [5, 12, 25, 40, 55],
+                arr: [270, 648, 1350, 2160, 2970],
+                revenue: [270, 648, 1350, 2160, 2970],
+                cogs: [41, 97, 203, 324, 446],
+                grossProfit: [229, 551, 1147, 1836, 2524],
+                opex: [200, 320, 480, 650, 800],
+                netIncome: [29, 231, 667, 1186, 1724]
+            }
+        };
+        
+        let currentScenario = 'base';
+        let customerChart, arrChart, revenueExpensesChart, profitabilityChart, costBreakdownChart;
+        
+        // Initialize charts
+        function initCharts() {
+            const data = scenarios[currentScenario];
+            const years = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'];
+            
+            // Customer Growth Chart
+            const customerCtx = document.getElementById('customerGrowthChart');
+            if (customerCtx) {
+                if (customerChart) customerChart.destroy();
+                customerChart = new Chart(customerCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Parking Lots',
+                            data: data.lots,
+                            backgroundColor: ['#BF5700', '#F78E1E', '#28A745', '#6C5CE7', '#00B894'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Number of Lots' } }
+                        }
+                    }
+                });
+            }
+            
+            // ARR Growth Chart
+            const arrCtx = document.getElementById('arrGrowthChart');
+            if (arrCtx) {
+                if (arrChart) arrChart.destroy();
+                arrChart = new Chart(arrCtx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'ARR ($k)',
+                            data: data.arr,
+                            borderColor: '#BF5700',
+                            backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#BF5700'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'ARR ($k)' } }
+                        }
+                    }
+                });
+            }
+            
+            // Revenue vs Expenses Chart
+            const revenueExpensesCtx = document.getElementById('revenueExpensesChart');
+            if (revenueExpensesCtx) {
+                if (revenueExpensesChart) revenueExpensesChart.destroy();
+                revenueExpensesChart = new Chart(revenueExpensesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: years,
+                        datasets: [
+                            {
+                                label: 'Revenue',
+                                data: data.revenue,
+                                backgroundColor: '#BF5700',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'COGS',
+                                data: data.cogs,
+                                backgroundColor: '#FF6B6B',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'Operating Expenses',
+                                data: data.opex,
+                                backgroundColor: '#FFE66D',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': $' + context.parsed.y + 'k';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'Amount ($k)' } }
+                        }
+                    }
+                });
+            }
+            
+            // Profitability Chart
+            const profitabilityCtx = document.getElementById('profitabilityChart');
+            if (profitabilityCtx) {
+                if (profitabilityChart) profitabilityChart.destroy();
+                const margins = data.netIncome.map((ni, i) => ((ni / data.revenue[i]) * 100).toFixed(1));
+                profitabilityChart = new Chart(profitabilityCtx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Net Income Margin',
+                            data: margins,
+                            borderColor: '#28A745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: margins.map(m => m >= 0 ? '#28A745' : '#DC3545')
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { title: { display: true, text: 'Margin (%)' } }
+                        }
+                    }
+                });
+            }
+            
+            // Update financial table
+            updateFinancialTable(data);
+        }
+        
+        // Cost Breakdown Chart (static)
+        const costBreakdownCtx = document.getElementById('costBreakdownChart');
+        if (costBreakdownCtx) {
+            costBreakdownChart = new Chart(costBreakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Engineering', 'Sales & Marketing', 'G&A', 'Customer Support', 'Infrastructure'],
+                    datasets: [{
+                        data: [140, 100, 60, 30, 20],
+                        backgroundColor: ['#BF5700', '#F78E1E', '#4ECDC4', '#95E1D3', '#FFE66D'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return context.label + ': $' + context.parsed + 'k (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update financial table
+        function updateFinancialTable(data) {
+            const tableBody = document.getElementById('financialTableBody');
+            if (!tableBody) return;
+            
+            const metrics = [
+                { name: 'Parking Lots', values: data.lots, format: '' },
+                { name: 'Revenue ($k)', values: data.revenue, format: '$', suffix: 'k' },
+                { name: 'COGS ($k)', values: data.cogs, format: '$', suffix: 'k' },
+                { name: 'Gross Profit ($k)', values: data.grossProfit, format: '$', suffix: 'k' },
+                { name: 'Gross Margin', values: data.grossProfit.map((gp, i) => ((gp / data.revenue[i]) * 100).toFixed(0)), format: '', suffix: '%' },
+                { name: 'Operating Expenses ($k)', values: data.opex, format: '$', suffix: 'k' },
+                { name: 'Net Income ($k)', values: data.netIncome, format: '$', suffix: 'k', highlight: true }
+            ];
+            
+            tableBody.innerHTML = metrics.map(metric => {
+                return `<tr>
+                    <td><strong>${metric.name}</strong></td>
+                    ${metric.values.map(v => {
+                        let className = '';
+                        if (metric.highlight) {
+                            className = v >= 0 ? 'positive' : 'negative';
+                        }
+                        const prefix = metric.format || '';
+                        const suffix = metric.suffix || '';
+                        return `<td class="${className}">${prefix}${v}${suffix}</td>`;
+                    }).join('')}
+                </tr>`;
+            }).join('');
+        }
+        
+        // Switch scenario
+        window.switchScenario = function(scenario) {
+            currentScenario = scenario;
+            
+            // Update tab styles
+            document.querySelectorAll('.scenario-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.scenario === scenario) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Re-initialize charts
+            initCharts();
+        };
+        
+        // Initialize
+        initCharts();
+    });
+    </script>
+</body>
+</html>
+

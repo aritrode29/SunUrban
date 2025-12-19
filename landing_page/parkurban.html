@@ -39,6 +39,7 @@
                     <div class="dropdown-menu">
                         <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
                         <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
                     </div>
                 </div>
                 <a href="how-it-works.html">How it Works</a>
@@ -47,6 +48,8 @@
                     <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-menu">
                         <a href="financials.html">Financials</a>
+                        <a href="parkurban-financials.html">ParkUrban Financials</a>
+                        <a href="parkurban-dashboard.html" style="color: #BF5700;">ParkUrban Dashboard</a>
                         <a href="data-layer.html">Data Layer</a>
                         <a href="energy-dashboard.html">Energy Dashboard</a>
                         <a href="pypsa-analysis.html">PyPSA Analysis</a>
@@ -76,7 +79,7 @@
                 <!-- Story Content - Large Typography -->
                 <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
                     <p style="margin-bottom: 3rem;">
-                        Every day, thousands of <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">UT students</span> circle parking lots, burning gas and time looking for spots that may or may not exist.
+                        Every day, thousands of <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">UT students, faculty, and staff</span> circle parking lots, burning gas and time looking for spots that may or may not exist.
                     </p>
                 </div>
 
@@ -105,13 +108,17 @@
 
     <!-- Platform Features - Clean Grid -->
     <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div style="margin-bottom: 4rem; text-align: center;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
                     The ParkUrban<br/>
                     <span style="color: #BF5700;">Platform</span>
                 </h2>
-                
+            </div>
+            
+            <!-- Two Column Layout: Features + Mobile Mockup -->
+            <div class="platform-layout" style="display: grid; grid-template-columns: 1fr 400px; gap: 4rem; align-items: start; margin-bottom: 4rem;">
+                <!-- Features Grid -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                     <!-- Feature 1 -->
                     <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
@@ -205,10 +212,129 @@
                                 <line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Student-Facing View</h3>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">User-Facing View</h3>
                         <p style="font-size: 1rem; line-height: 1.7; color: #666;">
                             Simple, intuitive interface: "Where to park now" with shaded/cooler zone recommendations.
                         </p>
+                    </div>
+                </div>
+                
+                <!-- Mobile App Mockup -->
+                <div class="mobile-mockup-container" style="position: sticky; top: 120px;">
+                    <!-- iPhone Frame - iPhone 15/16 Pro dimensions (393x852) -->
+                    <div style="background: #1A1A1A; border-radius: 47px; padding: 0.5rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 393px; height: 852px; margin: 0 auto; position: relative;">
+                        <!-- Screen -->
+                        <div style="background: #fff; border-radius: 42px; overflow: hidden; position: relative; width: 100%; height: 100%;">
+                            <!-- Dynamic Island -->
+                            <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 126px; height: 37px; background: #000; border-radius: 19px; z-index: 100;"></div>
+                            
+                            <!-- Status Bar -->
+                            <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 3rem 1.5rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: 600;">
+                                <span>9:41</span>
+                                <div style="display: flex; align-items: center; gap: 0.3rem;">
+                                    <svg width="17" height="11" viewBox="0 0 17 11" fill="none"><rect width="15" height="9" rx="1" fill="#fff"/><rect x="15" y="2" width="2" height="5" rx="0.5" fill="#fff"/></svg>
+                                    <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect width="13" height="9" rx="1" fill="#fff"/><rect x="13" y="1" width="2" height="9" rx="0.5" fill="#fff"/></svg>
+                                    <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="2" y="5" width="18" height="4" rx="1" fill="#fff"/><rect x="0" y="3" width="4" height="8" rx="1" fill="#fff"/><rect x="20" y="1" width="4" height="10" rx="1" fill="#fff"/></svg>
+                                </div>
+                            </div>
+                            
+                            <!-- App Header -->
+                            <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); padding: 1.25rem 1.5rem 1.5rem; color: #fff; margin-top: -1rem;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">ParkUrban</h3>
+                                    <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 1rem; text-align: center; backdrop-filter: blur(10px);">
+                                    <div style="font-size: 0.875rem; opacity: 0.95; margin-bottom: 0.5rem; font-weight: 500;">Available Now</div>
+                                    <div style="font-size: 2.5rem; font-weight: 700; line-height: 1;">138</div>
+                                    <div style="font-size: 0.8125rem; opacity: 0.85; margin-top: 0.25rem;">spots across 3 lots</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div style="padding: 1.25rem 1.5rem; background: #f8f9fa;">
+                                <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
+                                    <button style="flex: 1; background: #BF5700; color: #fff; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 600; font-size: 0.9375rem; cursor: pointer;">Find Spot</button>
+                                    <button style="flex: 1; background: #fff; color: #1A1A1A; border: 1px solid #e0e0e0; padding: 0.875rem; border-radius: 12px; font-weight: 600; font-size: 0.9375rem; cursor: pointer;">Map View</button>
+                                </div>
+                                
+                                <!-- Lot Cards -->
+                                <div style="display: flex; flex-direction: column; gap: 0.875rem;">
+                                    <!-- Lot 1 -->
+                                    <div style="background: #fff; border-radius: 14px; padding: 1.125rem; border-left: 4px solid #28A745; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.625rem;">
+                                            <div>
+                                                <div style="font-weight: 700; color: #1A1A1A; font-size: 1rem; margin-bottom: 0.375rem;">San Jacinto</div>
+                                                <div style="font-size: 0.8125rem; color: #666;">0.3 mi away</div>
+                                            </div>
+                                            <div style="background: #d4edda; color: #155724; padding: 0.375rem 0.75rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">45 open</div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: #666;">
+                                            <span style="font-size: 1rem;">☀️</span>
+                                            <span>12 shaded spots available</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Lot 2 -->
+                                    <div style="background: #fff; border-radius: 14px; padding: 1.125rem; border-left: 4px solid #FFC107; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.625rem;">
+                                            <div>
+                                                <div style="font-weight: 700; color: #1A1A1A; font-size: 1rem; margin-bottom: 0.375rem;">Speedway</div>
+                                                <div style="font-size: 0.8125rem; color: #666;">0.5 mi away</div>
+                                            </div>
+                                            <div style="background: #fff3cd; color: #856404; padding: 0.375rem 0.75rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">23 open</div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: #666;">
+                                            <span style="font-size: 1rem;">⚡</span>
+                                            <span>5 EV spots available</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Lot 3 -->
+                                    <div style="background: #fff; border-radius: 14px; padding: 1.125rem; border-left: 4px solid #28A745; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.625rem;">
+                                            <div>
+                                                <div style="font-weight: 700; color: #1A1A1A; font-size: 1rem; margin-bottom: 0.375rem;">Manor</div>
+                                                <div style="font-size: 0.8125rem; color: #666;">0.7 mi away</div>
+                                            </div>
+                                            <div style="background: #d4edda; color: #155724; padding: 0.375rem 0.75rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">70 open</div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: #666;">
+                                            <span style="font-size: 1rem;">☀️</span>
+                                            <span>18 shaded spots available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Comfort Zone Badge -->
+                                <div style="margin-top: 1.25rem; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; box-shadow: 0 4px 12px rgba(191,87,0,0.2);">
+                                    <div style="font-size: 0.9375rem; opacity: 0.95; margin-bottom: 0.625rem; font-weight: 500;">☀️ Comfort Zone</div>
+                                    <div style="font-size: 1.375rem; font-weight: 700; line-height: 1.2;">30 shaded spots</div>
+                                    <div style="font-size: 0.8125rem; opacity: 0.85; margin-top: 0.375rem;">Up to 20°C cooler</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bottom Navigation -->
+                            <div style="background: #fff; border-top: 1px solid #e0e0e0; padding: 0.75rem 0 1rem; display: flex; justify-content: space-around; position: absolute; bottom: 0; left: 0; right: 0;">
+                                <div style="text-align: center; flex: 1;">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2.5; margin: 0 auto;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <div style="font-size: 0.6875rem; color: #BF5700; margin-top: 0.375rem; font-weight: 600;">Map</div>
+                                </div>
+                                <div style="text-align: center; flex: 1;">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="stroke: #999; stroke-width: 2.5; margin: 0 auto;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    <div style="font-size: 0.6875rem; color: #999; margin-top: 0.375rem; font-weight: 500;">Schedule</div>
+                                </div>
+                                <div style="text-align: center; flex: 1;">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="stroke: #999; stroke-width: 2.5; margin: 0 auto;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <div style="font-size: 0.6875rem; color: #999; margin-top: 0.375rem; font-weight: 500;">Profile</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Safe Area Bottom Padding -->
+                            <div style="height: 2rem;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -586,92 +712,123 @@
                 grid-template-columns: 1fr !important;
             }
         }
+        
+        /* Mobile Mockup Responsive */
+        @media (max-width: 1200px) {
+            .platform-layout {
+                grid-template-columns: 1fr !important;
+            }
+            .mobile-mockup-container {
+                position: relative !important;
+                top: auto !important;
+                margin-top: 3rem;
+            }
+            .mobile-mockup-container > div {
+                width: 100% !important;
+                max-width: 393px !important;
+                height: auto !important;
+                aspect-ratio: 393 / 852 !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-mockup-container > div {
+                max-width: 300px !important;
+            }
+        }
     </style>
 
     <!-- Pricing Section -->
-    <section style="padding: 6rem 0; background: #fff;">
+    <section style="padding: 4rem 0; background: #fff;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">
                     Campus Pricing
                 </h2>
-                <p style="font-size: 1.2rem; color: #666; text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 1rem; color: #666;">
                     Flexible tiers designed for UT Campus operations
                 </p>
+            </div>
+            
+            <!-- 3x3 Grid Layout -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                <!-- Tier 1 -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(191,87,0,0.15)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Campus Core</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For basic operations</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">$2,500</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">per lot/month</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Live availability by lot
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Real-time analytics
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Basic reporting
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> User mobile view
+                        </li>
+                    </ul>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <!-- Tier 1 -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
-                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
-                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Campus Core</h3>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Live availability by lot
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Real-time analytics
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Basic reporting
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Student mobile view
-                            </li>
-                        </ul>
-                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                <!-- Tier 2 - Featured -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative;">
+                    <div style="position: absolute; top: -10px; right: 1.5rem; background: #BF5700; color: #fff; padding: 0.4rem 0.875rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
+                        Recommended
                     </div>
-                    
-                    <!-- Tier 2 - Featured -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative; transform: scale(1.05);">
-                        <div style="position: absolute; top: -12px; right: 2rem; background: #BF5700; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
-                            Recommended
-                        </div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Ops Pro</h3>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Everything in Core
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Predictive forecasting
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Event mode
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> API access
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Priority support
-                            </li>
-                        </ul>
-                        <button class="btn-primary" style="width: 100%;" onclick="window.location.href='contact.html'">Schedule Demo</button>
-                    </div>
-                    
-                    <!-- Tier 3 -->
-                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
-                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
-                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
-                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Everything in Ops Pro
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Custom integrations
-                            </li>
-                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> SLAs & dedicated support
-                            </li>
-                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="color: #BF5700;">✓</span> Research data partnerships
-                            </li>
-                        </ul>
-                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
-                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Ops Pro</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For advanced operations</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">$4,500</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">per lot/month</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Everything in Core
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Predictive forecasting
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Event mode
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> API access
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Priority support
+                        </li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Schedule Demo</button>
+                </div>
+                
+                <!-- Tier 3 -->
+                <div style="background: #fff; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(191,87,0,0.15)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">For full campus deployment</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin: 1rem 0;">Custom</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem;">Volume discounts available</div>
+                    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Everything in Ops Pro
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Custom integrations
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> SLAs & dedicated support
+                        </li>
+                        <li style="padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: #BF5700;">✓</span> Research data partnerships
+                        </li>
+                    </ul>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Contact Sales</button>
                 </div>
             </div>
         </div>
@@ -723,6 +880,7 @@
                     <ul>
                         <li><a href="parkurban.html">ParkUrban</a></li>
                         <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
                         <li><a href="how-it-works.html">Solar Canopies</a></li>
                         <li><a href="data-layer.html">Data Layer</a></li>
                     </ul>
