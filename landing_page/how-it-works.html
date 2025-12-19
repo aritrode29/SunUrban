@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>How It Works - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section style="padding-top: 140px; padding-bottom: 6rem; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h1 id="typingHero" style="font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                    <span id="typingText"></span><span id="typingCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
+                </h1>
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; color: #666; max-width: 700px;">
+                    SunUrban transforms parking lots into clean energy power plants. We install solar canopies that generate power, provide shade, and create multiple revenue streams—all while reducing your energy costs.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase Overview -->
+    <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%); position: relative; overflow: hidden;">
+        <!-- Decorative background elements -->
+        <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(191, 87, 0, 0.05) 0%, transparent 70%); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(191, 87, 0, 0.03) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1;">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <!-- Title -->
+                <div style="text-align: center; margin-bottom: 5rem;">
+                    <h2 style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.2;">
+                        <span style="color: #1A1A1A;">Three phases.</span><br/>
+                        <span style="color: #BF5700;">One mission.</span>
+                    </h2>
+                </div>
+                
+                <!-- Phase Cards with Enhanced Design -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-bottom: 4rem; position: relative;" id="phasesContainer">
+                    <!-- Connection Lines -->
+                    <div style="position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, #BF5700 20%, #BF5700 80%, transparent 100%); transform: translateY(-50%); z-index: 0; opacity: 0.3;" id="phaseConnector"></div>
+                    
+                    <!-- Phase 1 -->
+                    <div class="phase-card-enhanced" data-phase="1" style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 3px solid transparent; position: relative; z-index: 1; opacity: 0; transform: translateY(30px);"
+                         onmouseover="this.style.transform='translateY(-12px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(191,87,0,0.2)'; this.style.borderColor='#BF5700';"
+                         onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+                        <!-- Phase Number Badge -->
+                        <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 15px rgba(191,87,0,0.3);">
+                            1
+                        </div>
+                        <div style="margin-bottom: 1.5rem; text-align: center; display: flex; justify-content: center; align-items: center;">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v0M9 13v0M9 17v0M15 13v0M15 17v0" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; text-align: center;">Phase 1</h3>
+                        <h4 style="font-size: 1.3rem; font-weight: 600; color: #BF5700; margin-bottom: 1.5rem; text-align: center;">Sell Power to Host</h4>
+                        <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 2rem; text-align: center;">
+                            Solar canopies power on-site facilities under long-term PPAs. Hosts save, you earn stable revenue.
+                        </p>
+                        <div style="background: rgba(191, 87, 0, 0.08); border-radius: 12px; padding: 1.5rem;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Fixed PPA</strong> (8–10¢/kWh)</span>
+                                </li>
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v0M9 13v0M9 17v0M15 13v0M15 17v0" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Host saves</strong> 25–35% on bills</span>
+                                </li>
+                                <li style="font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <path d="M12 6v6l4 2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Quickest</strong> to deploy</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-card-enhanced" data-phase="2" style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 3px solid transparent; position: relative; z-index: 1; opacity: 0; transform: translateY(30px);"
+                         onmouseover="this.style.transform='translateY(-12px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(191,87,0,0.2)'; this.style.borderColor='#BF5700';"
+                         onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+                        <!-- Phase Number Badge -->
+                        <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: linear-gradient(135deg, #F78E1E, #FFA500); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 15px rgba(247,142,30,0.3);">
+                            2
+                        </div>
+                        <div style="margin-bottom: 1.5rem; text-align: center; display: flex; justify-content: center; align-items: center;">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; text-align: center;">Phase 2</h3>
+                        <h4 style="font-size: 1.3rem; font-weight: 600; color: #BF5700; margin-bottom: 1.5rem; text-align: center;">Hybrid: Host + Grid</h4>
+                        <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 2rem; text-align: center;">
+                            Surplus energy flows to ERCOT. Batteries store and sell during peak hours for higher returns.
+                        </p>
+                        <div style="background: rgba(191, 87, 0, 0.08); border-radius: 12px; padding: 1.5rem;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Hybrid model:</strong> host + grid</span>
+                                </li>
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <rect x="2" y="7" width="20" height="10" rx="2" ry="2"/>
+                                            <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Battery</strong> stores low, sells high</span>
+                                </li>
+                                <li style="font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <polyline points="17 6 23 6 23 12" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>15–25%</strong> higher total ROI</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-card-enhanced" data-phase="3" style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 3px solid transparent; position: relative; z-index: 1; opacity: 0; transform: translateY(30px);"
+                         onmouseover="this.style.transform='translateY(-12px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(191,87,0,0.2)'; this.style.borderColor='#BF5700';"
+                         onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+                        <!-- Phase Number Badge -->
+                        <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: linear-gradient(135deg, #8B3A00, #BF5700); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 15px rgba(139,58,0,0.3);">
+                            3
+                        </div>
+                        <div style="margin-bottom: 1.5rem; text-align: center; display: flex; justify-content: center; align-items: center;">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; text-align: center;">Phase 3</h3>
+                        <h4 style="font-size: 1.3rem; font-weight: 600; color: #BF5700; margin-bottom: 1.5rem; text-align: center;">Virtual Power Plant</h4>
+                        <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 2rem; text-align: center;">
+                            Connected canopies act as a distributed network — trading flexibility and stabilizing the grid.
+                        </p>
+                        <div style="background: rgba(191, 87, 0, 0.08); border-radius: 12px; padding: 1.5rem;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Networked</strong> energy nodes</span>
+                                </li>
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <line x1="18" y1="20" x2="18" y2="10"/>
+                                            <line x1="12" y1="20" x2="12" y2="4"/>
+                                            <line x1="6" y1="20" x2="6" y2="14"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Real-time</strong> optimization</span>
+                                </li>
+                                <li style="margin-bottom: 1rem; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Multi-market</strong> revenue streams</span>
+                                </li>
+                                <li style="font-size: 1rem; color: #333; display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="flex-shrink: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                            <path d="M3 9h18M9 21V9" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                    <span><strong>Digital Twin</strong> Licensing</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Twin Section -->
+                <div style="background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); border-radius: 16px; padding: 3rem; margin-top: 3rem; color: #fff;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18M9 21V9" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">The Data Layer: Digital Twin Licensing</h3>
+                            <p style="font-size: 1rem; color: rgba(255,255,255,0.9); margin: 0;">
+                                Phase 3 includes monetizing valuable data streams
+                            </p>
+                        </div>
+                    </div>
+                    <p style="font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                        Every SunUrban installation generates valuable data. Our Digital Twin Licensing provides real-time urban data to researchers, city planners, retailers, and insurance companies.
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <path d="M12 1v6M12 17v6M23 12h-6M7 12H1" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Shading Maps</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Solar & thermal data</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Thermal Data</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Heat island analysis</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6 14h12" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">EV Charging</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Usage patterns</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Footfall</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Traffic analytics</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Power Profiles</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Generation data</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <rect x="3" y="8" width="18" height="14" rx="2"/>
+                                    <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 12h10M7 16h10" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Parking Data</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Spot availability & rates</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Parking Analytics</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Usage patterns & trends</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Weather Data</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Temperature & wind patterns</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 2v20M2 12h20" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Air Quality</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Pollution & CO2 metrics</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">System Uptime</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Reliability & performance</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Carbon Metrics</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Emission reduction data</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Revenue Analytics</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Pricing optimization insights</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Grid Integration</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Energy flow & stability</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px;">
+                            <div style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">Demand Forecasting</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Predictive analytics</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works - Detailed -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+                    From parking lot<br/>
+                    <span style="color: #BF5700;">to power plant.</span>
+                </h2>
+
+                <!-- Step 1 -->
+                <div style="margin-bottom: 5rem;">
+                    <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Step 1
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Site Assessment & Qualification
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                                We evaluate your parking lot for solar potential. Minimum 2 acres with good sun exposure qualifies. Our team conducts a free site assessment to determine eligibility and optimal canopy placement.
+                            </p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Free site assessment
+                                </li>
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> No upfront costs
+                                </li>
+                                <li style="font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Quick qualification process
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; border-radius: 12px; overflow: hidden;">
+                            <img src="site.jpg" alt="Site evaluation" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div style="margin-bottom: 5rem;">
+                    <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap-reverse;">
+                        <div style="flex: 1; min-width: 300px; border-radius: 12px; overflow: hidden;">
+                            <img src="Installation.webp" alt="Installation process" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Step 2
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Installation & Deployment
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                                We handle everything—permits, engineering, and installation. Solar canopies go up in weeks, not months. No disruption to your parking operations during installation.
+                            </p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Weeks, not months
+                                </li>
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Minimal disruption
+                                </li>
+                                <li style="font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Professional installation
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div style="margin-bottom: 5rem;">
+                    <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Step 3
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Power Generation & Revenue
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                                Your solar canopies start generating power immediately. You save 25–35% on energy costs while we earn revenue from power sales. As we scale, we add batteries and grid services for even higher returns.
+                            </p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Immediate savings
+                                </li>
+                                <li style="margin-bottom: 0.75rem; font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Multiple revenue streams
+                                </li>
+                                <li style="font-size: 1rem; color: #333;">
+                                    <span style="color: #BF5700; margin-right: 0.5rem;">✓</span> Scalable to VPP
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; border-radius: 12px; overflow: hidden;">
+                            <img src="power generation.webp" alt="Power generation" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 6rem 0; background: #1A1A1A; color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2;">
+                    Ready to transform your parking lot?
+                </h2>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #ccc; margin-bottom: 2.5rem;">
+                    See if your property qualifies for solar canopy installation. No upfront costs, immediate savings.
+                </p>
+                <button class="btn-primary large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Typing animation for hero text
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('typingText');
+            const typingCursor = document.getElementById('typingCursor');
+            
+            if (!typingText) return;
+            
+            // Original text structure
+            const fullText = [
+                { text: 'Solar canopies,', color: '#1A1A1A', isBreak: true },
+                { text: 'power networks.', color: '#BF5700', isBreak: true },
+                { text: "Here's how it works.", color: '#1A1A1A', isBreak: false }
+            ];
+            
+            let currentIndex = 0;
+            let currentCharIndex = 0;
+            let currentSegment = 0;
+            let isDeleting = false;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    // Animation complete, hide cursor after a delay
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (!isDeleting && currentCharIndex < targetText.length) {
+                    // Typing forward
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 80); // Typing speed
+                } else if (isDeleting && currentCharIndex > 0) {
+                    // Deleting (not used in this animation, but kept for flexibility)
+                    currentCharIndex--;
+                    const currentText = targetText.substring(0, currentCharIndex);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    setTimeout(typeText, 50);
+                } else {
+                    // Move to next segment
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 300); // Pause between segments
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                
+                // Add all completed segments
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                
+                // Add current segment being typed
+                if (currentSegment < fullText.length) {
+                    html += `<span style="color: ${color};">${text}</span>`;
+                    if (isBreak && text === fullText[currentSegment].text) {
+                        html += '<br/>';
+                    }
+                }
+                
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation after a short delay
+            setTimeout(() => {
+                typeText();
+            }, 500);
+        });
+        
+        // Animate phase cards when section comes into view
+        document.addEventListener('DOMContentLoaded', function() {
+            function animatePhaseCards() {
+                const cards = document.querySelectorAll('.phase-card-enhanced');
+                const connector = document.getElementById('phaseConnector');
+                
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    }, index * 200);
+                });
+                
+                // Animate connector line
+                if (connector) {
+                    setTimeout(() => {
+                        connector.style.opacity = '0.3';
+                        connector.style.transition = 'opacity 1s ease';
+                    }, 600);
+                }
+            }
+            
+            // Animate phase cards when section comes into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(animatePhaseCards, 300);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            const phasesContainer = document.getElementById('phasesContainer');
+            if (phasesContainer) {
+                observer.observe(phasesContainer);
+            }
+        });
+    </script>
+</body>
+</html>

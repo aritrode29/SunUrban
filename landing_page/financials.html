@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Financial Projections - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Financial Projections Section -->
+    <section id="financial-projections" class="financial-projections-section" style="padding-top: 120px;">
+        <div class="container">
+            <h2>Financial Projections</h2>
+            <p class="section-intro">10-year financial outlook based on optimized SunUrban configuration with all revenue streams.</p>
+            
+            <!-- Key Metrics Overview -->
+            <div class="financial-metrics-grid">
+                <div class="financial-metric-card">
+                    <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="metric-content">
+                        <div class="metric-value">7.8%</div>
+                        <div class="metric-label">IRR</div>
+                        <div class="metric-note">Internal Rate of Return</div>
+                    </div>
+                </div>
+                <div class="financial-metric-card">
+                    <div class="metric-icon"><i class="fas fa-clock"></i></div>
+                    <div class="metric-content">
+                        <div class="metric-value">10.9</div>
+                        <div class="metric-label">Years</div>
+                        <div class="metric-note">Payback Period</div>
+                    </div>
+                </div>
+                <div class="financial-metric-card">
+                    <div class="metric-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="metric-content">
+                        <div class="metric-value">$477k</div>
+                        <div class="metric-label">Annual Revenue</div>
+                        <div class="metric-note">Year 1 (all streams)</div>
+                    </div>
+                </div>
+                <div class="financial-metric-card">
+                    <div class="metric-icon"><i class="fas fa-building"></i></div>
+                    <div class="metric-content">
+                        <div class="metric-value">$4.71M</div>
+                        <div class="metric-label">Total CAPEX</div>
+                        <div class="metric-note">Initial investment</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CAPEX Breakdown Section -->
+            <div class="capex-breakdown-section">
+                <h3>CAPEX Breakdown</h3>
+                <div class="capex-viz-grid">
+                    <div class="viz-panel capex-pie-panel">
+                        <h4>CAPEX by Component</h4>
+                        <canvas id="capexBreakdownChart"></canvas>
+                    </div>
+                    
+                    <div class="viz-panel capex-bar-panel">
+                        <h4>CAPEX by Site</h4>
+                        <canvas id="capexBySiteChart"></canvas>
+                    </div>
+                    
+                    <div class="viz-panel capex-cost-panel">
+                        <h4>Cost per kW Analysis</h4>
+                        <canvas id="costPerKWChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- CAPEX Details Table -->
+                <div class="capex-details-table">
+                    <h4>Detailed CAPEX Breakdown</h4>
+                    <div class="table-container">
+                        <table class="capex-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Cost per Unit</th>
+                                    <th>South Congress</th>
+                                    <th>UT Campus</th>
+                                    <th>Austin Airport</th>
+                                    <th>Total (3 Sites)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="capexTableBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pricing Model Section -->
+            <div class="pricing-model-section" style="margin-top: 4rem;">
+                <h2>Revenue!</h2>
+
+                <!-- Pricing Visualizations -->
+                <div class="pricing-viz-grid">
+                    <!-- Phase Comparison Chart -->
+                    <div class="viz-panel comparison-panel">
+                        <h3>Revenue Comparison by Phase</h3>
+                        <canvas id="phaseComparisonChart"></canvas>
+                    </div>
+                    
+                    <!-- Revenue Streams Breakdown -->
+                    <div class="viz-panel streams-panel">
+                        <h3>Revenue Streams Breakdown</h3>
+                        <canvas id="revenueStreamsChart"></canvas>
+                    </div>
+                    
+                    <!-- Phase Evolution Timeline -->
+                    <div class="viz-panel timeline-panel">
+                        <h3>Phase Evolution Timeline</h3>
+                        <div class="timeline-container">
+                            <svg id="phaseTimeline" width="100%" height="400" viewBox="0 0 800 400">
+                                <!-- Phase 1 -->
+                                <g class="phase-node" data-phase="1">
+                                    <rect x="50" y="150" width="180" height="100" rx="10" fill="#BF5700" opacity="0.9"/>
+                                    <text x="140" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 1</text>
+                                    <text x="140" y="205" text-anchor="middle" font-size="14" fill="white">Sell to Host</text>
+                                    <text x="140" y="230" text-anchor="middle" font-size="12" fill="white">$243k/year</text>
+                                    <circle cx="140" cy="120" r="25" fill="#BF5700" opacity="0.9"/>
+                                    <text x="140" y="128" text-anchor="middle" font-size="20" fill="white">🏢</text>
+                                </g>
+                                
+                                <!-- Phase 2 -->
+                                <g class="phase-node" data-phase="2">
+                                    <rect x="300" y="150" width="180" height="100" rx="10" fill="#F78E1E" opacity="0.9"/>
+                                    <text x="390" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 2</text>
+                                    <text x="390" y="205" text-anchor="middle" font-size="14" fill="white">Hybrid</text>
+                                    <text x="390" y="230" text-anchor="middle" font-size="12" fill="white">$322k/year</text>
+                                    <circle cx="390" cy="120" r="25" fill="#F78E1E" opacity="0.9"/>
+                                    <text x="390" y="128" text-anchor="middle" font-size="20" fill="white">⚡</text>
+                                </g>
+                                
+                                <!-- Phase 3 -->
+                                <g class="phase-node" data-phase="3">
+                                    <rect x="550" y="150" width="180" height="100" rx="10" fill="#8B3A00" opacity="0.9"/>
+                                    <text x="640" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 3</text>
+                                    <text x="640" y="205" text-anchor="middle" font-size="14" fill="white">VPP</text>
+                                    <text x="640" y="230" text-anchor="middle" font-size="12" fill="white">$477k/year</text>
+                                    <circle cx="640" cy="120" r="25" fill="#8B3A00" opacity="0.9"/>
+                                    <text x="640" y="128" text-anchor="middle" font-size="20" fill="white">🌐</text>
+                                </g>
+                                
+                                <!-- Connection Arrows -->
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                        <polygon points="0 0, 10 3, 0 6" fill="#BF5700"/>
+                                    </marker>
+                                </defs>
+                                <line x1="230" y1="200" x2="300" y2="200" stroke="#BF5700" stroke-width="4" marker-end="url(#arrowhead)"/>
+                                <line x1="480" y1="200" x2="550" y2="200" stroke="#BF5700" stroke-width="4" marker-end="url(#arrowhead)"/>
+                                
+                                <!-- Revenue Growth Line -->
+                                <polyline points="140,250 390,250 640,250" fill="none" stroke="#4CAF50" stroke-width="3" stroke-dasharray="5,5" opacity="0.6"/>
+                                <text x="400" y="280" text-anchor="middle" font-size="14" fill="#4CAF50" font-weight="bold">Revenue Growth</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Cost Breakdown -->
+                    <div class="viz-panel cost-panel">
+                        <h3>Cost Structure Breakdown</h3>
+                        <canvas id="costBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Revenue Projections Chart -->
+            <div class="projection-viz-grid">
+                <div class="viz-panel revenue-projection-panel">
+                    <h3>10-Year Revenue Projection</h3>
+                    <canvas id="revenueProjectionChart"></canvas>
+                </div>
+                
+                <div class="viz-panel cashflow-panel">
+                    <h3>Annual Cash Flow</h3>
+                    <canvas id="cashflowChart"></canvas>
+                </div>
+                
+                <div class="viz-panel revenue-breakdown-panel">
+                    <h3>Revenue Streams Breakdown</h3>
+                    <canvas id="revenueBreakdownChart"></canvas>
+                </div>
+                
+                <div class="viz-panel cumulative-panel">
+                    <h3>Cumulative Cash Flow</h3>
+                    <canvas id="cumulativeCashflowChart"></canvas>
+                </div>
+                
+                <div class="viz-panel revenue-data-type-panel">
+                    <h3>Revenue by Data Type</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                
+                <div class="viz-panel revenue-segment-panel">
+                    <h3>Revenue by Customer Segment</h3>
+                    <canvas id="segmentsChart"></canvas>
+                </div>
+                
+                <div class="viz-panel revenue-growth-panel">
+                    <h3>Revenue Growth Trend</h3>
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Financial Summary Table -->
+            <div class="financial-summary-table">
+                <h3>10-Year Financial Summary</h3>
+                <div class="table-container">
+                    <table class="financial-table">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Revenue</th>
+                                <th>OPEX</th>
+                                <th>Net Cash Flow</th>
+                                <th>Cumulative Cash Flow</th>
+                                <th>ROI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Assumptions -->
+            <div class="assumptions-panel">
+                <h3>Key Assumptions</h3>
+                <div class="assumptions-grid">
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Revenue Growth:</strong> 2% annual increase (inflation + efficiency gains)
+                        </div>
+                    </div>
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>OPEX:</strong> $43k/year (1.5% of CAPEX) with 2% annual inflation
+                        </div>
+                    </div>
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>System Degradation:</strong> 0.5% annual solar output decline
+                        </div>
+                    </div>
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Discount Rate:</strong> 7% (WACC for infrastructure projects)
+                        </div>
+                    </div>
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Revenue Streams:</strong> All streams active from Year 1
+                        </div>
+                    </div>
+                    <div class="assumption-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>No ITC:</strong> Analysis assumes no Investment Tax Credit
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+    // Financial Projections Data
+    document.addEventListener('DOMContentLoaded', function() {
+        const initialCapex = 4710000; // $4.71M
+        const initialRevenue = 477000; // $477k/year
+        const initialOpex = 43000; // $43k/year
+        const revenueGrowth = 0.02; // 2% annual
+        const opexInflation = 0.02; // 2% annual
+        const degradation = 0.005; // 0.5% annual
+        const discountRate = 0.07; // 7%
+        
+        // Calculate 10-year projections
+        const projections = [];
+        let cumulativeCashFlow = -initialCapex;
+        
+        for (let year = 1; year <= 10; year++) {
+            const revenue = initialRevenue * Math.pow(1 + revenueGrowth, year - 1) * Math.pow(1 - degradation, year - 1);
+            const opex = initialOpex * Math.pow(1 + opexInflation, year - 1);
+            const netCashFlow = revenue - opex;
+            cumulativeCashFlow += netCashFlow;
+            const roi = ((cumulativeCashFlow + initialCapex) / initialCapex) * 100;
+            
+            projections.push({
+                year,
+                revenue,
+                opex,
+                netCashFlow,
+                cumulativeCashFlow,
+                roi
+            });
+        }
+        
+        // Revenue Projection Chart
+        const revenueCtx = document.getElementById('revenueProjectionChart');
+        if (revenueCtx) {
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: projections.map(p => 'Year ' + p.year),
+                    datasets: [{
+                        label: 'Revenue',
+                        data: projections.map(p => p.revenue / 1000),
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'OPEX',
+                        data: projections.map(p => p.opex / 1000),
+                        borderColor: '#FF6B6B',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(0) + 'k';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount ($k)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Cash Flow Chart
+        const cashflowCtx = document.getElementById('cashflowChart');
+        if (cashflowCtx) {
+            new Chart(cashflowCtx, {
+                type: 'bar',
+                data: {
+                    labels: projections.map(p => 'Year ' + p.year),
+                    datasets: [{
+                        label: 'Net Cash Flow',
+                        data: projections.map(p => p.netCashFlow / 1000),
+                        backgroundColor: projections.map(p => p.netCashFlow >= 0 ? '#4CAF50' : '#FF6B6B'),
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toFixed(0) + 'k';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Cash Flow ($k)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Revenue Breakdown Chart
+        const breakdownCtx = document.getElementById('revenueBreakdownChart');
+        if (breakdownCtx) {
+            new Chart(breakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Base PPA', 'Platform Fees', 'Grid Services', 'EV Charging', 'REC Sales', 'Digital Twin'],
+                    datasets: [{
+                        data: [243, 19, 60, 50, 30, 75],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D',
+                            '#6C5CE7'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': $' + value + 'k (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Revenue by Data Type Chart
+        const revenueDataCtx = document.getElementById('revenueChart');
+        if (revenueDataCtx) {
+            new Chart(revenueDataCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Shading Maps', 'Thermal Data', 'EV Charging', 'Footfall', 'Power Profiles', 'Uptime'],
+                    datasets: [{
+                        label: 'Revenue ($k)',
+                        data: [7.5, 7.5, 7.5, 12.5, 7.5, 7.5],
+                        backgroundColor: [
+                            '#FFA500',
+                            '#FF6B6B',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D',
+                            '#A8E6CF'
+                        ],
+                        borderColor: '#BF5700',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y + 'k/year';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' },
+                            title: {
+                                display: true,
+                                text: 'Revenue ($k/year)'
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Revenue by Customer Segment Chart
+        const segmentsCtx = document.getElementById('segmentsChart');
+        if (segmentsCtx) {
+            new Chart(segmentsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Urban Analytics', 'Retail Operators', 'Insurance', 'Research', 'Fleet'],
+                    datasets: [{
+                        data: [20, 12.5, 7.5, 7.5, 7.5],
+                        backgroundColor: [
+                            '#6C5CE7',
+                            '#A29BFE',
+                            '#74B9FF',
+                            '#55EFC4',
+                            '#81ECEC'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { padding: 15, usePointStyle: true }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': $' + context.parsed + 'k/year';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Revenue Growth Trend Chart
+        const growthCtx = document.getElementById('growthChart');
+        if (growthCtx) {
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                    datasets: [{
+                        label: 'Total Data Revenue',
+                        data: [75, 225, 450, 750, 1200],
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: '#BF5700',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y + 'k/year';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' },
+                            title: {
+                                display: true,
+                                text: 'Revenue ($k/year)'
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Pricing Model Charts
+        // Phase Comparison Chart
+        const phaseComparisonCtx = document.getElementById('phaseComparisonChart');
+        if (phaseComparisonCtx) {
+            new Chart(phaseComparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Phase 1', 'Phase 2', 'Phase 3'],
+                    datasets: [{
+                        label: 'Annual Revenue ($k)',
+                        data: [243, 322, 477],
+                        backgroundColor: ['#BF5700', '#F78E1E', '#8B3A00'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y + 'k/year';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Revenue ($k/year)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Revenue Streams Breakdown Chart
+        const streamsCtx = document.getElementById('revenueStreamsChart');
+        if (streamsCtx) {
+            new Chart(streamsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Base PPA', 'Platform Fees', 'Grid Services', 'EV Charging', 'REC Sales', 'Digital Twin'],
+                    datasets: [{
+                        data: [243, 19, 60, 50, 30, 75],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D',
+                            '#6C5CE7'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': $' + value + 'k (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Cost Breakdown Chart
+        const costCtx = document.getElementById('costBreakdownChart');
+        if (costCtx) {
+            new Chart(costCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Solar', 'Battery', 'Inverter', 'Electrical', 'Installation', 'Engineering', 'Contingency'],
+                    datasets: [{
+                        label: 'Cost ($k)',
+                        data: [2076, 865, 389, 346, 433, 173, 428],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#FFA500',
+                            '#FF6B6B',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.x + 'k';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cost ($k)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Animate timeline on scroll
+        const timelineNodes = document.querySelectorAll('.phase-node');
+        if (timelineNodes.length > 0) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'scale(1)';
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            timelineNodes.forEach(node => {
+                node.style.opacity = '0.5';
+                node.style.transform = 'scale(0.9)';
+                node.style.transition = 'all 0.5s ease';
+                observer.observe(node);
+            });
+        }
+        
+        // Cumulative Cash Flow Chart
+        const cumulativeCtx = document.getElementById('cumulativeCashflowChart');
+        if (cumulativeCtx) {
+            new Chart(cumulativeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 0', ...projections.map(p => 'Year ' + p.year)],
+                    datasets: [{
+                        label: 'Cumulative Cash Flow',
+                        data: [-initialCapex / 1000, ...projections.map(p => p.cumulativeCashFlow / 1000)],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toFixed(0) + 'k';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Cumulative Cash Flow ($k)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Populate Financial Table
+        const tableBody = document.getElementById('financialTableBody');
+        if (tableBody) {
+            tableBody.innerHTML = projections.map(p => `
+                <tr>
+                    <td>${p.year}</td>
+                    <td>$${(p.revenue / 1000).toFixed(0)}k</td>
+                    <td>$${(p.opex / 1000).toFixed(0)}k</td>
+                    <td>$${(p.netCashFlow / 1000).toFixed(0)}k</td>
+                    <td>$${(p.cumulativeCashFlow / 1000).toFixed(0)}k</td>
+                    <td>${p.roi.toFixed(1)}%</td>
+                </tr>
+            `).join('');
+        }
+        
+        // CAPEX Breakdown Data
+        const capexData = {
+            siteA: {
+                name: 'South Congress',
+                solar_kw: 550,
+                battery_kw: 275,
+                battery_kwh: 138,
+                solar_pv: 550 * 1200,
+                battery: (275 * 800) + (138 * 400),
+                inverter: (550 + 275) * 150,
+                electrical: 550 * 200,
+                installation: 550 * 250,
+                engineering: 550 * 100,
+                contingency: 0
+            },
+            siteB: {
+                name: 'UT Campus',
+                solar_kw: 380,
+                battery_kw: 190,
+                battery_kwh: 95,
+                solar_pv: 380 * 1200,
+                battery: (190 * 800) + (95 * 400),
+                inverter: (380 + 190) * 150,
+                electrical: 380 * 200,
+                installation: 380 * 250,
+                engineering: 380 * 100,
+                contingency: 0
+            },
+            siteC: {
+                name: 'Austin Airport',
+                solar_kw: 800,
+                battery_kw: 400,
+                battery_kwh: 200,
+                solar_pv: 800 * 1200,
+                battery: (400 * 800) + (200 * 400),
+                inverter: (800 + 400) * 150,
+                electrical: 800 * 200,
+                installation: 800 * 250,
+                engineering: 800 * 100,
+                contingency: 0
+            }
+        };
+        
+        // Calculate subtotals and contingency for each site
+        Object.keys(capexData).forEach(site => {
+            const s = capexData[site];
+            s.subtotal = s.solar_pv + s.battery + s.inverter + s.electrical + s.installation + s.engineering;
+            s.contingency = s.subtotal * 0.10;
+            s.total_capex = s.subtotal + s.contingency;
+            s.cost_per_kw = s.total_capex / s.solar_kw;
+        });
+        
+        // CAPEX Breakdown Chart (Pie)
+        const capexBreakdownCtx = document.getElementById('capexBreakdownChart');
+        if (capexBreakdownCtx) {
+            const totalSolar = capexData.siteA.solar_pv + capexData.siteB.solar_pv + capexData.siteC.solar_pv;
+            const totalBattery = capexData.siteA.battery + capexData.siteB.battery + capexData.siteC.battery;
+            const totalInverter = capexData.siteA.inverter + capexData.siteB.inverter + capexData.siteC.inverter;
+            const totalElectrical = capexData.siteA.electrical + capexData.siteB.electrical + capexData.siteC.electrical;
+            const totalInstallation = capexData.siteA.installation + capexData.siteB.installation + capexData.siteC.installation;
+            const totalEngineering = capexData.siteA.engineering + capexData.siteB.engineering + capexData.siteC.engineering;
+            const totalContingency = capexData.siteA.contingency + capexData.siteB.contingency + capexData.siteC.contingency;
+            
+            new Chart(capexBreakdownCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Solar PV', 'Battery', 'Inverter', 'Electrical', 'Installation', 'Engineering', 'Contingency'],
+                    datasets: [{
+                        data: [
+                            totalSolar / 1000,
+                            totalBattery / 1000,
+                            totalInverter / 1000,
+                            totalElectrical / 1000,
+                            totalInstallation / 1000,
+                            totalEngineering / 1000,
+                            totalContingency / 1000
+                        ],
+                        backgroundColor: [
+                            '#BF5700',
+                            '#F78E1E',
+                            '#FFA500',
+                            '#FF6B6B',
+                            '#4ECDC4',
+                            '#95E1D3',
+                            '#FFE66D'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': $' + value.toFixed(0) + 'k (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // CAPEX by Site Chart
+        const capexBySiteCtx = document.getElementById('capexBySiteChart');
+        if (capexBySiteCtx) {
+            new Chart(capexBySiteCtx, {
+                type: 'bar',
+                data: {
+                    labels: [capexData.siteA.name, capexData.siteB.name, capexData.siteC.name],
+                    datasets: [{
+                        label: 'Total CAPEX',
+                        data: [
+                            capexData.siteA.total_capex / 1000,
+                            capexData.siteB.total_capex / 1000,
+                            capexData.siteC.total_capex / 1000
+                        ],
+                        backgroundColor: ['#BF5700', '#F78E1E', '#8B3A00'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toFixed(0) + 'k';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'CAPEX ($k)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Cost per kW Chart
+        const costPerKWCtx = document.getElementById('costPerKWChart');
+        if (costPerKWCtx) {
+            new Chart(costPerKWCtx, {
+                type: 'bar',
+                data: {
+                    labels: [capexData.siteA.name, capexData.siteB.name, capexData.siteC.name, 'Industry Avg'],
+                    datasets: [{
+                        label: 'Cost per kW',
+                        data: [
+                            capexData.siteA.cost_per_kw,
+                            capexData.siteB.cost_per_kw,
+                            capexData.siteC.cost_per_kw,
+                            1400
+                        ],
+                        backgroundColor: ['#BF5700', '#F78E1E', '#8B3A00', '#95E1D3'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toFixed(0) + '/kW';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cost ($/kW)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Populate CAPEX Table
+        const capexTableBody = document.getElementById('capexTableBody');
+        if (capexTableBody) {
+            const components = [
+                { name: 'Solar PV', unit: '$1,200/kW', key: 'solar_pv' },
+                { name: 'Battery', unit: '$800/kW + $400/kWh', key: 'battery' },
+                { name: 'Inverter', unit: '$150/kW', key: 'inverter' },
+                { name: 'Electrical', unit: '$200/kW', key: 'electrical' },
+                { name: 'Installation', unit: '$250/kW', key: 'installation' },
+                { name: 'Engineering', unit: '$100/kW', key: 'engineering' },
+                { name: 'Contingency', unit: '10%', key: 'contingency' },
+                { name: 'Total CAPEX', unit: '', key: 'total_capex', isTotal: true }
+            ];
+            
+            capexTableBody.innerHTML = components.map(comp => {
+                const siteA = capexData.siteA[comp.key] || 0;
+                const siteB = capexData.siteB[comp.key] || 0;
+                const siteC = capexData.siteC[comp.key] || 0;
+                const total = siteA + siteB + siteC;
+                
+                const rowClass = comp.isTotal ? 'total-row' : '';
+                return `
+                    <tr class="${rowClass}">
+                        <td><strong>${comp.name}</strong></td>
+                        <td>${comp.unit}</td>
+                        <td>$${(siteA / 1000).toFixed(2)}k<br><small>${capexData.siteA.name}</small></td>
+                        <td>$${(siteB / 1000).toFixed(2)}k<br><small>${capexData.siteB.name}</small></td>
+                        <td>$${(siteC / 1000).toFixed(2)}k<br><small>${capexData.siteC.name}</small></td>
+                        <td><strong>$${(total / 1000).toFixed(2)}k</strong></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

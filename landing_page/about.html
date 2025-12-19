@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>About the Team - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Our Story Section -->
+    <section style="padding-top: 120px; padding-bottom: 8rem; background: #fff; min-height: 100vh;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Dramatic Title -->
+                <div style="margin-bottom: 6rem;">
+                    <h1 id="ourStoryTitle" style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.03em;">
+                        <span id="ourStoryText"></span><span id="ourStoryCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
+                    </h1>
+                </div>
+
+                <!-- Story Content - Large Typography with Key Words Highlighted -->
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        We've all done this — most days we fight for the closest parking spot, but on a <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">hot</span> summer day, we'll go out of our way to park in the one spot with a sliver of <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">tree</span> shade.
+                    </p>
+                </div>
+
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        A few summers ago here in <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">Austin,</span> I was leaving an H-E-B when I saw a middle-aged man <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">collapse</span> in the parking lot, strike his head on the concrete, and begin bleeding as his wife called out for help.
+                    </p>
+                    <p style="margin-bottom: 3rem;">
+                        From what appeared to be <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">heat</span> exhaustion, the moment was alarming — and it stuck with me — because <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">extreme</span> heat isn't just uncomfortable, it's dangerous, and heat-related deaths are already the leading cause of climate-related deaths.
+                    </p>
+                </div>
+
+                <!-- Final Statement - Highlighted -->
+                <div style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.2; color: var(--primary-orange); font-weight: 700; margin-top: 8rem; padding-top: 4rem; border-top: 3px solid var(--primary-orange);">
+                    <div style="margin-bottom: 2rem;">
+                        <span style="display: block;">Sun</span>
+                        <span style="display: block;">Urban</span>
+                        <span style="display: block; font-size: clamp(1.8rem, 3.5vw, 3rem); margin-top: 1rem;">was inspired by that reality.</span>
+                    </div>
+                    <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); color: #1A1A1A; font-weight: 400; margin-top: 3rem; line-height: 1.4;">
+                        <p>
+                            While we solve real energy problems, <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">human safety</span> and <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">livability</span> were a primary motivation behind the idea.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section style="padding-bottom: 4rem; background: #F5F5F5;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); background: #000; cursor: pointer;" onclick="window.open('https://www.youtube.com/watch?v=hLRng7t-bzc', '_blank')">
+                    <!-- YouTube Thumbnail -->
+                    <img 
+                        src="https://img.youtube.com/vi/hLRng7t-bzc/maxresdefault.jpg" 
+                        alt="SunUrban Video Thumbnail" 
+                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;"
+                        onerror="this.src='https://img.youtube.com/vi/hLRng7t-bzc/hqdefault.jpg'"
+                    />
+                    <!-- Play Button Overlay -->
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: var(--primary-orange); opacity: 0.9; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                        <i class="fas fa-play" style="color: white; font-size: 32px; margin-left: 4px;"></i>
+                    </div>
+                    <!-- Hover Effect -->
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); transition: all 0.3s ease;" 
+                         onmouseover="this.style.background='rgba(0,0,0,0.1)'" 
+                         onmouseout="this.style.background='rgba(0,0,0,0.3)'">
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="https://www.youtube.com/watch?v=hLRng7t-bzc" target="_blank" rel="noopener noreferrer" style="color: var(--primary-orange); text-decoration: none; font-weight: 500;">
+                        Click to watch on YouTube <i class="fas fa-external-link-alt" style="margin-left: 5px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Team Section -->
+    <section class="about-team" style="padding-top: 6rem; padding-bottom: 8rem; background: #fff;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 100%; margin: 0 auto;">
+                <!-- Dramatic Title - Matching Our Story Style -->
+                <div style="margin-bottom: 5rem;">
+                    <h1 id="meetTeamTitle" style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.03em;">
+                        <span id="meetTeamText"></span><span id="meetTeamCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
+                    </h1>
+                </div>
+                
+                <!-- Team Grid - Enhanced Layout -->
+                <div class="team-grid-enhanced" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-top: 4rem;">
+                    <!-- Kendall Baker -->
+                    <div class="team-card-enhanced" style="background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid transparent;" 
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='var(--primary-orange)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="position: relative; width: 100%; padding-top: 75%; background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%); overflow: hidden;">
+                            <img src="Kendall_portrait.jpg" alt="Portrait of Kendall Baker" 
+                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <h3 style="font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                                    Kendall Baker
+                                </h3>
+                                <p style="font-size: clamp(0.9rem, 1.2vw, 1rem); color: var(--primary-orange); font-weight: 600; margin-bottom: 0.25rem;">
+                                    Co-founder and CEO
+                                </p>
+                                <p style="font-size: clamp(0.8rem, 1vw, 0.9rem); color: #666; line-height: 1.5;">
+                                    MA Energy and Earth Resources, Jackson School of Geosciences, UT
+                                </p>
+                            </div>
+                            <p style="font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: #333; line-height: 1.7; margin-top: 1rem;">
+                                Kendall is an Energy and Earth Resources Master's student at UT. Her research focuses on the <span style="color: var(--primary-orange); font-weight: 600;">climate movement</span>, <span style="color: var(--primary-orange); font-weight: 600;">decarbonization</span>, clean energy, and emissions reduction. She's passionate about business development and market research, building a career at the intersection of net‑zero solutions and sustainable innovation.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Aritro De -->
+                    <div class="team-card-enhanced" style="background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid transparent;" 
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='var(--primary-orange)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="position: relative; width: 100%; padding-top: 75%; background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%); overflow: hidden;">
+                            <img src="Aritro De_profile.jpg" alt="Portrait of Aritro De" 
+                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <h3 style="font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                                    Aritro De
+                                </h3>
+                                <p style="font-size: clamp(0.9rem, 1.2vw, 1rem); color: var(--primary-orange); font-weight: 600; margin-bottom: 0.25rem;">
+                                    Co-founder and CSO
+                                </p>
+                                <p style="font-size: clamp(0.8rem, 1vw, 0.9rem); color: #666; line-height: 1.5;">
+                                    MS Sustainable Design, School of Architecture, UT
+                                </p>
+                            </div>
+                            <p style="font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: #333; line-height: 1.7; margin-top: 1rem;">
+                                Aritro is trained as an architect with a focus on <span style="color: var(--primary-orange); font-weight: 600;">energy efficiency</span> and <span style="color: var(--primary-orange); font-weight: 600;">decarbonization</span> in the built environment. He has experience in policy analysis, energy optimization, and indoor environment quality research through projects including USAID and GIZ India. He is currently pursuing an MS in Sustainable Design from UT.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Jaehwan Cha -->
+                    <div class="team-card-enhanced" style="background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid transparent;" 
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='var(--primary-orange)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="position: relative; width: 100%; padding-top: 75%; background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%); overflow: hidden;">
+                            <img src="Jae_headshot.jpg" alt="Portrait of Jaehwan Cha" 
+                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <h3 style="font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                                    Jaehwan Cha
+                                </h3>
+                                <p style="font-size: clamp(0.9rem, 1.2vw, 1rem); color: var(--primary-orange); font-weight: 600; margin-bottom: 0.25rem;">
+                                    CTO
+                                </p>
+                                <p style="font-size: clamp(0.8rem, 1vw, 0.9rem); color: #666; line-height: 1.5;">
+                                    Ph.D. Student, Department of Civil, Architectural, and Environmental Engineering, UT Austin
+                                </p>
+                            </div>
+                            <p style="font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: #333; line-height: 1.7; margin-top: 1rem;">
+                                Jaehwan is a Ph.D. student specializing in Building Energy and Environments. As a researcher at Fix Lab, he focuses on advanced <span style="color: var(--primary-orange); font-weight: 600;">HVAC systems</span>, <span style="color: var(--primary-orange); font-weight: 600;">thermodynamic cycles</span>, and energy simulation. With expertise in thermal management and system optimization, he develops innovative engineering solutions to enhance energy efficiency and decarbonize the built environment. As CTO, he leads the technical strategy for system integration and performance modeling.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tejoo -->
+                    <div class="team-card-enhanced" style="background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 2px solid transparent;" 
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='var(--primary-orange)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="position: relative; width: 100%; padding-top: 75%; background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%); overflow: hidden;">
+                            <img src="Tejoo_headshot.jpg" alt="Portrait of Tejoo" 
+                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <h3 style="font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                                    Tejoo
+                                </h3>
+                                <p style="font-size: clamp(0.9rem, 1.2vw, 1rem); color: var(--primary-orange); font-weight: 600; margin-bottom: 0.25rem;">
+                                    Technical Lead
+                                </p>
+                                <p style="font-size: clamp(0.8rem, 1vw, 0.9rem); color: #666; line-height: 1.5;">
+                                    Electrical and Computer Engineering Student, UT Austin
+                                </p>
+                            </div>
+                            <p style="font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: #333; line-height: 1.7; margin-top: 1rem;">
+                                Tejoo is an Electrical and Computer Engineering student specializing in <span style="color: var(--primary-orange); font-weight: 600;">Power and Renewable Energy Systems</span>. At Fix Lab, she researches energy efficiency in large-scale computing systems. With experience in computational energy analysis, <span style="color: var(--primary-orange); font-weight: 600;">circuit design</span>, and end-to-end electrical system design, including load studies, voltage-drop analysis, and solar power integration, Tejoo is passionate about building sustainable, reliable power systems.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Typing animation for "Our Story"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('ourStoryText');
+            const typingCursor = document.getElementById('ourStoryCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: 'Our', color: '#1A1A1A', isBreak: true },
+                { text: 'Story', color: '#BF5700', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 100);
+                } else {
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 300);
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                html += `<span style="color: ${color};">${text}</span>`;
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation after a short delay
+            setTimeout(typeText, 500);
+        });
+        
+        // Typing animation for "Meet the Team"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('meetTeamText');
+            const typingCursor = document.getElementById('meetTeamCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: 'Meet the', color: '#1A1A1A', isBreak: true },
+                { text: 'Team', color: '#BF5700', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 100);
+                } else {
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 300);
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                html += `<span style="color: ${color};">${text}</span>`;
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation when section comes into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(typeText, 500);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            const titleElement = document.getElementById('meetTeamTitle');
+            if (titleElement) {
+                observer.observe(titleElement);
+            }
+        });
+    </script>
+</body>
+</html>
+

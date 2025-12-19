@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Contact Us - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section style="padding-top: 140px; padding-bottom: 6rem; background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); color: #fff; position: relative; overflow: hidden;">
+        <!-- Decorative background elements -->
+        <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1;">
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <h1 id="buildTogetherTitle" style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; margin-bottom: 2rem; line-height: 1.1; letter-spacing: -0.02em;">
+                    <span id="buildTogetherText"></span><span id="buildTogetherCursor" style="border-right: 3px solid white; animation: blink 1s infinite;">|</span>
+                </h1>
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; opacity: 0.95; margin-bottom: 2rem;">
+                    Whether you're a property owner, investor, or partner, we'd love to hear from you. Let's transform parking lots into power plants.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Options Section -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+                <!-- General Inquiry Card -->
+                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 2px solid transparent;" 
+                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                    <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 10h8M8 14h6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">General Inquiry</h3>
+                    <p style="font-size: 1.05rem; color: #666; margin-bottom: 2rem; line-height: 1.7;">
+                        Have questions? Want to learn more? Send us a message.
+                    </p>
+                    <button class="btn-primary" onclick="scrollToForm('generalForm')" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Contact Us</button>
+                </div>
+
+                <!-- Host Parking Lot Card -->
+                <div style="background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); border-radius: 20px; padding: 3rem; text-align: center; color: #fff; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid transparent;" 
+                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.4)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(191,87,0,0.2)'">
+                    <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
+                            <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v0M9 13v0M9 17v0M15 13v0M15 17v0" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem;">Host Your Parking Lot</h3>
+                    <p style="font-size: 1.05rem; opacity: 0.95; margin-bottom: 2rem; line-height: 1.7;">
+                        Transform your parking lot into a clean energy source. No upfront costs.
+                    </p>
+                    <button class="btn-primary" onclick="scrollToForm('hostForm')" style="width: 100%; padding: 1rem; font-size: 1.1rem; background: #fff; color: #BF5700; border: none; font-weight: 600;">Get Started</button>
+                </div>
+
+                <!-- Early Access Card -->
+                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 2px solid transparent;" 
+                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                    <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Get Early Access</h3>
+                    <p style="font-size: 1.05rem; color: #666; margin-bottom: 2rem; line-height: 1.7;">
+                        Join our waitlist to be notified when we launch in your area.
+                    </p>
+                    <button class="btn-primary" onclick="scrollToForm('earlyAccessForm')" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Join Waitlist</button>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div style="background: #F5F5F5; border-radius: 16px; padding: 3rem; margin-bottom: 4rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div>
+                        <div style="font-size: 2rem; color: #BF5700; margin-bottom: 0.75rem;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Email</h4>
+                        <a href="mailto:info@solarcanopy.com" style="color: #666; text-decoration: none; font-size: 1rem;">
+                            info@solarcanopy.com
+                        </a>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: #BF5700; margin-bottom: 0.75rem;">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Location</h4>
+                        <p style="color: #666; font-size: 1rem; margin: 0;">
+                            Austin, Texas
+                        </p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: #BF5700; margin-bottom: 0.75rem;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Response Time</h4>
+                        <p style="color: #666; font-size: 1rem; margin: 0;">
+                            We typically respond within 24 hours
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Contact Form -->
+            <div id="generalForm" style="background: #fff; border-radius: 16px; padding: 3rem; margin-bottom: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">
+                    Send Us a Message
+                </h2>
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    Have a question or want to learn more? Fill out the form below and we'll get back to you.
+                </p>
+                
+                <form id="contactForm" onsubmit="handleContactSubmit(event)" style="max-width: 700px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="contactName" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Full Name *</label>
+                            <input type="text" id="contactName" name="name" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Email Address *</label>
+                            <input type="email" id="contactEmail" name="email" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="contactSubject" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Subject</label>
+                        <input type="text" id="contactSubject" name="subject" 
+                               style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                               onfocus="this.style.borderColor='#BF5700'" 
+                               onblur="this.style.borderColor='#E0E0E0'">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="contactMessage" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Message *</label>
+                        <textarea id="contactMessage" name="message" rows="6" required 
+                                  style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical; transition: border-color 0.3s ease;"
+                                  onfocus="this.style.borderColor='#BF5700'" 
+                                  onblur="this.style.borderColor='#E0E0E0'"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary large" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Host Parking Lot Form -->
+            <div id="hostForm" style="background: #fff; border-radius: 16px; padding: 3rem; margin-bottom: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">
+                    Host Your Parking Lot
+                </h2>
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    Transform your parking lot into a clean energy source. No upfront costs. Fill out the form below to get started.
+                </p>
+                
+                <form id="hostFormElement" onsubmit="handleHostSubmit(event)" style="max-width: 700px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="hostName" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Full Name *</label>
+                            <input type="text" id="hostName" name="name" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                        <div class="form-group">
+                            <label for="hostEmail" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Email Address *</label>
+                            <input type="email" id="hostEmail" name="email" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="hostPhone" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Phone Number</label>
+                            <input type="tel" id="hostPhone" name="phone" 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                        <div class="form-group">
+                            <label for="hostParkingSize" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Parking Lot Size (acres)</label>
+                            <input type="number" id="hostParkingSize" name="parkingSize" min="0" step="0.1" placeholder="e.g., 2.5"
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="hostProperty" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Property Address *</label>
+                        <input type="text" id="hostProperty" name="property" required 
+                               style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                               onfocus="this.style.borderColor='#BF5700'" 
+                               onblur="this.style.borderColor='#E0E0E0'">
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="hostMonthlyBill" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Current Monthly Power Bill ($)</label>
+                            <input type="number" id="hostMonthlyBill" name="monthlyBill" min="0" step="0.01" placeholder="e.g., 5000"
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="hostMessage" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Additional Information</label>
+                        <textarea id="hostMessage" name="message" rows="4" placeholder="Tell us about your property and goals..."
+                                  style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical; transition: border-color 0.3s ease;"
+                                  onfocus="this.style.borderColor='#BF5700'" 
+                                  onblur="this.style.borderColor='#E0E0E0'"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary large" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        Submit Request
+                    </button>
+                </form>
+            </div>
+
+            <!-- Early Access Form -->
+            <div id="earlyAccessForm" style="background: #fff; border-radius: 16px; padding: 3rem; margin-bottom: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">
+                    Get Early Access
+                </h2>
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    Join our waitlist to be notified when we launch in your area. Be among the first to transform parking lots into power plants.
+                </p>
+                
+                <form id="earlyAccessFormElement" onsubmit="handleEarlyAccessSubmit(event)" style="max-width: 700px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="accessName" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Full Name *</label>
+                            <input type="text" id="accessName" name="name" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                        <div class="form-group">
+                            <label for="accessEmail" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Email Address *</label>
+                            <input type="email" id="accessEmail" name="email" required 
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="accessRole" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">I'm interested as:</label>
+                            <select id="accessRole" name="role" 
+                                    style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; background: #fff; transition: border-color 0.3s ease;"
+                                    onfocus="this.style.borderColor='#BF5700'" 
+                                    onblur="this.style.borderColor='#E0E0E0'">
+                                <option value="">Select...</option>
+                                <option value="Property Owner">Property Owner</option>
+                                <option value="Investor">Investor</option>
+                                <option value="Partner">Partner</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="accessLocation" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Location (City, State) *</label>
+                            <input type="text" id="accessLocation" name="location" required placeholder="e.g., Austin, TX"
+                                   style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease;"
+                                   onfocus="this.style.borderColor='#BF5700'" 
+                                   onblur="this.style.borderColor='#E0E0E0'">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="accessMessage" style="display: block; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">What interests you most?</label>
+                        <textarea id="accessMessage" name="message" rows="3" placeholder="Tell us what you're looking for..."
+                                  style="width: 100%; padding: 0.75rem; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical; transition: border-color 0.3s ease;"
+                                  onfocus="this.style.borderColor='#BF5700'" 
+                                  onblur="this.style.borderColor='#E0E0E0'"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary large" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        Join Waitlist
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToForm(formId) {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Add a slight offset for better visibility
+                setTimeout(() => {
+                    window.scrollBy(0, -80);
+                }, 100);
+            }
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent! ✓';
+                submitBtn.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    event.target.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    
+                    // Show success message
+                    alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                }, 2000);
+            }, 1000);
+        }
+
+        function handleHostSubmit(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'Request Submitted! ✓';
+                submitBtn.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    event.target.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    
+                    // Show success message
+                    alert('Thank you for your interest! We\'ll review your property and contact you soon.');
+                }, 2000);
+            }, 1000);
+        }
+
+        function handleEarlyAccessSubmit(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Joining...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'Joined! ✓';
+                submitBtn.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    event.target.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    
+                    // Show success message
+                    alert('Welcome to the waitlist! We\'ll notify you when we launch in your area.');
+                }, 2000);
+            }, 1000);
+        }
+        
+        // Typing animation for "Let's Build Together"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('buildTogetherText');
+            const typingCursor = document.getElementById('buildTogetherCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: "Let's", color: '#fff', isBreak: false },
+                { text: 'Build', color: '#fff', isBreak: false },
+                { text: 'Together', color: '#fff', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 80);
+                } else {
+                    // Add space after each word except the last
+                    if (currentSegment < fullText.length - 1) {
+                        updateText(targetText + ' ', segment.color, segment.isBreak);
+                        setTimeout(() => {
+                            currentSegment++;
+                            currentCharIndex = 0;
+                            typeText();
+                        }, 200);
+                    } else {
+                        currentSegment++;
+                        currentCharIndex = 0;
+                        setTimeout(() => {
+                            if (typingCursor) typingCursor.style.display = 'none';
+                        }, 1000);
+                    }
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                    else if (i < fullText.length - 1) html += ' ';
+                }
+                html += `<span style="color: ${color};">${text}</span>`;
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation after a short delay
+            setTimeout(typeText, 500);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ParkUrban - Smart Parking Intelligence for UT Campus | SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Clean like About page -->
+    <section style="padding-top: 120px; padding-bottom: 8rem; background: #fff; min-height: 100vh;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Dramatic Title with Typing -->
+                <div style="margin-bottom: 4rem;">
+                    <h1 id="parkurbanTitle" style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.03em;">
+                        <span id="parkurbanText"></span><span id="parkurbanCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
+                    </h1>
+                </div>
+
+                <!-- Story Content - Large Typography -->
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        Every day, thousands of <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">UT students</span> circle parking lots, burning gas and time looking for spots that may or may not exist.
+                    </p>
+                </div>
+
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        In Austin's <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">100°F</span> summer heat, a cooler spot isn't just convenient — it's about <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">safety</span> and <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">comfort</span>.
+                    </p>
+                </div>
+
+                <!-- Final Statement -->
+                <div style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.2; color: var(--primary-orange); font-weight: 700; margin-top: 8rem; padding-top: 4rem; border-top: 3px solid var(--primary-orange);">
+                    <div style="margin-bottom: 2rem;">
+                        <span style="display: block;">Park</span>
+                        <span style="display: block;">Urban</span>
+                        <span style="display: block; font-size: clamp(1.8rem, 3.5vw, 3rem); margin-top: 1rem;">solves this.</span>
+                    </div>
+                    <div style="font-size: clamp(1.5rem, 2.5vw, 2rem); color: #1A1A1A; font-weight: 400; margin-top: 3rem; line-height: 1.5;">
+                        <p>
+                            Real-time availability. <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">Predictive forecasting.</span> Comfort-aware routing. All powered by SunUrban's solar canopy infrastructure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features - Clean Grid -->
+    <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+                    The ParkUrban<br/>
+                    <span style="color: #BF5700;">Platform</span>
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Feature 1 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Real-Time Availability</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Live parking spot availability by lot and zone. Updated every 30 seconds with accurate occupancy data.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="17 6 23 6 23 12" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Predictive Forecasting</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            AI-powered predictions for 15, 30, and 60-minute availability based on class schedules and patterns.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Event Mode</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Special mode for football games, concerts, and graduation. Demand forecasting and dynamic pricing.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">EV Availability</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Track EV charging spot utilization, turnover rates, and enforcement signals in real-time.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Operator Dashboard</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Comprehensive analytics: utilization rates, dwell time, peak times, and distribution patterns.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Student-Facing View</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Simple, intuitive interface: "Where to park now" with shaded/cooler zone recommendations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Different Section -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+                    Why ParkUrban is<br/>
+                    <span style="color: #BF5700;">different.</span>
+                </h2>
+                
+                <!-- Moat 1 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 1
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Comfort-Aware Parking
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                                UT Austin heat is real. ParkUrban routes drivers to <strong style="color: #BF5700;">shaded/cooler zones</strong> enabled by SunUrban canopies, quantifying comfort impact — a differentiator most parking software doesn't have.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 3rem; color: #fff;">
+                            <div style="font-size: 4rem; font-weight: 700; margin-bottom: 0.5rem;">10-20°C</div>
+                            <div style="font-size: 1.2rem; opacity: 0.9;">cooler under SunUrban canopies</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 2 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap-reverse;">
+                        <div style="flex: 1; min-width: 300px; background: #1A1A1A; border-radius: 16px; padding: 3rem; color: #fff;">
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <div style="background: rgba(191,87,0,0.3); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: 700;">Real-time</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8;">Data</div>
+                                </div>
+                                <div style="background: rgba(191,87,0,0.3); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: 700;">Recommend</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8;">Action</div>
+                                </div>
+                                <div style="background: rgba(191,87,0,0.3); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: 700;">Measure</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8;">Outcome</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 2
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Closed-Loop Operations
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                Not just showing availability — ParkUrban recommends pricing and controls, then measures outcomes (occupancy, turnover, complaints) in real-time.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 3 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 3
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Physical Deployment Synergy
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                SunUrban canopies give us an installation pathway to instrument lots. Software-only competitors must fight for access and hardware deployments.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: #F5F5F5; border-radius: 16px; padding: 3rem; border-left: 4px solid #BF5700;">
+                            <div style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">We own the infrastructure.</div>
+                            <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                                Solar canopies + sensors + software = a vertically integrated parking intelligence platform.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 4 -->
+                <div>
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap-reverse;">
+                        <div style="flex: 1; min-width: 300px; background: linear-gradient(135deg, #F5F5F5, #E8E8E8); border-radius: 16px; padding: 3rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                                <span style="font-weight: 600; color: #1A1A1A;">Research-Grade Quality</span>
+                            </div>
+                            <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                                Ground-truth parking data with longitudinal continuity and strict privacy controls.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 4
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Research-Grade Data
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                UT values credible, publishable datasets. Our moat is ground-truth parking data + longitudinal continuity (with strict privacy controls).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section style="padding: 6rem 0; background: #F5F5F5;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    See it in <span style="color: #BF5700;">action.</span>
+                </h2>
+                <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto;">
+                    Real-time parking availability across UT Campus lots
+                </p>
+            </div>
+            
+            <div class="demo-grid-container" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;">
+                <!-- Main Map Area -->
+                <div style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+                    <!-- Header with Live Badge -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin: 0;">UT Campus Parking</h3>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: #d4edda; padding: 0.4rem 0.75rem; border-radius: 20px;">
+                                <div style="width: 8px; height: 8px; background: #28A745; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                                <span style="font-size: 0.8rem; font-weight: 600; color: #155724;">LIVE</span>
+                            </div>
+                        </div>
+                        <button id="demoRefreshBtn" style="background: #BF5700; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: all 0.2s;">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    
+                    <!-- Lot Selector Tabs -->
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;" id="lotTabs">
+                        <button class="lot-tab active" data-lot="0" style="padding: 0.75rem 1.25rem; border: 2px solid #BF5700; background: #BF5700; color: #fff; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;">San Jacinto</button>
+                        <button class="lot-tab" data-lot="1" style="padding: 0.75rem 1.25rem; border: 2px solid #e0e0e0; background: #fff; color: #666; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Speedway</button>
+                        <button class="lot-tab" data-lot="2" style="padding: 0.75rem 1.25rem; border: 2px solid #e0e0e0; background: #fff; color: #666; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Manor</button>
+                    </div>
+                    
+                    <!-- Lot Info Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; color: #fff; margin-bottom: 1.5rem;">
+                        <div>
+                            <div style="font-size: 1.25rem; font-weight: 700;" id="currentLotName">San Jacinto Garage</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;" id="currentLotRate">$1.75/hr • Updated 5s ago</div>
+                        </div>
+                        <div style="display: flex; gap: 2rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700;" id="currentLotVacant">138</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Vacant</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700;" id="currentLotTotal">450</div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Total</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Parking Spot Grid -->
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 1.5rem; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #666;">Spot Availability Map</div>
+                            <div style="display: flex; gap: 1rem; font-size: 0.8rem; color: #666;">
+                                <span>☀️ = Shaded Zone (Cooler)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Parking Grid -->
+                        <div id="parkingSpotGrid" style="display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px;">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                        
+                        <!-- Tooltip -->
+                        <div id="spotTooltip" style="position: absolute; display: none; background: #1A1A1A; color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; pointer-events: none; z-index: 100; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.2);"></div>
+                    </div>
+                    
+                    <!-- Legend -->
+                    <div style="display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 24px; height: 24px; background: #28A745; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.7rem; font-weight: 700;">✓</div>
+                            <span style="font-size: 0.9rem; color: #666;">Vacant</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 24px; height: 24px; background: #DC3545; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.7rem; font-weight: 700;">✗</div>
+                            <span style="font-size: 0.9rem; color: #666;">Occupied</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 24px; height: 24px; background: #FFC107; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #1A1A1A; font-size: 0.7rem; font-weight: 700;">⚡</div>
+                            <span style="font-size: 0.9rem; color: #666;">EV Charging</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #28A745, #20c997); border-radius: 4px; border: 2px solid #BF5700; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.6rem;">☀️</div>
+                            <span style="font-size: 0.9rem; color: #666;">Shaded (SunUrban)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Stats Card -->
+                    <div style="background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Campus Overview</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A;" id="demoTotalSpots">1,050</div>
+                                <div style="font-size: 0.8rem; color: #666;">Total Spots</div>
+                            </div>
+                            <div style="background: #d4edda; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.75rem; font-weight: 700; color: #155724;" id="demoVacantCount">355</div>
+                                <div style="font-size: 0.8rem; color: #155724;">Vacant Now</div>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A;" id="demoAvgOccupancy">66%</div>
+                                <div style="font-size: 0.8rem; color: #666;">Occupancy</div>
+                            </div>
+                            <div style="background: rgba(191,87,0,0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.75rem; font-weight: 700; color: #BF5700;">$1.67</div>
+                                <div style="font-size: 0.8rem; color: #BF5700;">Avg Rate/hr</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Prediction Card -->
+                    <div style="background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                            <h4 style="font-size: 1rem; font-weight: 700; color: #1A1A1A; margin: 0;">Availability Forecast</h4>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">In 15 min</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #28A745;">+12 spots</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">In 30 min</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #28A745;">+28 spots</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">In 60 min</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #DC3545;">-15 spots</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; font-size: 0.8rem; color: #666;">
+                            📚 Class ends at 2:50 PM — expect surge
+                        </div>
+                    </div>
+                    
+                    <!-- Shaded Zones Card -->
+                    <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 1.5rem; color: #fff;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="font-size: 1.25rem;">☀️</span>
+                            <h4 style="font-size: 1rem; font-weight: 700; margin: 0;">Comfort Zones</h4>
+                        </div>
+                        <p style="font-size: 0.9rem; opacity: 0.95; margin-bottom: 1rem; line-height: 1.5;">
+                            45 shaded spots available under SunUrban canopies — up to 20°C cooler!
+                        </p>
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="flex: 1; background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.25rem; font-weight: 700;">45</div>
+                                <div style="font-size: 0.75rem; opacity: 0.9;">Shaded Open</div>
+                            </div>
+                            <div style="flex: 1; background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.25rem; font-weight: 700;">82°F</div>
+                                <div style="font-size: 0.75rem; opacity: 0.9;">Under Canopy</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div style="background: #1A1A1A; border-radius: 16px; padding: 1.5rem; color: #fff;">
+                        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Quick Actions</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <button style="background: #BF5700; color: #fff; border: none; padding: 0.875rem; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-route"></i> Navigate to Nearest Spot
+                            </button>
+                            <button style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 0.875rem; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-bell"></i> Alert When Spot Opens
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .parking-spot {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        
+        .parking-spot:hover {
+            transform: scale(1.3);
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .parking-spot.vacant {
+            background: #28A745;
+            color: #fff;
+        }
+        
+        .parking-spot.occupied {
+            background: #DC3545;
+            color: #fff;
+        }
+        
+        .parking-spot.ev {
+            background: #FFC107;
+            color: #1A1A1A;
+        }
+        
+        .parking-spot.shaded {
+            border: 2px solid #BF5700;
+            box-shadow: inset 0 0 0 1px rgba(191,87,0,0.3);
+        }
+        
+        .parking-spot.shaded.vacant {
+            background: linear-gradient(135deg, #28A745, #20c997);
+        }
+        
+        .lot-tab:hover {
+            border-color: #BF5700 !important;
+            color: #BF5700 !important;
+        }
+        
+        @media (max-width: 1024px) {
+            #parkingSpotGrid {
+                grid-template-columns: repeat(10, 1fr) !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #parkingSpotGrid {
+                grid-template-columns: repeat(8, 1fr) !important;
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .demo-grid-container {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+    <!-- Pricing Section -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">
+                    Campus Pricing
+                </h2>
+                <p style="font-size: 1.2rem; color: #666; text-align: center; margin-bottom: 4rem;">
+                    Flexible tiers designed for UT Campus operations
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Tier 1 -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Campus Core</h3>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Live availability by lot
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Real-time analytics
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Basic reporting
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Student mobile view
+                            </li>
+                        </ul>
+                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                    </div>
+                    
+                    <!-- Tier 2 - Featured -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative; transform: scale(1.05);">
+                        <div style="position: absolute; top: -12px; right: 2rem; background: #BF5700; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                            Recommended
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Ops Pro</h3>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Everything in Core
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Predictive forecasting
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Event mode
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> API access
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Priority support
+                            </li>
+                        </ul>
+                        <button class="btn-primary" style="width: 100%;" onclick="window.location.href='contact.html'">Schedule Demo</button>
+                    </div>
+                    
+                    <!-- Tier 3 -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Everything in Ops Pro
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Custom integrations
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> SLAs & dedicated support
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Research data partnerships
+                            </li>
+                        </ul>
+                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 6rem 0; background: #1A1A1A; color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2;">
+                    Ready to transform<br/>UT Campus parking?
+                </h2>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #ccc; margin-bottom: 2.5rem;">
+                    Reduce cruising time, optimize utilization, and improve the campus experience. Let's build ParkUrban together.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        Schedule Demo
+                    </button>
+                    <button class="btn-outline large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem; border-color: rgba(255,255,255,0.5); color: #fff;">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Typing animation for "ParkUrban"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('parkurbanText');
+            const typingCursor = document.getElementById('parkurbanCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: 'Park', color: '#1A1A1A', isBreak: false },
+                { text: 'Urban', color: '#BF5700', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 120);
+                } else {
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 200);
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                html += `<span style="color: ${color};">${text}</span>`;
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation after a short delay
+            setTimeout(typeText, 500);
+        });
+        
+        // Parking Demo Data
+        const utCampusLots = [
+            { name: 'San Jacinto Garage', totalSpots: 450, vacantSpots: 138, rate: 1.75, evSpots: 45, shadedSpots: 60 },
+            { name: 'Speedway Garage', totalSpots: 320, vacantSpots: 122, rate: 1.75, evSpots: 32, shadedSpots: 40 },
+            { name: 'Manor Garage', totalSpots: 280, vacantSpots: 95, rate: 1.50, evSpots: 28, shadedSpots: 35 }
+        ];
+        
+        let currentLotIndex = 0;
+        let spotsData = [];
+        
+        // Generate spots for a lot
+        function generateSpots(lot) {
+            const spots = [];
+            const displayCount = Math.min(90, lot.totalSpots); // Show up to 90 spots in grid
+            const vacantRatio = lot.vacantSpots / lot.totalSpots;
+            const evRatio = lot.evSpots / lot.totalSpots;
+            const shadedRatio = lot.shadedSpots / lot.totalSpots;
+            
+            for (let i = 0; i < displayCount; i++) {
+                const isEV = i < Math.floor(displayCount * evRatio);
+                const isShaded = i < Math.floor(displayCount * shadedRatio);
+                const isVacant = Math.random() < vacantRatio;
+                
+                spots.push({
+                    id: i,
+                    status: isVacant ? 'vacant' : 'occupied',
+                    ev: isEV,
+                    shaded: isShaded,
+                    rate: isEV ? lot.rate + 1 : lot.rate
+                });
+            }
+            
+            // Shuffle for random distribution
+            return spots.sort(() => Math.random() - 0.5);
+        }
+        
+        // Render parking grid
+        function renderParkingGrid(lotIndex) {
+            const grid = document.getElementById('parkingSpotGrid');
+            const lot = utCampusLots[lotIndex];
+            spotsData = generateSpots(lot);
+            
+            grid.innerHTML = '';
+            
+            spotsData.forEach((spot, idx) => {
+                const spotEl = document.createElement('div');
+                spotEl.className = `parking-spot ${spot.status} ${spot.ev ? 'ev' : ''} ${spot.shaded ? 'shaded' : ''}`;
+                spotEl.dataset.spotId = spot.id;
+                
+                // Icon
+                if (spot.ev && spot.status === 'vacant') {
+                    spotEl.textContent = '⚡';
+                } else if (spot.shaded && spot.status === 'vacant') {
+                    spotEl.textContent = '☀️';
+                } else if (spot.status === 'vacant') {
+                    spotEl.textContent = '✓';
+                } else {
+                    spotEl.textContent = '✗';
+                }
+                
+                // Tooltip events
+                spotEl.addEventListener('mouseenter', (e) => showSpotTooltip(e, spot, lot));
+                spotEl.addEventListener('mouseleave', hideSpotTooltip);
+                
+                grid.appendChild(spotEl);
+            });
+            
+            // Update lot info
+            document.getElementById('currentLotName').textContent = lot.name;
+            document.getElementById('currentLotRate').textContent = `$${lot.rate.toFixed(2)}/hr • Updated ${Math.floor(Math.random() * 10) + 1}s ago`;
+            document.getElementById('currentLotVacant').textContent = lot.vacantSpots;
+            document.getElementById('currentLotTotal').textContent = lot.totalSpots;
+        }
+        
+        // Show tooltip
+        function showSpotTooltip(e, spot, lot) {
+            const tooltip = document.getElementById('spotTooltip');
+            const rect = e.target.getBoundingClientRect();
+            const container = document.getElementById('parkingSpotGrid').parentElement;
+            const containerRect = container.getBoundingClientRect();
+            
+            let content = '';
+            if (spot.status === 'vacant') {
+                content = `<div style="font-weight: 600; margin-bottom: 0.25rem;">${spot.ev ? '⚡ EV Charging' : spot.shaded ? '☀️ Shaded Spot' : '🅿️ Regular Spot'}</div>`;
+                content += `<div>Status: <span style="color: #28A745;">Available</span></div>`;
+                content += `<div>Rate: $${spot.rate.toFixed(2)}/hr</div>`;
+                if (spot.shaded) {
+                    content += `<div style="color: #F78E1E; margin-top: 0.25rem;">🌡️ 10-20°C cooler!</div>`;
+                }
+            } else {
+                content = `<div style="font-weight: 600; margin-bottom: 0.25rem;">🅿️ Parking Spot</div>`;
+                content += `<div>Status: <span style="color: #DC3545;">Occupied</span></div>`;
+            }
+            
+            tooltip.innerHTML = content;
+            tooltip.style.display = 'block';
+            tooltip.style.left = (rect.left - containerRect.left + rect.width / 2 - 80) + 'px';
+            tooltip.style.top = (rect.top - containerRect.top - tooltip.offsetHeight - 10) + 'px';
+        }
+        
+        // Hide tooltip
+        function hideSpotTooltip() {
+            document.getElementById('spotTooltip').style.display = 'none';
+        }
+        
+        // Update global stats
+        function updateGlobalStats() {
+            const totalSpots = utCampusLots.reduce((sum, lot) => sum + lot.totalSpots, 0);
+            const totalVacant = utCampusLots.reduce((sum, lot) => sum + lot.vacantSpots, 0);
+            const avgOccupancy = Math.round((totalSpots - totalVacant) / totalSpots * 100);
+            
+            document.getElementById('demoTotalSpots').textContent = totalSpots.toLocaleString();
+            document.getElementById('demoVacantCount').textContent = totalVacant;
+            document.getElementById('demoAvgOccupancy').textContent = avgOccupancy + '%';
+        }
+        
+        // Initialize parking demo
+        function initParkingDemo() {
+            // Render initial lot
+            renderParkingGrid(0);
+            updateGlobalStats();
+            
+            // Tab switching
+            document.querySelectorAll('.lot-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.lot-tab').forEach(t => {
+                        t.style.background = '#fff';
+                        t.style.borderColor = '#e0e0e0';
+                        t.style.color = '#666';
+                        t.classList.remove('active');
+                    });
+                    this.style.background = '#BF5700';
+                    this.style.borderColor = '#BF5700';
+                    this.style.color = '#fff';
+                    this.classList.add('active');
+                    
+                    currentLotIndex = parseInt(this.dataset.lot);
+                    renderParkingGrid(currentLotIndex);
+                });
+            });
+            
+            // Refresh button
+            const refreshBtn = document.getElementById('demoRefreshBtn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    icon.classList.add('fa-spin');
+                    
+                    setTimeout(() => {
+                        icon.classList.remove('fa-spin');
+                        
+                        // Randomize vacancy counts
+                        utCampusLots.forEach(lot => {
+                            const change = Math.floor(Math.random() * 20) - 10;
+                            lot.vacantSpots = Math.max(50, Math.min(lot.totalSpots - 50, lot.vacantSpots + change));
+                        });
+                        
+                        renderParkingGrid(currentLotIndex);
+                        updateGlobalStats();
+                    }, 800);
+                });
+            }
+            
+            // Auto-update spots periodically
+            setInterval(() => {
+                const spots = document.querySelectorAll('.parking-spot');
+                spots.forEach(spot => {
+                    if (Math.random() > 0.97) {
+                        const isVacant = spot.classList.contains('vacant');
+                        if (isVacant) {
+                            spot.classList.remove('vacant');
+                            spot.classList.add('occupied');
+                            spot.textContent = '✗';
+                        } else if (spot.classList.contains('occupied')) {
+                            spot.classList.remove('occupied');
+                            spot.classList.add('vacant');
+                            const isEV = spot.classList.contains('ev');
+                            const isShaded = spot.classList.contains('shaded');
+                            spot.textContent = isEV ? '⚡' : isShaded ? '☀️' : '✓';
+                        }
+                    }
+                });
+            }, 3000);
+        }
+        
+        // Initialize on page load
+        window.addEventListener('load', initParkingDemo);
+    </script>
+</body>
+</html>

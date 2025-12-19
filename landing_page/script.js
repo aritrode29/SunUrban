@@ -1,3 +1,16 @@
+// Redirect to waitlist page function (must be global for inline onclick)
+function redirectToWaitlistPage() {
+    const qualifyInput = document.getElementById('qualifyInput');
+    const val = (qualifyInput && qualifyInput.value || '').trim();
+    if (val) {
+        const encodedAddress = encodeURIComponent(val);
+        window.location.href = `join-waitlist.html?address=${encodedAddress}`;
+    } else {
+        window.location.href = 'join-waitlist.html';
+    }
+    return false;
+}
+
 // Dynamic Counter Animation
 function animateCounter(element) {
     const target = parseInt(element.getAttribute('data-target'));
@@ -677,33 +690,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Qualify check → open Early Access modal with location prefilled
-    function openQualifyModal() {
-        if (!earlyAccessModal) return;
+    // Qualify check → redirect to waitlist page with address
+    function redirectToWaitlist() {
         const val = (qualifyInput && qualifyInput.value || '').trim();
-        earlyAccessModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        const locInput = document.getElementById('accessLocation');
-        if (locInput && val) {
-            locInput.value = val;
-        }
-        const roleSelect = document.getElementById('accessRole');
-        if (roleSelect) {
-            roleSelect.value = 'Property Owner';
+        if (val) {
+            // Encode the address and redirect to waitlist page
+            const encodedAddress = encodeURIComponent(val);
+            window.location.href = `join-waitlist.html?address=${encodedAddress}`;
+        } else {
+            // If no address entered, just go to waitlist page
+            window.location.href = 'join-waitlist.html';
         }
     }
 
     if (checkQualifyBtn) {
         checkQualifyBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openQualifyModal();
+            e.stopPropagation();
+            redirectToWaitlist();
         });
     }
+    
     if (qualifyInput) {
         qualifyInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                openQualifyModal();
+                e.stopPropagation();
+                redirectToWaitlist();
             }
         });
     }
@@ -888,3 +901,195 @@ function scrollToTop() {
         behavior: 'smooth'
     });
 }
+
+// ============================================
+// PWA - Service Worker Registration
+// ============================================
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then((registration) => {
+                console.log('Service Worker registered successfully:', registration.scope);
+                
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New service worker available
+                            showUpdateNotification();
+                        }
+                    });
+                });
+            })
+            .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+    });
+}
+
+// ============================================
+// PWA - Install Prompt
+// ============================================
+
+let deferredPrompt;
+const installButton = document.getElementById('installAppBtn');
+
+// Listen for the beforeinstallprompt event
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    // Show install button if it exists
+    if (installButton) {
+        installButton.style.display = 'block';
+    } else {
+        // Create install button if it doesn't exist
+        createInstallButton();
+    }
+});
+
+// Create install button dynamically
+function createInstallButton() {
+    const installBtn = document.createElement('button');
+    installBtn.id = 'installAppBtn';
+    installBtn.className = 'btn-primary';
+    installBtn.innerHTML = '<i class="fas fa-download"></i> Install App';
+    installBtn.style.display = 'none';
+    installBtn.style.position = 'fixed';
+    installBtn.style.bottom = '20px';
+    installBtn.style.right = '20px';
+    installBtn.style.zIndex = '10000';
+    installBtn.style.borderRadius = '50px';
+    installBtn.style.padding = '12px 24px';
+    installBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            return;
+        }
+        
+        // Show the install prompt
+        deferredPrompt.prompt();
+        
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        } else {
+            console.log('User dismissed the install prompt');
+        }
+        
+        // Clear the deferredPrompt
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+    });
+    
+    document.body.appendChild(installBtn);
+}
+
+// Listen for app installed event
+window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed');
+    deferredPrompt = null;
+    if (installButton) {
+        installButton.style.display = 'none';
+    }
+    // Show success message
+    showNotification('App installed successfully!', 'success');
+});
+
+// ============================================
+// PWA - Update Notification
+// ============================================
+
+function showUpdateNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'pwa-update-notification';
+    notification.innerHTML = `
+        <div style="background: var(--primary-orange); color: white; padding: 1rem; border-radius: 8px; margin: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <p style="margin: 0 0 0.5rem 0; font-weight: 600;">New version available!</p>
+            <button onclick="window.location.reload()" style="background: white; color: var(--primary-orange); border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 600;">
+                Update Now
+            </button>
+        </div>
+    `;
+    notification.style.position = 'fixed';
+    notification.style.top = '80px';
+    notification.style.left = '50%';
+    notification.style.transform = 'translateX(-50%)';
+    notification.style.zIndex = '10001';
+    notification.style.maxWidth = '400px';
+    notification.style.width = '90%';
+    
+    document.body.appendChild(notification);
+    
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 10000);
+}
+
+// ============================================
+// PWA - Notification Helper
+// ============================================
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = 'pwa-notification';
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10002;
+        max-width: 400px;
+        width: 90%;
+        animation: slideUp 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notification);
+    
+    // Auto-dismiss after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideUp 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ============================================
+// PWA - Offline Detection
+// ============================================
+
+window.addEventListener('online', () => {
+    showNotification('You are back online!', 'success');
+});
+
+window.addEventListener('offline', () => {
+    showNotification('You are offline. Some features may be limited.', 'info');
+});

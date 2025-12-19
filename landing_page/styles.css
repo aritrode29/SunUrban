@@ -60,6 +60,13 @@
     line-height: 1.6;
 }
 
+/* Enhanced Team Grid for New Design */
+.team-grid-enhanced {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+}
+
 @media (max-width: 900px) {
     .team-grid {
         grid-template-columns: 1fr;
@@ -70,6 +77,10 @@
     }
     .team-photo img {
         height: 120px;
+    }
+    .team-grid-enhanced {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 }
 
@@ -87,7 +98,7 @@ body {
     background-color: #ffffff;
 }
 
-/* UT Austin Color Scheme */
+/* SunUrban Color Scheme */
 :root {
     --primary-orange: #BF5700;
     --secondary-orange: #F78E1E;
@@ -5369,7 +5380,7 @@ body {
     gap: 0.75rem;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-orange);
+    color: #BF5700;
     margin-bottom: 1rem;
 }
 
@@ -5399,7 +5410,7 @@ body {
 
 .footer-logo .grid-line {
     position: absolute;
-    background: var(--primary-orange);
+    background: #BF5700;
     opacity: 0.3;
 }
 
@@ -5422,7 +5433,7 @@ body {
 .footer-logo .grid-line:nth-child(3) {
     width: 2px;
     height: 2px;
-    background: var(--primary-orange);
+    background: #BF5700;
     border-radius: 50%;
     top: 50%;
     left: 50%;
@@ -5456,7 +5467,7 @@ body {
 }
 
 .footer-section ul li a:hover {
-    color: var(--primary-orange);
+    color: #BF5700;
 }
 
 .footer-bottom {
@@ -5473,6 +5484,17 @@ body {
     color: #CCCCCC;
 }
 
+.footer-bottom p a {
+    color: #BF5700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom p a:hover {
+    color: #8B3A00;
+    text-decoration: underline;
+}
+
 .footer-links {
     display: flex;
     gap: 2rem;
@@ -5485,7 +5507,7 @@ body {
 }
 
 .footer-links a:hover {
-    color: var(--primary-orange);
+    color: #BF5700;
 }
 
 /* Responsive Design */

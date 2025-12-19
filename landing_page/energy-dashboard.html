@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Energy Management Dashboard - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* Energy Dashboard Styles */
+        .energy-dashboard {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding-top: 80px;
+            color: #2C2C2C;
+        }
+
+        .dashboard-wrapper {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+
+        .header-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .header-left h1 span {
+            color: var(--primary-orange);
+        }
+
+        .header-left p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--ut-gray);
+            background: white;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: rgba(191, 87, 0, 0.1);
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--ut-gray);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-orange);
+            box-shadow: 0 8px 24px rgba(191, 87, 0, 0.15);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: rgba(191, 87, 0, 0.1);
+            color: var(--primary-orange);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive {
+            color: #28A745;
+        }
+
+        .stat-change.negative {
+            color: #DC3545;
+        }
+
+        /* Main Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-panel {
+            background: white;
+            border: 1px solid var(--ut-gray);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-panel:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--ut-gray);
+        }
+
+        .panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+        .span-8 { grid-column: span 8; }
+        .span-12 { grid-column: span 12; }
+
+        /* Site Cards */
+        .site-card {
+            background: var(--ut-gray);
+            border: 1px solid var(--ut-gray);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .site-card:hover {
+            background: rgba(191, 87, 0, 0.05);
+            border-color: var(--primary-orange);
+            transform: translateX(4px);
+        }
+
+        .site-card.active {
+            border-color: var(--primary-orange);
+            background: rgba(191, 87, 0, 0.1);
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .site-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .site-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #28A745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(40, 167, 69, 0); }
+        }
+
+        .site-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .site-metric {
+            text-align: center;
+        }
+
+        .site-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #BF5700;
+            margin-bottom: 0.25rem;
+        }
+
+        .site-metric-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* Energy Flow Visualization */
+        .energy-flow {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--ut-gray);
+            cursor: crosshair;
+        }
+
+        .flow-node {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid;
+            background: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            z-index: 20;
+        }
+
+        .flow-node.active {
+            animation: nodePulse 2s infinite;
+        }
+
+        @keyframes nodePulse {
+            0%, 100% { 
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 0 0 0 rgba(191, 87, 0, 0.4);
+            }
+            50% { 
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 0 0 20px rgba(191, 87, 0, 0);
+            }
+        }
+
+        .flow-node.solar {
+            top: 15%;
+            left: 8%;
+            border-color: #FFA500;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 165, 0, 0.05));
+        }
+
+        .flow-node.solar:hover {
+            border-color: #FF8C00;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 165, 0, 0.1));
+        }
+
+        .flow-node.battery {
+            top: 15%;
+            right: 8%;
+            border-color: #4ECDC4;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(78, 205, 196, 0.05));
+        }
+
+        .flow-node.battery:hover {
+            border-color: #3BA99A;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(78, 205, 196, 0.1));
+        }
+
+        .flow-node.grid {
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-color: #28A745;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.2), rgba(40, 167, 69, 0.05));
+        }
+
+        .flow-node.grid:hover {
+            border-color: #218838;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.3), rgba(40, 167, 69, 0.1));
+        }
+
+        .flow-node.load {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-color: #BF5700;
+            background: linear-gradient(135deg, rgba(191, 87, 0, 0.2), rgba(191, 87, 0, 0.05));
+        }
+
+        .flow-node.load:hover {
+            border-color: #8B3A00;
+            background: linear-gradient(135deg, rgba(191, 87, 0, 0.3), rgba(191, 87, 0, 0.1));
+        }
+
+        .node-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .node-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            transition: all 0.3s ease;
+        }
+
+        .node-value.updating {
+            color: #BF5700;
+            animation: valueUpdate 0.5s ease;
+        }
+
+        @keyframes valueUpdate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .node-label {
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flow-line {
+            position: absolute;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(191, 87, 0, 0.3), rgba(191, 87, 0, 0.6), rgba(191, 87, 0, 0.3), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .flow-line::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(191, 87, 0, 0.8), transparent);
+            animation: flowParticle 3s linear infinite;
+        }
+
+        @keyframes flowParticle {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        .energy-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #BF5700;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #BF5700;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .flow-tooltip {
+            position: absolute;
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+            border: 2px solid #BF5700;
+            min-width: 200px;
+            font-size: 0.875rem;
+        }
+
+        .tooltip-title {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tooltip-content {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .tooltip-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--ut-gray);
+        }
+
+        .tooltip-metric-label {
+            color: var(--text-gray);
+        }
+
+        .tooltip-metric-value {
+            font-weight: 600;
+            color: #BF5700;
+        }
+
+        .flow-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 15;
+        }
+
+        .flow-control-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid var(--ut-gray);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-gray);
+        }
+
+        .flow-control-btn:hover {
+            background: rgba(191, 87, 0, 0.1);
+            border-color: #BF5700;
+            color: #BF5700;
+        }
+
+        .flow-control-btn.active {
+            background: #BF5700;
+            border-color: #BF5700;
+            color: white;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        .chart-container.large {
+            height: 400px;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .control-item {
+            background: var(--ut-gray);
+            border: 1px solid var(--ut-gray);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .control-label {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-orange);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 33px;
+        }
+
+        .slider-control {
+            width: 100%;
+            height: 6px;
+            background: var(--ut-gray);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #BF5700;
+            cursor: pointer;
+        }
+
+        .slider-control::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #BF5700;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .span-6 { grid-column: span 12; }
+            .span-4 { grid-column: span 6; }
+            .span-3 { grid-column: span 6; }
+            .span-8 { grid-column: span 12; }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .span-4, .span-3, .span-6, .span-8 {
+                grid-column: span 12;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom Chart Colors */
+        .chart-dark {
+            filter: brightness(0.9) contrast(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="financials.html">Financials</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Energy Dashboard -->
+    <section class="energy-dashboard">
+        <div class="dashboard-wrapper">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="header-left">
+                    <h1>Energy Management & <span>Orchestration</span></h1>
+                    <p>Real-time monitoring and control across all SunUrban canopies</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+                    <button class="btn-icon" title="Settings"><i class="fas fa-cog"></i></button>
+                    <button class="btn-icon" title="Export"><i class="fas fa-download"></i></button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Generation</span>
+                        <div class="stat-icon"><i class="fas fa-sun"></i></div>
+                    </div>
+                    <div class="stat-value">1,730 kW</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12.5% vs yesterday</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Battery Storage</span>
+                        <div class="stat-icon"><i class="fas fa-battery-three-quarters"></i></div>
+                    </div>
+                    <div class="stat-value">865 kWh</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>78% capacity</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Grid Export</span>
+                        <div class="stat-icon"><i class="fas fa-plug"></i></div>
+                    </div>
+                    <div class="stat-value">420 kW</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8.3% increase</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Load Demand</span>
+                        <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                    </div>
+                    <div class="stat-value">890 kW</div>
+                    <div class="stat-change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>-5.2% decrease</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Efficiency</span>
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    </div>
+                    <div class="stat-value">94.2%</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+2.1% improvement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Energy Flow Visualization -->
+                <div class="dashboard-panel span-8">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Energy Flow & Orchestration</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="energy-flow" id="energyFlow">
+                        <div class="flow-controls">
+                            <button class="flow-control-btn active" data-view="all">All</button>
+                            <button class="flow-control-btn" data-view="solar">Solar</button>
+                            <button class="flow-control-btn" data-view="battery">Battery</button>
+                            <button class="flow-control-btn" data-view="grid">Grid</button>
+                        </div>
+                        <div class="flow-tooltip" id="flowTooltip"></div>
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Site Status -->
+                <div class="dashboard-panel span-4">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Canopy Sites</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div id="siteStatusList">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Generation Chart -->
+                <div class="dashboard-panel span-6">
+                    <div class="panel-header">
+                        <h3 class="panel-title">24-Hour Generation</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="generationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Battery Status -->
+                <div class="dashboard-panel span-6">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Battery Storage Status</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="batteryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Grid Interaction -->
+                <div class="dashboard-panel span-6">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Grid Import/Export</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="gridChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Control Panel -->
+                <div class="dashboard-panel span-6">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Orchestration Controls</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                    <div class="control-panel" id="controlPanel">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="dashboard-panel span-12">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Performance Metrics</h3>
+                        <div class="panel-actions">
+                            <button class="btn-icon"><i class="fas fa-download"></i></button>
+                            <button class="btn-icon"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container large">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initEnergyFlow();
+        initSiteStatus();
+        initCharts();
+        initControlPanel();
+        
+        // Auto-refresh every 5 seconds
+        setInterval(updateDashboard, 5000);
+    });
+
+    function initEnergyFlow() {
+        const container = document.getElementById('energyFlow');
+        if (!container) {
+            console.error('Energy flow container not found');
+            return;
+        }
+        
+        // Keep controls and tooltip, clear the rest
+        const controls = container.querySelector('.flow-controls');
+        const tooltip = container.querySelector('.flow-tooltip');
+        container.innerHTML = '';
+        if (controls) container.appendChild(controls);
+        if (tooltip) container.appendChild(tooltip);
+        
+        // Node data
+        const nodes = [
+            {
+                id: 'solar',
+                icon: '☀️',
+                value: 1730,
+                unit: 'kW',
+                label: 'Solar Generation',
+                position: { top: '15%', left: '8%' },
+                color: '#FFA500',
+                data: {
+                    current: 1730,
+                    peak: 1850,
+                    efficiency: '94.2%',
+                    sites: 3
+                }
+            },
+            {
+                id: 'battery',
+                icon: '🔋',
+                value: 865,
+                unit: 'kWh',
+                label: 'Battery Storage',
+                position: { top: '15%', right: '8%' },
+                color: '#4ECDC4',
+                data: {
+                    capacity: 1100,
+                    percentage: 78,
+                    charging: true,
+                    rate: '125 kW'
+                }
+            },
+            {
+                id: 'load',
+                icon: '⚡',
+                value: 890,
+                unit: 'kW',
+                label: 'Load Demand',
+                position: { top: '50%', left: '50%' },
+                color: '#BF5700',
+                data: {
+                    current: 890,
+                    peak: 950,
+                    sites: 3,
+                    efficiency: '96.1%'
+                }
+            },
+            {
+                id: 'grid',
+                icon: '🔌',
+                value: 420,
+                unit: 'kW',
+                label: 'Grid Export',
+                position: { bottom: '15%', left: '50%' },
+                color: '#28A745',
+                data: {
+                    export: 420,
+                    import: 0,
+                    revenue: '$42/hr',
+                    peak: 580
+                }
+            }
+        ];
+
+        // Create nodes
+        nodes.forEach(node => {
+            const nodeEl = document.createElement('div');
+            nodeEl.className = `flow-node ${node.id}`;
+            nodeEl.dataset.nodeId = node.id;
+            nodeEl.innerHTML = `
+                <div class="node-icon">${node.icon}</div>
+                <div class="node-value" id="${node.id}Value">${node.value.toLocaleString()} ${node.unit}</div>
+                <div class="node-label">${node.label}</div>
+            `;
+            
+            // Position
+            Object.keys(node.position).forEach(key => {
+                nodeEl.style[key] = node.position[key];
+            });
+            
+            // Add interactions
+            nodeEl.addEventListener('mouseenter', (e) => showNodeTooltip(e, node));
+            nodeEl.addEventListener('mouseleave', hideTooltip);
+            nodeEl.addEventListener('click', () => highlightNode(node.id));
+            
+            container.appendChild(nodeEl);
+        });
+
+        // Create animated flow lines
+        createAnimatedFlowLine(container, '8%', '15%', '50%', '50%', '#FFA500', 'solar-load');
+        createAnimatedFlowLine(container, '92%', '15%', '50%', '50%', '#4ECDC4', 'battery-load');
+        createAnimatedFlowLine(container, '50%', '50%', '50%', '85%', '#28A745', 'load-grid');
+
+        // Initialize particle animations
+        startParticleAnimation(container);
+
+        // Add view control handlers
+        const viewButtons = container.querySelectorAll('.flow-control-btn');
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                viewButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterView(this.dataset.view);
+            });
+        });
+    }
+
+    function createAnimatedFlowLine(container, x1, y1, x2, y2, color, id) {
+        const line = document.createElement('div');
+        line.className = 'flow-line';
+        line.dataset.lineId = id;
+        
+        const angle = Math.atan2(
+            parseFloat(y2.replace('%', '')) - parseFloat(y1.replace('%', '')),
+            parseFloat(x2.replace('%', '')) - parseFloat(x1.replace('%', ''))
+        ) * 180 / Math.PI;
+        
+        const length = Math.sqrt(
+            Math.pow(parseFloat(x2.replace('%', '')) - parseFloat(x1.replace('%', '')), 2) +
+            Math.pow(parseFloat(y2.replace('%', '')) - parseFloat(y1.replace('%', '')), 2)
+        );
+        
+        line.style.width = length + '%';
+        line.style.left = x1;
+        line.style.top = y1;
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.transformOrigin = '0 0';
+        line.style.background = `linear-gradient(90deg, transparent, ${color}40, ${color}80, ${color}40, transparent)`;
+        
+        container.appendChild(line);
+    }
+
+    function startParticleAnimation(container) {
+        const lines = container.querySelectorAll('.flow-line');
+        lines.forEach((line, index) => {
+            setInterval(() => {
+                createParticle(container, line, index * 1000);
+            }, 2000);
+        });
+    }
+
+    function createParticle(container, line, delay) {
+        const particle = document.createElement('div');
+        particle.className = 'energy-particle';
+        
+        const rect = line.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        particle.style.left = (rect.left - containerRect.left) + 'px';
+        particle.style.top = (rect.top - containerRect.top) + 'px';
+        
+        const angle = parseFloat(line.style.transform.match(/rotate\(([^)]+)\)/)?.[1] || 0);
+        const distance = rect.width;
+        
+        particle.style.animation = `particleMove${delay} ${3 + Math.random()}s linear`;
+        
+        // Add animation keyframes dynamically
+        if (!document.getElementById(`particleAnim${delay}`)) {
+            const style = document.createElement('style');
+            style.id = `particleAnim${delay}`;
+            style.textContent = `
+                @keyframes particleMove${delay} {
+                    0% {
+                        transform: translate(0, 0) rotate(${angle}deg);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    90% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(${distance}px, 0) rotate(${angle}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+        }, 4000);
+    }
+
+    function showNodeTooltip(event, node) {
+        const tooltip = document.getElementById('flowTooltip');
+        if (!tooltip) return;
+        
+        const rect = event.currentTarget.getBoundingClientRect();
+        const containerRect = event.currentTarget.closest('.energy-flow').getBoundingClientRect();
+        
+        tooltip.innerHTML = `
+            <div class="tooltip-title">${node.label}</div>
+            <div class="tooltip-content">
+                ${Object.entries(node.data).map(([key, value]) => `
+                    <div class="tooltip-metric">
+                        <span class="tooltip-metric-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</span>
+                        <span class="tooltip-metric-value">${value}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        tooltip.style.display = 'block';
+        tooltip.style.left = (rect.left - containerRect.left + rect.width / 2 - 100) + 'px';
+        tooltip.style.top = (rect.top - containerRect.top - 120) + 'px';
+    }
+
+    function hideTooltip() {
+        const tooltip = document.getElementById('flowTooltip');
+        if (tooltip) tooltip.style.display = 'none';
+    }
+
+    function highlightNode(nodeId) {
+        const nodes = document.querySelectorAll('.flow-node');
+        nodes.forEach(node => {
+            node.classList.remove('active');
+            if (node.dataset.nodeId === nodeId) {
+                node.classList.add('active');
+                setTimeout(() => node.classList.remove('active'), 2000);
+            }
+        });
+    }
+
+    function filterView(view) {
+        const nodes = document.querySelectorAll('.flow-node');
+        const lines = document.querySelectorAll('.flow-line');
+        
+        if (view === 'all') {
+            nodes.forEach(n => n.style.opacity = '1');
+            lines.forEach(l => l.style.opacity = '1');
+        } else {
+            nodes.forEach(n => {
+                n.style.opacity = n.dataset.nodeId === view ? '1' : '0.3';
+            });
+            lines.forEach(l => {
+                l.style.opacity = l.dataset.lineId.includes(view) ? '1' : '0.2';
+            });
+        }
+    }
+
+    function initSiteStatus() {
+        const container = document.getElementById('siteStatusList');
+        if (!container) return;
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        const sites = [
+            { name: 'South Congress', generation: '550 kW', battery: '275 kWh', status: 'active', load: '320 kW' },
+            { name: 'UT Campus', generation: '380 kW', battery: '190 kWh', status: 'active', load: '220 kW' },
+            { name: 'Austin Airport', generation: '800 kW', battery: '400 kWh', status: 'active', load: '350 kW' }
+        ];
+
+        sites.forEach((site, index) => {
+            const siteCard = document.createElement('div');
+            siteCard.className = 'site-card' + (index === 0 ? ' active' : '');
+            siteCard.innerHTML = `
+                <div class="site-header">
+                    <span class="site-name">${site.name}</span>
+                    <div class="site-status"></div>
+                </div>
+                <div class="site-metrics">
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.generation}</div>
+                        <div class="site-metric-label">Generation</div>
+                    </div>
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.battery}</div>
+                        <div class="site-metric-label">Battery</div>
+                    </div>
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.load}</div>
+                        <div class="site-metric-label">Load</div>
+                    </div>
+                </div>
+            `;
+            siteCard.addEventListener('click', () => {
+                document.querySelectorAll('.site-card').forEach(c => c.classList.remove('active'));
+                siteCard.classList.add('active');
+            });
+            container.appendChild(siteCard);
+        });
+    }
+
+    function initCharts() {
+        // Wait for Chart.js to be fully loaded
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js not loaded');
+            setTimeout(initCharts, 100);
+            return;
+        }
+        
+        // Generation Chart
+        const genCtx = document.getElementById('generationChart');
+        if (genCtx) {
+            const hours = Array.from({length: 24}, (_, i) => i + ':00');
+            new Chart(genCtx, {
+                type: 'line',
+                data: {
+                    labels: hours,
+                    datasets: [
+                        {
+                            label: 'South Congress',
+                            data: Array.from({length: 24}, (_, i) => {
+                                const hour = i;
+                                if (hour >= 6 && hour <= 18) {
+                                    return Math.sin((hour - 6) / 12 * Math.PI) * 400 + 150;
+                                }
+                                return 0;
+                            }),
+                            borderColor: '#FFA500',
+                            backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'UT Campus',
+                            data: Array.from({length: 24}, (_, i) => {
+                                const hour = i;
+                                if (hour >= 6 && hour <= 18) {
+                                    return Math.sin((hour - 6) / 12 * Math.PI) * 280 + 100;
+                                }
+                                return 0;
+                            }),
+                            borderColor: '#4ECDC4',
+                            backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Austin Airport',
+                            data: Array.from({length: 24}, (_, i) => {
+                                const hour = i;
+                                if (hour >= 6 && hour <= 18) {
+                                    return Math.sin((hour - 6) / 12 * Math.PI) * 600 + 200;
+                                }
+                                return 0;
+                            }),
+                            borderColor: '#BF5700',
+                            backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: '#2C2C2C', usePointStyle: true }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' }
+                        },
+                        x: {
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666', maxTicksLimit: 12 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Battery Chart
+        const batCtx = document.getElementById('batteryChart');
+        if (batCtx) {
+            new Chart(batCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Charged', 'Available'],
+                    datasets: [{
+                        data: [78, 22],
+                        backgroundColor: ['#BF5700', 'rgba(255,255,255,0.1)'],
+                        borderColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#2C2C2C' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Grid Chart
+        const gridCtx = document.getElementById('gridChart');
+        if (gridCtx) {
+            const hours = Array.from({length: 24}, (_, i) => i + ':00');
+            new Chart(gridCtx, {
+                type: 'bar',
+                data: {
+                    labels: hours,
+                    datasets: [
+                        {
+                            label: 'Export',
+                            data: Array.from({length: 24}, () => Math.random() * 500 + 200),
+                            backgroundColor: '#28A745',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Import',
+                            data: Array.from({length: 24}, () => Math.random() * 100),
+                            backgroundColor: '#DC3545',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: '#2C2C2C' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666', maxTicksLimit: 12 }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Performance Chart
+        const perfCtx = document.getElementById('performanceChart');
+        if (perfCtx) {
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            new Chart(perfCtx, {
+                type: 'line',
+                data: {
+                    labels: days,
+                    datasets: [
+                        {
+                            label: 'Efficiency %',
+                            data: [92, 93, 94, 94.5, 94.2, 93.8, 94.2],
+                            borderColor: '#BF5700',
+                            backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Generation (MW)',
+                            data: [1.6, 1.65, 1.7, 1.73, 1.68, 1.65, 1.73],
+                            borderColor: '#FFA500',
+                            backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: '#2C2C2C', usePointStyle: true }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        },
+                        x: {
+                            grid: { color: '#f0f0f0' },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function initControlPanel() {
+        const container = document.getElementById('controlPanel');
+        if (!container) return;
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        const controls = [
+            { label: 'Auto Orchestration', type: 'toggle', value: true },
+            { label: 'Grid Export Limit', type: 'slider', value: 500, unit: 'kW' },
+            { label: 'Battery Reserve', type: 'slider', value: 20, unit: '%' },
+            { label: 'Load Balancing', type: 'toggle', value: true }
+        ];
+
+        controls.forEach(control => {
+            const controlItem = document.createElement('div');
+            controlItem.className = 'control-item';
+            
+            if (control.type === 'toggle') {
+                controlItem.innerHTML = `
+                    <div class="control-label">${control.label}</div>
+                    <div class="toggle-switch ${control.value ? 'active' : ''}" onclick="this.classList.toggle('active')"></div>
+                `;
+            } else {
+                controlItem.innerHTML = `
+                    <div class="control-label">${control.label}</div>
+                    <input type="range" class="slider-control" min="0" max="${control.unit === '%' ? 100 : 1000}" value="${control.value}">
+                    <div style="margin-top: 0.5rem; color: #BF5700; font-weight: 600;">${control.value} ${control.unit}</div>
+                `;
+            }
+            
+            container.appendChild(controlItem);
+        });
+    }
+
+    function updateDashboard() {
+        // Update energy flow values with animation
+        const nodes = ['solar', 'battery', 'load', 'grid'];
+        const units = { solar: 'kW', battery: 'kWh', load: 'kW', grid: 'kW' };
+        
+        nodes.forEach(nodeId => {
+            const valueEl = document.getElementById(nodeId + 'Value');
+            if (valueEl) {
+                const currentText = valueEl.textContent.replace(/[^\d.]/g, '');
+                const current = parseFloat(currentText) || 0;
+                const change = (Math.random() - 0.5) * (current * 0.05); // 5% variation
+                const newValue = Math.max(0, current + change);
+                
+                valueEl.classList.add('updating');
+                setTimeout(() => {
+                    valueEl.textContent = Math.round(newValue).toLocaleString() + ' ' + units[nodeId];
+                    valueEl.classList.remove('updating');
+                }, 250);
+            }
+        });
+    }
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,3771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Digital Twin Data Dashboard - SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .dashboard-subtitle {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+
+        .time-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .time-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--ut-gray);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .time-btn:hover {
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+        }
+
+        .time-btn.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(191, 87, 0, 0.15);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: rgba(191, 87, 0, 0.1);
+            color: var(--primary-orange);
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .kpi-change.positive {
+            color: #28A745;
+        }
+
+        .kpi-change.negative {
+            color: #DC3545;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--ut-gray);
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--ut-gray);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-gray);
+        }
+
+        .card-action-btn:hover {
+            background: var(--ut-gray);
+            color: var(--primary-orange);
+        }
+
+        /* Grid Spans */
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+        .span-8 { grid-column: span 8; }
+        .span-12 { grid-column: span 12; }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        .chart-container.large {
+            height: 400px;
+        }
+
+        /* Real-time Data Stream */
+        .data-stream {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .stream-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--ut-gray);
+            transition: background 0.2s ease;
+        }
+
+        .stream-item:hover {
+            background: var(--ut-gray);
+        }
+
+        .stream-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stream-content {
+            flex: 1;
+        }
+
+        .stream-label {
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .stream-meta {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        .stream-value {
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+
+        /* Site Status Cards */
+        .site-card {
+            padding: 1rem;
+            border-radius: 12px;
+            background: var(--ut-gray);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .site-card:hover {
+            background: rgba(191, 87, 0, 0.05);
+            transform: translateX(4px);
+        }
+
+        .site-card.active {
+            background: rgba(191, 87, 0, 0.1);
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .site-name {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .site-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #28A745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .site-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .site-metric {
+            text-align: center;
+        }
+
+        .site-metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .site-metric-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* Interactive Map */
+        .interactive-map {
+            position: relative;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .map-tooltip {
+            position: absolute;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            border-bottom: 2px solid var(--ut-gray);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid var(--ut-gray);
+            color: var(--text-gray);
+        }
+
+        .data-table tr:hover {
+            background: var(--ut-gray);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28A745;
+        }
+
+        .badge-warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #FFC107;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .span-6 { grid-column: span 12; }
+            .span-4 { grid-column: span 6; }
+            .span-3 { grid-column: span 6; }
+            .span-8 { grid-column: span 12; }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .span-4, .span-3, .span-6, .span-8 {
+                grid-column: span 12;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Parking Map Styles */
+        .parking-map-container {
+            position: relative;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .parking-map-header {
+            background: white;
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+
+        .parking-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .stat-value.vacant-count {
+            color: #28A745;
+        }
+
+        .parking-map-content {
+            position: relative;
+            height: 500px;
+            padding: 2rem;
+            overflow: auto;
+        }
+
+        .parking-site-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .parking-site-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(191, 87, 0, 0.15);
+            border-color: var(--primary-orange);
+        }
+
+        .site-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+
+        .site-name-rate {
+            flex: 1;
+        }
+
+        .site-name-large {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .site-rate-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(191, 87, 0, 0.3);
+        }
+
+        .site-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .site-metric-box {
+            background: var(--ut-gray);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .site-metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 0.25rem;
+        }
+
+        .site-metric-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .parking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .parking-spot {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 3px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .parking-spot.vacant {
+            background: linear-gradient(135deg, #28A745, #20c997);
+            animation: pulse-green 2s infinite;
+        }
+
+        .parking-spot.occupied {
+            background: linear-gradient(135deg, #DC3545, #c82333);
+            opacity: 0.7;
+        }
+
+        .parking-spot.ev-charging {
+            background: linear-gradient(135deg, #FFC107, #ff9800);
+            animation: pulse-yellow 2s infinite;
+        }
+
+        .parking-spot:hover {
+            transform: scale(1.15) rotate(5deg);
+            z-index: 10;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .parking-spot.vacant:hover {
+            animation: none;
+            box-shadow: 0 8px 24px rgba(40, 167, 69, 0.4);
+        }
+
+        .parking-spot.ev-charging:hover {
+            animation: none;
+            box-shadow: 0 8px 24px rgba(255, 193, 7, 0.4);
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3); }
+            50% { box-shadow: 0 4px 16px rgba(40, 167, 69, 0.6); }
+        }
+
+        @keyframes pulse-yellow {
+            0%, 100% { box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3); }
+            50% { box-shadow: 0 4px 16px rgba(255, 193, 7, 0.6); }
+        }
+
+        .parking-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 10;
+            min-width: 180px;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--dark-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .legend-color.vacant {
+            background: linear-gradient(135deg, #28A745, #20c997);
+        }
+
+        .legend-color.occupied {
+            background: linear-gradient(135deg, #DC3545, #c82333);
+        }
+
+        .legend-color.ev-charging {
+            background: linear-gradient(135deg, #FFC107, #ff9800);
+        }
+
+        .parking-tooltip {
+            position: absolute;
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+            border: 2px solid var(--primary-orange);
+            min-width: 200px;
+        }
+
+        .tooltip-header {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tooltip-content {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .tooltip-rate {
+            color: var(--primary-orange);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #refreshParkingMap.spinning {
+            animation: spin 0.5s linear;
+        }
+
+        @media (max-width: 768px) {
+            .parking-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .site-metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .parking-grid {
+                grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .parking-legend {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 1rem;
+            }
+        }
+
+        /* Power Profiles Map Styles */
+        .power-profiles-map {
+            position: relative;
+            height: 450px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--ut-gray);
+            margin-bottom: 1rem;
+        }
+
+        .power-map-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(191, 87, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 25%, rgba(78, 205, 196, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 35%, rgba(191, 87, 0, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .power-map-title {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .power-site {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid white;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            z-index: 10;
+        }
+
+        .power-site:hover {
+            transform: scale(1.15);
+            z-index: 20;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .power-site.selected {
+            border-color: #FFD700;
+            border-width: 5px;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.3), 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .power-site.low {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-color: #90caf9;
+        }
+
+        .power-site.medium {
+            background: linear-gradient(135deg, #90caf9, #64b5f6);
+            border-color: #42a5f5;
+        }
+
+        .power-site.high {
+            background: linear-gradient(135deg, #42a5f5, #2196f3);
+            border-color: #1976d2;
+        }
+
+        .power-site.peak {
+            background: linear-gradient(135deg, #BF5700, #8B3A00);
+            border-color: #6B2A00;
+            animation: peakPulse 2s infinite;
+        }
+
+        @keyframes peakPulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 0 0 0 rgba(191, 87, 0, 0.4); }
+            50% { box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 0 0 15px rgba(191, 87, 0, 0); }
+        }
+
+        .power-site-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .power-site-value {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .power-site-label {
+            font-size: 0.7rem;
+            opacity: 0.95;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .power-flow-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(191, 87, 0, 0.4), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .power-tooltip {
+            position: absolute;
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+            border: 2px solid var(--primary-orange);
+            min-width: 220px;
+        }
+
+        .power-tooltip-title {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .power-tooltip-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .power-tooltip-label {
+            color: var(--text-gray);
+        }
+
+        .power-tooltip-value {
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+
+        .power-map-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--ut-gray);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .power-filter-group,
+        .power-time-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .power-filter-group label,
+        .power-time-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        .power-time-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .power-map-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--ut-gray);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .power-map-legend {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .legend-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .legend-gradient {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .power-map-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .power-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .power-stat .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .power-stat .stat-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .power-site-detail-panel {
+            position: absolute;
+            top: 50%;
+            right: -400px;
+            width: 380px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 200;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .power-site-detail-panel.active {
+            right: 20px;
+        }
+
+        .power-site-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--ut-gray);
+        }
+
+        .power-site-detail-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .power-site-detail-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: color 0.3s ease;
+        }
+
+        .power-site-detail-close:hover {
+            color: var(--primary-orange);
+        }
+
+        .power-site-detail-chart {
+            height: 200px;
+            margin: 1rem 0;
+        }
+
+        .power-pulse-ring {
+            position: absolute;
+            border: 2px solid rgba(191, 87, 0, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: pulseRing 2s infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        .power-heat-wave {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: heatWave 3s infinite;
+        }
+
+        @keyframes heatWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.1;
+            }
+        }
+
+        .power-flow-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #BF5700;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #BF5700, 0 0 16px rgba(191, 87, 0, 0.5);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Shading Maps Styles */
+        .shading-map-container {
+            position: relative;
+            height: 700px;
+            background: #2d5016;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--ut-gray);
+            margin-bottom: 1rem;
+            cursor: crosshair;
+        }
+
+        .map-base-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: 
+                /* Parking lot base */
+                repeating-linear-gradient(90deg, 
+                    transparent 0px, 
+                    transparent 48px, 
+                    rgba(255,255,255,0.1) 48px, 
+                    rgba(255,255,255,0.1) 50px
+                ),
+                repeating-linear-gradient(0deg, 
+                    transparent 0px, 
+                    transparent 48px, 
+                    rgba(255,255,255,0.1) 48px, 
+                    rgba(255,255,255,0.1) 50px
+                ),
+                /* Roads */
+                linear-gradient(90deg, #4a4a4a 0%, #4a4a4a 100%),
+                /* Grass/landscape */
+                radial-gradient(ellipse at 20% 30%, #3d6b1f 0%, #2d5016 50%),
+                radial-gradient(ellipse at 80% 70%, #3d6b1f 0%, #2d5016 50%),
+                /* Base */
+                #2d5016;
+            background-size: 
+                50px 50px,
+                50px 50px,
+                100% 15%,
+                40% 30%,
+                40% 30%,
+                100% 100%;
+            background-position: 
+                0 0,
+                0 0,
+                0 20%,
+                0 0,
+                100% 100%,
+                0 0;
+            z-index: 1;
+        }
+
+        .heatmap-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .heatmap-cell {
+            position: absolute;
+            border-radius: 4px;
+            transition: opacity 0.3s ease;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .heatmap-cell:hover {
+            opacity: 1 !important;
+            z-index: 15;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .shade-area-marker {
+            position: absolute;
+            border: 3px dashed rgba(0, 204, 255, 0.8);
+            background: rgba(0, 204, 255, 0.15);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 4;
+            box-shadow: inset 0 0 20px rgba(0, 204, 255, 0.3);
+        }
+
+        .shade-area-label {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 204, 255, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 5;
+        }
+
+        .map-legend-scale {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            z-index: 20;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .scale-title {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .scale-gradient {
+            height: 20px;
+            background: linear-gradient(to right, 
+                #0066CC 0%,
+                #00CCFF 25%,
+                #FFCC00 50%,
+                #FF6600 75%,
+                #CC0000 100%
+            );
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #ccc;
+        }
+
+        .map-info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 1.5rem;
+            border-radius: 12px;
+            z-index: 20;
+            min-width: 280px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(191, 87, 0, 0.5);
+        }
+
+        .info-panel-title {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-panel-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-panel-metric:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .metric-label {
+            color: #ccc;
+            font-size: 0.875rem;
+        }
+
+        .metric-value {
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .metric-value.highlight {
+            color: #FF6600;
+            font-size: 1rem;
+        }
+
+        .comparison-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-toggle label {
+            color: white;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .before-after-overlay {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 15;
+            transition: width 0.5s ease;
+        }
+
+        .comparison-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: rgba(191, 87, 0, 0.8);
+            z-index: 16;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(191, 87, 0, 0.5);
+        }
+
+        .comparison-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(191, 87, 0, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 17;
+        }
+
+        .comparison-label.before {
+            left: 10px;
+        }
+
+        .comparison-label.after {
+            right: 10px;
+        }
+
+        .shading-map-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--ut-gray);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .shading-filter-group,
+        .shading-time-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .shading-filter-group label,
+        .shading-time-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .shading-time-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .shading-stats-mini {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-mini .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .stat-mini .stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .shading-map-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--ut-gray);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .shading-map-legend {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .shading-site-info {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .site-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .info-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .shading-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 100;
+            pointer-events: none;
+            border: 2px solid var(--primary-orange);
+            min-width: 220px;
+            backdrop-filter: blur(10px);
+        }
+
+        .shading-tooltip-title {
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .shading-tooltip-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .shading-tooltip-label {
+            color: #ccc;
+        }
+
+        .shading-tooltip-value {
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section id="data-layer" class="data-layer-section" style="padding-top: 120px; background: #f8f9fa; min-height: 100vh;">
+        <div class="dashboard-container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div>
+                    <h1 class="dashboard-title">Digital Twin Data Dashboard</h1>
+                    <p class="dashboard-subtitle">Real-time urban data insights from SunUrban installations</p>
+                </div>
+                <div class="time-selector">
+                    <button class="time-btn" data-period="24h">24H</button>
+                    <button class="time-btn active" data-period="7d">7D</button>
+                    <button class="time-btn" data-period="30d">30D</button>
+                    <button class="time-btn" data-period="1y">1Y</button>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Total Revenue</span>
+                        <div class="kpi-icon"><i class="fas fa-dollar-sign"></i></div>
+                    </div>
+                    <div class="kpi-value">$225k</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12.5% vs last period</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Active Sites</span>
+                        <div class="kpi-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+1 new site</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Data Points/Day</span>
+                        <div class="kpi-icon"><i class="fas fa-database"></i></div>
+                    </div>
+                    <div class="kpi-value">2.4M</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8.3% growth</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Active Licenses</span>
+                        <div class="kpi-icon"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="kpi-value">47</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+5 this month</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Uptime</span>
+                        <div class="kpi-icon"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                    <div class="kpi-value">99.8%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+0.2% improvement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Shading Maps with Heat Hotspots -->
+                <div class="dashboard-card span-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Shading Maps - Heat Hotspots & Thermal Analysis</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" id="refreshShadingMap" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+                            <button class="card-action-btn" id="shadingMapFilter" title="Filter"><i class="fas fa-filter"></i></button>
+                            <button class="card-action-btn" title="Download"><i class="fas fa-download"></i></button>
+                            <button class="card-action-btn" title="Expand"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="shading-map-controls">
+                        <div class="shading-filter-group">
+                            <label>View:</label>
+                            <button class="filter-btn active" data-view="heat">Heat Map</button>
+                            <button class="filter-btn" data-view="shade">Shade Coverage</button>
+                            <button class="filter-btn" data-view="thermal">Thermal</button>
+                        </div>
+                        <div class="shading-time-group">
+                            <label>Time:</label>
+                            <select id="shadingTimeSelect" class="shading-time-select">
+                                <option value="now">Now</option>
+                                <option value="morning">Morning (6-12)</option>
+                                <option value="afternoon">Afternoon (12-18)</option>
+                                <option value="evening">Evening (18-22)</option>
+                                <option value="day">Full Day</option>
+                            </select>
+                        </div>
+                        <div class="shading-stats-mini">
+                            <div class="stat-mini">
+                                <span class="stat-label">Hotspots:</span>
+                                <span class="stat-value" id="hotspotCount">12</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span class="stat-label">Max Temp:</span>
+                                <span class="stat-value" id="maxTemp">42.3°C</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span class="stat-label">Shade Coverage:</span>
+                                <span class="stat-value" id="shadeCoverage">68%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shading-map-container" id="shadingMapContainer">
+                        <!-- Map will be populated by JavaScript -->
+                    </div>
+                    <div class="shading-map-footer">
+                        <div class="shading-map-legend">
+                            <div class="legend-title">Heat Intensity</div>
+                            <div class="legend-gradient">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #0066CC;"></div>
+                                    <span>Cool</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #00CCFF;"></div>
+                                    <span>Moderate</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #FFCC00;"></div>
+                                    <span>Warm</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #FF6600;"></div>
+                                    <span>Hot</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #CC0000;"></div>
+                                    <span>Critical</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shading-site-info">
+                            <div class="site-info-item">
+                                <span class="info-label">Site:</span>
+                                <span class="info-value" id="selectedSite">South Congress</span>
+                            </div>
+                            <div class="site-info-item">
+                                <span class="info-label">Data Points:</span>
+                                <span class="info-value" id="dataPoints">2,450</span>
+                            </div>
+                            <div class="site-info-item">
+                                <span class="info-label">Last Update:</span>
+                                <span class="info-value" id="lastUpdate">2s ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Data Stream -->
+                <div class="dashboard-card span-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Live Data Stream</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="data-stream" id="dataStream">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Site Status -->
+                <div class="dashboard-card span-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Site Status</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn"><i class="fas fa-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div id="siteStatus">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Vacant Parking Spot Data -->
+                <div class="dashboard-card span-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Vacant Parking Spot Data</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn"><i class="fas fa-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div id="vacantParkingData">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                    <div class="chart-container" style="height: 200px; margin-top: 1rem;">
+                        <canvas id="parkingOccupancyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Vacant Parking Spot Map -->
+                <div class="dashboard-card span-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Vacant Parking Spot Map - Real-Time Availability & Rates</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" id="refreshParkingMap" title="Refresh Data"><i class="fas fa-sync-alt"></i></button>
+                            <button class="card-action-btn" id="toggleView" title="Toggle View"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="parking-map-container">
+                        <div class="parking-map-header">
+                            <div class="parking-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Spots</span>
+                                    <span class="stat-value" id="totalSpots">1,450</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Vacant Now</span>
+                                    <span class="stat-value vacant-count" id="vacantCount">453</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg Rate</span>
+                                    <span class="stat-value" id="avgRate">$2.50/hr</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="parkingSpotMap" class="parking-map-content">
+                            <!-- Map will be populated by JavaScript -->
+                        </div>
+                        <div class="parking-legend">
+                            <div class="legend-title">Legend</div>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color vacant"></div>
+                                    <span>Vacant</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color occupied"></div>
+                                    <span>Occupied</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color ev-charging"></div>
+                                    <span>EV Charging</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="parkingTooltip" class="parking-tooltip"></div>
+                    </div>
+                </div>
+
+                <!-- Power Profiles Map & Chart -->
+                <div class="dashboard-card span-8">
+                    <div class="card-header">
+                        <h3 class="card-title">Power Profiles Map</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" id="powerMapPlayPause" title="Play/Pause Animation"><i class="fas fa-pause"></i></button>
+                            <button class="card-action-btn" id="refreshPowerMap" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+                            <button class="card-action-btn" id="powerMapFilter" title="Filter"><i class="fas fa-filter"></i></button>
+                            <button class="card-action-btn" title="Expand"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="power-map-controls">
+                        <div class="power-filter-group">
+                            <label>View:</label>
+                            <button class="filter-btn active" data-filter="all">All Sites</button>
+                            <button class="filter-btn" data-filter="peak">Peak Only</button>
+                            <button class="filter-btn" data-filter="high">High+</button>
+                        </div>
+                        <div class="power-time-group">
+                            <label>Time:</label>
+                            <select id="powerTimeSelect" class="power-time-select">
+                                <option value="now">Now</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="power-profiles-map" id="powerProfilesMap">
+                        <!-- Map will be populated by JavaScript -->
+                    </div>
+                    <div class="power-map-footer">
+                        <div class="power-map-legend">
+                            <div class="legend-title">Power Intensity</div>
+                            <div class="legend-gradient">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #e3f2fd;"></div>
+                                    <span>Low</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #90caf9;"></div>
+                                    <span>Medium</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #42a5f5;"></div>
+                                    <span>High</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #BF5700;"></div>
+                                    <span>Peak</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="power-map-stats">
+                            <div class="power-stat">
+                                <span class="stat-label">Total Power:</span>
+                                <span class="stat-value" id="totalPowerValue">1,730 kW</span>
+                            </div>
+                            <div class="power-stat">
+                                <span class="stat-label">Avg Efficiency:</span>
+                                <span class="stat-value" id="avgEfficiencyValue">94.0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Profiles Chart -->
+                <div class="dashboard-card span-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Power Profile Trends</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" title="Download"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="powerProfilesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Power Profile Details -->
+                <div class="dashboard-card span-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Power Profile Analysis</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" id="powerProfileFilter" title="Filter"><i class="fas fa-filter"></i></button>
+                            <button class="card-action-btn" title="Download"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-container large">
+                        <canvas id="powerProfileAnalysisChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="dashboard-card span-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Data Transactions</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn"><i class="fas fa-filter"></i></button>
+                            <button class="card-action-btn"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Data Type</th>
+                                <th>Site</th>
+                                <th>Customer</th>
+                                <th>Volume</th>
+                                <th>Revenue</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes ripple {
+            0% {
+                r: 20;
+                opacity: 0.5;
+            }
+            100% {
+                r: 40;
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+    // Initialize dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Time selector functionality
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateDashboard(this.dataset.period);
+            });
+        });
+
+        // Initialize charts
+        initCharts();
+        
+        // Initialize interactive components
+        initDataStream();
+        initSiteStatus();
+        initVacantParkingData();
+        initDataTable();
+        initParkingSpotMap();
+        initPowerProfiles();
+        initShadingMaps();
+
+        // Simulate real-time updates
+        setInterval(updateDataStream, 3000);
+        setInterval(updateKPIs, 5000);
+    });
+
+    function updateDashboard(period) {
+        console.log('Updating dashboard for period:', period);
+        // In a real implementation, this would fetch new data based on the selected period
+    }
+
+    function initCharts() {
+        // Charts initialization (Revenue Growth Trend moved to financials page)
+    }
+
+    function initDataStream() {
+        const stream = document.getElementById('dataStream');
+        const streamData = [
+            { icon: '☀️', label: 'Shading Map Update', site: 'South Congress', value: '2.4k points', time: '2s ago', color: '#FFA500' },
+            { icon: '🌡️', label: 'Thermal Reading', site: 'UT Campus', value: '32.5°C', time: '5s ago', color: '#FF6B6B' },
+            { icon: '👥', label: 'Footfall Detection', site: 'Austin Airport', value: '156 vehicles', time: '8s ago', color: '#95E1D3' },
+            { icon: '🔌', label: 'EV Charging Event', site: 'South Congress', value: '2.3 kWh', time: '12s ago', color: '#4ECDC4' },
+            { icon: '⚡', label: 'Power Profile', site: 'UT Campus', value: '380 kW', time: '15s ago', color: '#FFE66D' },
+            { icon: '☀️', label: 'Shading Map Update', site: 'Austin Airport', value: '3.1k points', time: '18s ago', color: '#FFA500' }
+        ];
+
+        streamData.forEach(item => {
+            const streamItem = document.createElement('div');
+            streamItem.className = 'stream-item';
+            streamItem.innerHTML = `
+                <div class="stream-icon" style="background: ${item.color}20; color: ${item.color};">
+                    ${item.icon}
+                </div>
+                <div class="stream-content">
+                    <div class="stream-label">${item.label}</div>
+                    <div class="stream-meta">${item.site} • ${item.time}</div>
+                </div>
+                <div class="stream-value">${item.value}</div>
+            `;
+            stream.appendChild(streamItem);
+        });
+    }
+
+    function updateDataStream() {
+        const stream = document.getElementById('dataStream');
+        const items = stream.querySelectorAll('.stream-item');
+        if (items.length > 0) {
+            items[items.length - 1].remove();
+        }
+
+        const newItems = [
+            { icon: '☀️', label: 'Shading Map Update', site: 'South Congress', value: '2.4k points', time: 'Just now', color: '#FFA500' },
+            { icon: '🌡️', label: 'Thermal Reading', site: 'UT Campus', value: '32.5°C', time: 'Just now', color: '#FF6B6B' },
+            { icon: '👥', label: 'Footfall Detection', site: 'Austin Airport', value: '156 vehicles', time: 'Just now', color: '#95E1D3' },
+            { icon: '🔌', label: 'EV Charging Event', site: 'South Congress', value: '2.3 kWh', time: 'Just now', color: '#4ECDC4' }
+        ];
+        const item = newItems[Math.floor(Math.random() * newItems.length)];
+
+        const streamItem = document.createElement('div');
+        streamItem.className = 'stream-item';
+        streamItem.style.opacity = '0';
+        streamItem.innerHTML = `
+            <div class="stream-icon" style="background: ${item.color}20; color: ${item.color};">
+                ${item.icon}
+            </div>
+            <div class="stream-content">
+                <div class="stream-label">${item.label}</div>
+                <div class="stream-meta">${item.site} • ${item.time}</div>
+            </div>
+            <div class="stream-value">${item.value}</div>
+        `;
+        stream.insertBefore(streamItem, stream.firstChild);
+        setTimeout(() => streamItem.style.opacity = '1', 10);
+    }
+
+    function initSiteStatus() {
+        const container = document.getElementById('siteStatus');
+        const sites = [
+            { name: 'South Congress', capacity: '550 kW', dataPoints: '2.1M/day', status: 'active', temp: '32°C', vehicles: '142' },
+            { name: 'UT Campus', capacity: '380 kW', dataPoints: '1.8M/day', status: 'active', temp: '31°C', vehicles: '98' },
+            { name: 'Austin Airport', capacity: '800 kW', dataPoints: '3.2M/day', status: 'active', temp: '34°C', vehicles: '287' }
+        ];
+
+        sites.forEach((site, index) => {
+            const siteCard = document.createElement('div');
+            siteCard.className = 'site-card' + (index === 0 ? ' active' : '');
+            siteCard.innerHTML = `
+                <div class="site-header">
+                    <span class="site-name">${site.name}</span>
+                    <div class="site-status"></div>
+                </div>
+                <div class="site-metrics">
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.capacity}</div>
+                        <div class="site-metric-label">Capacity</div>
+                    </div>
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.temp}</div>
+                        <div class="site-metric-label">Temp</div>
+                    </div>
+                    <div class="site-metric">
+                        <div class="site-metric-value">${site.vehicles}</div>
+                        <div class="site-metric-label">Vehicles</div>
+                    </div>
+                </div>
+            `;
+            siteCard.addEventListener('click', () => {
+                document.querySelectorAll('.site-card').forEach(c => c.classList.remove('active'));
+                siteCard.classList.add('active');
+            });
+            container.appendChild(siteCard);
+        });
+    }
+
+    function initVacantParkingData() {
+        const container = document.getElementById('vacantParkingData');
+        const parkingData = [
+            { site: 'South Congress', total: 450, occupied: 312, vacant: 138, occupancy: '69%', vacantPct: '31%', icon: '🅿️', color: '#BF5700' },
+            { site: 'UT Campus', total: 320, occupied: 198, vacant: 122, occupancy: '62%', vacantPct: '38%', icon: '🅿️', color: '#F78E1E' },
+            { site: 'Austin Airport', total: 680, occupied: 487, vacant: 193, occupancy: '72%', vacantPct: '28%', icon: '🅿️', color: '#8B3A00' }
+        ];
+
+        parkingData.forEach(site => {
+            const siteItem = document.createElement('div');
+            siteItem.className = 'stream-item';
+            siteItem.innerHTML = `
+                <div class="stream-icon" style="background: ${site.color}20; color: ${site.color};">
+                    ${site.icon}
+                </div>
+                <div class="stream-content" style="flex: 1;">
+                    <div class="stream-label">${site.site}</div>
+                    <div class="stream-meta" style="display: flex; gap: 1rem; margin-top: 0.25rem;">
+                        <span>Total: ${site.total}</span>
+                        <span>Vacant: <strong style="color: ${site.color};">${site.vacant}</strong></span>
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.25rem;">
+                            <span>Occupancy</span>
+                            <span>${site.occupancy}</span>
+                        </div>
+                        <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                            <div style="width: ${site.occupancy}; height: 100%; background: ${site.color}; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(siteItem);
+        });
+
+        // Initialize parking occupancy chart
+        const parkingCtx = document.getElementById('parkingOccupancyChart');
+        if (parkingCtx) {
+            new Chart(parkingCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['South Congress', 'UT Campus', 'Austin Airport'],
+                    datasets: [
+                        {
+                            label: 'Occupied',
+                            data: [312, 198, 487],
+                            backgroundColor: '#BF5700',
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Vacant',
+                            data: [138, 122, 193],
+                            backgroundColor: '#95E1D3',
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { usePointStyle: true, padding: 10 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + ' spots';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' },
+                            ticks: { 
+                                color: '#666',
+                                stepSize: 100
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function initDataTable() {
+        const tbody = document.getElementById('dataTableBody');
+        const transactions = [
+            { time: '2025-01-15 14:32', type: 'Shading Maps', site: 'South Congress', customer: 'Urban Analytics', volume: '2.4M', revenue: '$1,250', status: 'success' },
+            { time: '2025-01-15 14:28', type: 'Thermal Data', site: 'UT Campus', customer: 'Research', volume: '1.8M', revenue: '$850', status: 'success' },
+            { time: '2025-01-15 14:25', type: 'Footfall', site: 'Austin Airport', customer: 'Retail Operators', volume: '3.2M', revenue: '$1,450', status: 'success' },
+            { time: '2025-01-15 14:20', type: 'EV Charging', site: 'South Congress', customer: 'Fleet', volume: '850k', revenue: '$420', status: 'success' },
+            { time: '2025-01-15 14:15', type: 'Power Profiles', site: 'UT Campus', customer: 'Insurance', volume: '1.2M', revenue: '$680', status: 'success' },
+            { time: '2025-01-15 14:10', type: 'Uptime', site: 'Austin Airport', customer: 'Urban Analytics', volume: '2.1M', revenue: '$950', status: 'success' }
+        ];
+
+        transactions.forEach(tx => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${tx.time}</td>
+                <td><strong>${tx.type}</strong></td>
+                <td>${tx.site}</td>
+                <td>${tx.customer}</td>
+                <td>${tx.volume}</td>
+                <td><strong style="color: var(--primary-orange);">${tx.revenue}</strong></td>
+                <td><span class="badge badge-success">Completed</span></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function initParkingSpotMap() {
+        const mapContainer = document.getElementById('parkingSpotMap');
+        if (!mapContainer) return;
+
+        // Park ATX-style rates (dynamic pricing based on demand)
+        const parkingSites = [
+            {
+                name: 'South Congress',
+                totalSpots: 450,
+                vacantSpots: 138,
+                occupiedSpots: 312,
+                rates: {
+                    current: 2.50,
+                    peak: 4.00,
+                    offPeak: 1.50,
+                    evCharging: 3.50
+                },
+                spots: generateParkingSpots(450, 138, 2.50, 3.50)
+            },
+            {
+                name: 'UT Campus',
+                totalSpots: 320,
+                vacantSpots: 122,
+                occupiedSpots: 198,
+                rates: {
+                    current: 1.75,
+                    peak: 3.00,
+                    offPeak: 1.00,
+                    evCharging: 2.75
+                },
+                spots: generateParkingSpots(320, 122, 1.75, 2.75)
+            },
+            {
+                name: 'Austin Airport',
+                totalSpots: 680,
+                vacantSpots: 193,
+                occupiedSpots: 487,
+                rates: {
+                    current: 3.25,
+                    peak: 5.50,
+                    offPeak: 2.00,
+                    evCharging: 4.50
+                },
+                spots: generateParkingSpots(680, 193, 3.25, 4.50)
+            }
+        ];
+
+        // Generate parking spots array
+        function generateParkingSpots(total, vacant, rate, evRate) {
+            const spots = [];
+            const evSpots = Math.floor(total * 0.1); // 10% EV spots
+            let vacantCount = 0;
+            
+            for (let i = 0; i < total; i++) {
+                const isEV = i < evSpots;
+                const isVacant = vacantCount < vacant && Math.random() > 0.3;
+                if (isVacant) vacantCount++;
+                
+                spots.push({
+                    id: i,
+                    status: isVacant ? 'vacant' : 'occupied',
+                    rate: isEV ? evRate : rate,
+                    ev: isEV
+                });
+            }
+            
+            // Shuffle to randomize positions
+            return spots.sort(() => Math.random() - 0.5);
+        }
+
+        // Render parking sites
+        parkingSites.forEach((site, siteIndex) => {
+            const siteCard = document.createElement('div');
+            siteCard.className = 'parking-site-card';
+            siteCard.dataset.siteIndex = siteIndex;
+
+            // Calculate grid columns (approximately square grid)
+            const cols = Math.ceil(Math.sqrt(site.totalSpots));
+            const displaySpots = site.spots.slice(0, Math.min(100, site.totalSpots)); // Show up to 100 spots for performance
+
+            siteCard.innerHTML = `
+                <div class="site-header-info">
+                    <div class="site-name-rate">
+                        <div class="site-name-large">${site.name}</div>
+                        <div class="site-rate-badge">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>$${site.rates.current.toFixed(2)}/hr</span>
+                        </div>
+                    </div>
+                    <div class="site-metrics-grid">
+                        <div class="site-metric-box">
+                            <div class="site-metric-value">${site.totalSpots}</div>
+                            <div class="site-metric-label">Total Spots</div>
+                        </div>
+                        <div class="site-metric-box">
+                            <div class="site-metric-value" style="color: #28A745;">${site.vacantSpots}</div>
+                            <div class="site-metric-label">Vacant</div>
+                        </div>
+                        <div class="site-metric-box">
+                            <div class="site-metric-value" style="color: #DC3545;">${site.occupiedSpots}</div>
+                            <div class="site-metric-label">Occupied</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parking-grid" style="grid-template-columns: repeat(${cols}, 1fr);">
+                    ${displaySpots.map((spot, idx) => `
+                        <div class="parking-spot ${spot.status} ${spot.ev ? 'ev-charging' : ''}" 
+                             data-spot-id="${spot.id}"
+                             data-rate="${spot.rate}"
+                             data-status="${spot.status}"
+                             data-ev="${spot.ev}"
+                             title="${spot.status === 'vacant' ? 'Vacant' : 'Occupied'} • $${spot.rate.toFixed(2)}/hr${spot.ev ? ' • EV Charging' : ''}">
+                            ${spot.ev && spot.status === 'vacant' ? '⚡' : spot.status === 'vacant' ? '✓' : '✗'}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            mapContainer.appendChild(siteCard);
+        });
+
+        // Add tooltip functionality
+        const tooltip = document.getElementById('parkingTooltip');
+        const spots = document.querySelectorAll('.parking-spot');
+
+        spots.forEach(spot => {
+            spot.addEventListener('mouseenter', function(e) {
+                if (this.dataset.status === 'vacant') {
+                    const rate = parseFloat(this.dataset.rate);
+                    const isEV = this.dataset.ev === 'true';
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-header">${isEV ? '⚡ EV Charging Spot' : '🅿️ Parking Spot'}</div>
+                        <div class="tooltip-content">
+                            <div><strong>Status:</strong> Vacant</div>
+                            <div><strong>Rate:</strong></div>
+                            <div class="tooltip-rate">$${rate.toFixed(2)}/hour</div>
+                            ${isEV ? '<div style="margin-top: 0.5rem; color: #FFC107;"><i class="fas fa-bolt"></i> EV Charging Available</div>' : ''}
+                        </div>
+                    `;
+                    
+                    const rect = this.getBoundingClientRect();
+                    const containerRect = mapContainer.getBoundingClientRect();
+                    
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = (rect.left - containerRect.left + rect.width / 2 - 100) + 'px';
+                    tooltip.style.top = (rect.top - containerRect.top - 120) + 'px';
+                }
+            });
+
+            spot.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+            });
+
+            spot.addEventListener('click', function() {
+                if (this.dataset.status === 'vacant') {
+                    // Add click animation
+                    this.style.transform = 'scale(1.3) rotate(10deg)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                }
+            });
+        });
+
+        // Update stats
+        updateParkingStats(parkingSites);
+
+        // Add refresh button functionality
+        const refreshBtn = document.getElementById('refreshParkingMap');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                this.classList.add('spinning');
+                setTimeout(() => {
+                    this.classList.remove('spinning');
+                    updateParkingMap();
+                }, 500);
+            });
+        }
+
+        // Auto-refresh every 5 seconds
+        setInterval(updateParkingMap, 5000);
+    }
+
+    function generateParkingSpots(total, vacant, rate, evRate) {
+        const spots = [];
+        const evSpots = Math.floor(total * 0.1);
+        let vacantCount = 0;
+        
+        for (let i = 0; i < total; i++) {
+            const isEV = i < evSpots;
+            const isVacant = vacantCount < vacant && Math.random() > 0.3;
+            if (isVacant) vacantCount++;
+            
+            spots.push({
+                id: i,
+                status: isVacant ? 'vacant' : 'occupied',
+                rate: isEV ? evRate : rate,
+                ev: isEV
+            });
+        }
+        
+        return spots.sort(() => Math.random() - 0.5);
+    }
+
+    function updateParkingStats(sites) {
+        const totalSpots = sites.reduce((sum, site) => sum + site.totalSpots, 0);
+        const totalVacant = sites.reduce((sum, site) => sum + site.vacantSpots, 0);
+        const avgRate = sites.reduce((sum, site) => sum + site.rates.current, 0) / sites.length;
+
+        document.getElementById('totalSpots').textContent = totalSpots.toLocaleString();
+        document.getElementById('vacantCount').textContent = totalVacant;
+        document.getElementById('avgRate').textContent = `$${avgRate.toFixed(2)}/hr`;
+    }
+
+    function updateParkingMap() {
+        const spots = document.querySelectorAll('.parking-spot.vacant, .parking-spot.occupied');
+        spots.forEach(spot => {
+            if (Math.random() > 0.95) { // 5% chance to change
+                const currentStatus = spot.dataset.status;
+                if (currentStatus === 'vacant') {
+                    spot.classList.remove('vacant');
+                    spot.classList.add('occupied');
+                    spot.dataset.status = 'occupied';
+                    spot.textContent = '✗';
+                } else {
+                    spot.classList.remove('occupied');
+                    spot.classList.add('vacant');
+                    spot.dataset.status = 'vacant';
+                    spot.textContent = spot.dataset.ev === 'true' ? '⚡' : '✓';
+                }
+            }
+        });
+
+        // Update stats
+        const sites = document.querySelectorAll('.parking-site-card');
+        sites.forEach(siteCard => {
+            const vacantSpots = siteCard.querySelectorAll('.parking-spot.vacant').length;
+            const totalSpots = siteCard.querySelectorAll('.parking-spot').length;
+            const occupiedSpots = totalSpots - vacantSpots;
+            
+            const vacantValue = siteCard.querySelector('.site-metric-value[style*="color: #28A745"]');
+            const occupiedValue = siteCard.querySelector('.site-metric-value[style*="color: #DC3545"]');
+            
+            if (vacantValue) vacantValue.textContent = vacantSpots;
+            if (occupiedValue) occupiedValue.textContent = occupiedSpots;
+        });
+
+        // Update header stats
+        const allVacant = document.querySelectorAll('.parking-spot.vacant').length;
+        document.getElementById('vacantCount').textContent = allVacant;
+    }
+
+    function updateKPIs() {
+        // Simulate KPI updates
+        const kpiValues = document.querySelectorAll('.kpi-value');
+        kpiValues.forEach(kpi => {
+            // Add subtle animation
+            kpi.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                kpi.style.transform = 'scale(1)';
+            }, 200);
+        });
+    }
+
+    function initPowerProfiles() {
+        initPowerProfilesMap();
+        initPowerProfilesChart();
+        initPowerProfileAnalysisChart();
+    }
+
+    function initPowerProfilesMap() {
+        const mapContainer = document.getElementById('powerProfilesMap');
+        if (!mapContainer) {
+            console.error('Power profiles map container not found');
+            return;
+        }
+
+        // Clear container
+        mapContainer.innerHTML = '';
+
+        // Add background
+        const background = document.createElement('div');
+        background.className = 'power-map-background';
+        mapContainer.appendChild(background);
+
+        // Add title
+        const title = document.createElement('div');
+        title.className = 'power-map-title';
+        title.textContent = 'Austin, Texas - Power Generation Sites';
+        mapContainer.appendChild(title);
+
+        // Create tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'power-tooltip';
+        tooltip.id = 'powerTooltip';
+        mapContainer.appendChild(tooltip);
+
+        // Power profile data for sites with more details
+        const powerSites = [
+            {
+                name: 'South Congress',
+                icon: '☀️',
+                x: 20,
+                y: 30,
+                current: 550,
+                peak: 620,
+                avg: 485,
+                min: 320,
+                intensity: 'high',
+                efficiency: '94.2%',
+                status: 'active',
+                capacity: 550,
+                generation: '2.1M kWh/year'
+            },
+            {
+                name: 'UT Campus',
+                icon: '☀️',
+                x: 50,
+                y: 25,
+                current: 380,
+                peak: 420,
+                avg: 340,
+                min: 220,
+                intensity: 'medium',
+                efficiency: '92.8%',
+                status: 'active',
+                capacity: 380,
+                generation: '1.5M kWh/year'
+            },
+            {
+                name: 'Austin Airport',
+                icon: '☀️',
+                x: 80,
+                y: 35,
+                current: 800,
+                peak: 920,
+                avg: 720,
+                min: 480,
+                intensity: 'peak',
+                efficiency: '95.1%',
+                status: 'active',
+                capacity: 800,
+                generation: '3.2M kWh/year'
+            }
+        ];
+
+        // Create site markers
+        powerSites.forEach((site, index) => {
+            const siteMarker = document.createElement('div');
+            siteMarker.className = `power-site ${site.intensity}`;
+            siteMarker.style.left = `${site.x}%`;
+            siteMarker.style.top = `${site.y}%`;
+            siteMarker.dataset.siteName = site.name;
+            siteMarker.dataset.current = site.current;
+            siteMarker.dataset.peak = site.peak;
+            siteMarker.dataset.avg = site.avg;
+            siteMarker.dataset.min = site.min;
+            siteMarker.dataset.efficiency = site.efficiency;
+            siteMarker.dataset.capacity = site.capacity;
+            siteMarker.dataset.generation = site.generation;
+            
+            siteMarker.innerHTML = `
+                <div class="power-site-icon">${site.icon}</div>
+                <div class="power-site-value">${site.current} kW</div>
+                <div class="power-site-label">${site.name}</div>
+            `;
+
+            // Add hover interactions
+            siteMarker.addEventListener('mouseenter', function(e) {
+                const siteData = powerSites.find(s => s.name === site.name);
+                if (!siteData) return;
+                
+                const rect = this.getBoundingClientRect();
+                const containerRect = mapContainer.getBoundingClientRect();
+                
+                tooltip.innerHTML = `
+                    <div class="power-tooltip-title">${siteData.name} ${siteData.icon}</div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Current Power:</span>
+                        <span class="power-tooltip-value">${siteData.current} kW</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Peak Power:</span>
+                        <span class="power-tooltip-value">${siteData.peak} kW</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Average Power:</span>
+                        <span class="power-tooltip-value">${siteData.avg} kW</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Minimum Power:</span>
+                        <span class="power-tooltip-value">${siteData.min} kW</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Capacity:</span>
+                        <span class="power-tooltip-value">${siteData.capacity} kW</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Annual Generation:</span>
+                        <span class="power-tooltip-value">${siteData.generation}</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Efficiency:</span>
+                        <span class="power-tooltip-value">${siteData.efficiency}</span>
+                    </div>
+                    <div class="power-tooltip-metric">
+                        <span class="power-tooltip-label">Intensity:</span>
+                        <span class="power-tooltip-value" style="text-transform: capitalize; font-weight: 700;">${siteData.intensity}</span>
+                    </div>
+                `;
+                
+                tooltip.style.display = 'block';
+                const tooltipLeft = rect.left - containerRect.left + rect.width / 2 - 110;
+                const tooltipTop = rect.top - containerRect.top - 200;
+                tooltip.style.left = Math.max(10, Math.min(tooltipLeft, containerRect.width - 230)) + 'px';
+                tooltip.style.top = Math.max(10, tooltipTop) + 'px';
+            });
+
+            siteMarker.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+            });
+
+            siteMarker.addEventListener('click', function() {
+                // Highlight selected site
+                document.querySelectorAll('.power-site').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Show detail panel
+                showPowerSiteDetail(site);
+                
+                // Update charts
+                updatePowerCharts(site.name);
+                
+                // Add click animation
+                this.style.transform = 'translate(-50%, -50%) scale(1.3)';
+                setTimeout(() => {
+                    this.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 200);
+            });
+
+            mapContainer.appendChild(siteMarker);
+        });
+
+        // Create connection lines between sites (showing power flow network)
+        // Lines connect the sites in a triangle pattern
+        setTimeout(() => {
+            createPowerFlowLine(mapContainer, 20, 30, 50, 25, '#4ECDC4');
+            createPowerFlowLine(mapContainer, 50, 25, 80, 35, '#4ECDC4');
+            createPowerFlowLine(mapContainer, 80, 35, 20, 30, '#4ECDC4');
+
+            // Add power flow indicators
+            startPowerFlowAnimation(mapContainer);
+            
+            // Add heat waves to sites
+            addHeatWaves(mapContainer, powerSites);
+            
+            // Add pulse rings to peak sites
+            addPulseRings(mapContainer, powerSites);
+        }, 100);
+
+        // Initialize interactive controls
+        initPowerMapControls(mapContainer, powerSites);
+        
+        // Initialize detail panel
+        initPowerSiteDetailPanel(mapContainer);
+
+        // Add refresh button handler
+        const refreshBtn = document.getElementById('refreshPowerMap');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                this.classList.add('spinning');
+                setTimeout(() => {
+                    this.classList.remove('spinning');
+                    updatePowerProfiles();
+                }, 500);
+            });
+        }
+    }
+
+    let powerFlowAnimationActive = true;
+    let powerFlowIntervals = [];
+
+    function createPowerFlowLine(container, x1, y1, x2, y2, color = '#BF5700') {
+        const line = document.createElement('div');
+        line.className = 'power-flow-line';
+        line.dataset.x1 = x1;
+        line.dataset.y1 = y1;
+        line.dataset.x2 = x2;
+        line.dataset.y2 = y2;
+        
+        // Calculate angle and length
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        
+        // Set position and rotation
+        line.style.position = 'absolute';
+        line.style.left = x1 + '%';
+        line.style.top = y1 + '%';
+        line.style.width = length + '%';
+        line.style.height = '3px';
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.transformOrigin = '0 0';
+        line.style.background = `linear-gradient(90deg, transparent, ${color}60, ${color}80, ${color}60, transparent)`;
+        line.style.zIndex = '1';
+        
+        container.appendChild(line);
+        return line;
+    }
+
+    function startPowerFlowAnimation(container) {
+        const lines = container.querySelectorAll('.power-flow-line');
+        powerFlowIntervals = [];
+        
+        lines.forEach((line, index) => {
+            const interval = setInterval(() => {
+                if (powerFlowAnimationActive) {
+                    createPowerParticle(container, line, index);
+                }
+            }, 1500 + index * 500);
+            powerFlowIntervals.push(interval);
+        });
+    }
+
+    function stopPowerFlowAnimation() {
+        powerFlowIntervals.forEach(interval => clearInterval(interval));
+        powerFlowIntervals = [];
+    }
+
+    function createPowerParticle(container, line, lineIndex) {
+        const particle = document.createElement('div');
+        particle.className = 'power-flow-particle';
+        
+        const x1 = parseFloat(line.dataset.x1);
+        const y1 = parseFloat(line.dataset.y1);
+        const x2 = parseFloat(line.dataset.x2);
+        const y2 = parseFloat(line.dataset.y2);
+        
+        const containerRect = container.getBoundingClientRect();
+        const startX = (x1 / 100) * containerRect.width;
+        const startY = (y1 / 100) * containerRect.height;
+        const endX = (x2 / 100) * containerRect.width;
+        const endY = (y2 / 100) * containerRect.height;
+        
+        const dx = endX - startX;
+        const dy = endY - startY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        
+        particle.style.left = startX + 'px';
+        particle.style.top = startY + 'px';
+        particle.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        particle.style.transformOrigin = 'center';
+        
+        const animId = `powerParticle${Date.now()}_${lineIndex}`;
+        const duration = 2 + Math.random();
+        
+        if (!document.getElementById(`powerParticleAnim${lineIndex}`)) {
+            const style = document.createElement('style');
+            style.id = `powerParticleAnim${lineIndex}`;
+            style.textContent = `
+                @keyframes powerParticleMove${lineIndex} {
+                    0% {
+                        transform: translate(-50%, -50%) translateX(0) rotate(${angle}deg);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    90% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(-50%, -50%) translateX(${distance}px) rotate(${angle}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        particle.style.animation = `powerParticleMove${lineIndex} ${duration}s linear`;
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+        }, duration * 1000);
+    }
+
+    function addHeatWaves(container, sites) {
+        sites.forEach(site => {
+            const heatWave = document.createElement('div');
+            heatWave.className = 'power-heat-wave';
+            heatWave.style.left = site.x + '%';
+            heatWave.style.top = site.y + '%';
+            heatWave.style.width = '120px';
+            heatWave.style.height = '120px';
+            heatWave.style.background = `radial-gradient(circle, rgba(191, 87, 0, 0.2) 0%, transparent 70%)`;
+            heatWave.style.transform = 'translate(-50%, -50%)';
+            container.appendChild(heatWave);
+        });
+    }
+
+    function addPulseRings(container, sites) {
+        sites.filter(s => s.intensity === 'peak').forEach(site => {
+            const ring = document.createElement('div');
+            ring.className = 'power-pulse-ring';
+            ring.style.left = site.x + '%';
+            ring.style.top = site.y + '%';
+            ring.style.width = '100px';
+            ring.style.height = '100px';
+            container.appendChild(ring);
+        });
+    }
+
+    function initPowerMapControls(container, sites) {
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                const siteMarkers = container.querySelectorAll('.power-site');
+                
+                siteMarkers.forEach(marker => {
+                    const intensity = marker.classList.contains('peak') ? 'peak' :
+                                    marker.classList.contains('high') ? 'high' :
+                                    marker.classList.contains('medium') ? 'medium' : 'low';
+                    
+                    if (filter === 'all' || 
+                        (filter === 'peak' && intensity === 'peak') ||
+                        (filter === 'high' && (intensity === 'peak' || intensity === 'high'))) {
+                        marker.style.opacity = '1';
+                        marker.style.pointerEvents = 'auto';
+                    } else {
+                        marker.style.opacity = '0.3';
+                        marker.style.pointerEvents = 'none';
+                    }
+                });
+            });
+        });
+
+        // Play/Pause button
+        const playPauseBtn = document.getElementById('powerMapPlayPause');
+        if (playPauseBtn) {
+            playPauseBtn.addEventListener('click', function() {
+                powerFlowAnimationActive = !powerFlowAnimationActive;
+                const icon = this.querySelector('i');
+                
+                if (powerFlowAnimationActive) {
+                    icon.className = 'fas fa-pause';
+                    startPowerFlowAnimation(container);
+                } else {
+                    icon.className = 'fas fa-play';
+                    stopPowerFlowAnimation();
+                }
+            });
+        }
+
+        // Time select
+        const timeSelect = document.getElementById('powerTimeSelect');
+        if (timeSelect) {
+            timeSelect.addEventListener('change', function() {
+                updatePowerMapForTime(this.value, sites, container);
+            });
+        }
+    }
+
+    function updatePowerMapForTime(timePeriod, sites, container) {
+        // Simulate different power values based on time
+        const multipliers = {
+            'now': 1,
+            'today': 0.95,
+            'week': 0.9,
+            'month': 0.85
+        };
+        
+        const multiplier = multipliers[timePeriod] || 1;
+        const siteMarkers = container.querySelectorAll('.power-site');
+        
+        siteMarkers.forEach((marker, index) => {
+            const site = sites[index];
+            if (!site) return;
+            
+            const newValue = Math.round(site.current * multiplier);
+            const valueEl = marker.querySelector('.power-site-value');
+            if (valueEl) {
+                valueEl.textContent = newValue + ' kW';
+                valueEl.style.animation = 'none';
+                setTimeout(() => {
+                    valueEl.style.animation = 'scale 0.3s ease';
+                }, 10);
+            }
+        });
+        
+        // Update total power
+        const totalPower = sites.reduce((sum, s) => sum + (s.current * multiplier), 0);
+        const totalPowerEl = document.getElementById('totalPowerValue');
+        if (totalPowerEl) {
+            totalPowerEl.textContent = Math.round(totalPower) + ' kW';
+        }
+    }
+
+    function initPowerSiteDetailPanel(container) {
+        const panel = document.createElement('div');
+        panel.className = 'power-site-detail-panel';
+        panel.id = 'powerSiteDetailPanel';
+        panel.innerHTML = `
+            <div class="power-site-detail-header">
+                <h3 class="power-site-detail-title">Site Details</h3>
+                <button class="power-site-detail-close">&times;</button>
+            </div>
+            <div id="powerSiteDetailContent"></div>
+        `;
+        container.parentElement.appendChild(panel);
+        
+        const closeBtn = panel.querySelector('.power-site-detail-close');
+        closeBtn.addEventListener('click', () => {
+            panel.classList.remove('active');
+        });
+    }
+
+    function showPowerSiteDetail(site) {
+        const panel = document.getElementById('powerSiteDetailPanel');
+        const content = document.getElementById('powerSiteDetailContent');
+        
+        if (!panel || !content) return;
+        
+        const ctx = document.createElement('canvas');
+        ctx.width = 300;
+        ctx.height = 200;
+        
+        // Create mini chart
+        setTimeout(() => {
+            const chartCtx = ctx.getContext('2d');
+            const hours = Array.from({length: 24}, (_, i) => i);
+            const data = hours.map(h => {
+                if (h >= 6 && h <= 18) {
+                    return Math.sin((h - 6) / 12 * Math.PI) * (site.peak - site.min) + site.min;
+                }
+                return site.min + Math.random() * 50;
+            });
+            
+            chartCtx.strokeStyle = '#BF5700';
+            chartCtx.lineWidth = 2;
+            chartCtx.beginPath();
+            data.forEach((value, i) => {
+                const x = (i / 23) * 300;
+                const y = 200 - ((value - site.min) / (site.peak - site.min)) * 180;
+                if (i === 0) chartCtx.moveTo(x, y);
+                else chartCtx.lineTo(x, y);
+            });
+            chartCtx.stroke();
+        }, 100);
+        
+        content.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #666;">Current:</span>
+                    <strong style="color: #BF5700; font-size: 1.25rem;">${site.current} kW</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #666;">Peak:</span>
+                    <strong>${site.peak} kW</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #666;">Average:</span>
+                    <strong>${site.avg} kW</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #666;">Efficiency:</span>
+                    <strong style="color: #28A745;">${site.efficiency}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #666;">Annual Generation:</span>
+                    <strong>${site.generation}</strong>
+                </div>
+            </div>
+            <div class="power-site-detail-chart">
+                <canvas id="powerSiteMiniChart"></canvas>
+            </div>
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">24-Hour Profile</div>
+                <div style="font-size: 0.75rem; color: #999;">Shows power generation pattern throughout the day</div>
+            </div>
+        `;
+        
+        panel.classList.add('active');
+        
+        // Initialize mini chart
+        setTimeout(() => {
+            const miniChartEl = document.getElementById('powerSiteMiniChart');
+            if (miniChartEl && typeof Chart !== 'undefined') {
+                new Chart(miniChartEl, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 24}, (_, i) => i + ':00'),
+                        datasets: [{
+                            label: 'Power (kW)',
+                            data: Array.from({length: 24}, (_, i) => {
+                                const h = i;
+                                if (h >= 6 && h <= 18) {
+                                    return Math.sin((h - 6) / 12 * Math.PI) * (site.peak - site.min) + site.min;
+                                }
+                                return site.min + Math.random() * 50;
+                            }),
+                            borderColor: '#BF5700',
+                            backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: false },
+                            x: { ticks: { maxTicksLimit: 6 } }
+                        }
+                    }
+                });
+            }
+        }, 200);
+    }
+
+    function initPowerProfilesChart() {
+        const ctx = document.getElementById('powerProfilesChart');
+        if (!ctx) return;
+
+        const hours = Array.from({length: 24}, (_, i) => i + ':00');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: 'Power Profile',
+                    data: Array.from({length: 24}, (_, i) => {
+                        const hour = i;
+                        if (hour >= 6 && hour <= 18) {
+                            return Math.sin((hour - 6) / 12 * Math.PI) * 400 + 500;
+                        }
+                        return 200 + Math.random() * 100;
+                    }),
+                    borderColor: '#BF5700',
+                    backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 0,
+                    pointHoverRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Power: ' + Math.round(context.parsed.y) + ' kW';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f0f0f0' },
+                        ticks: { 
+                            color: '#666',
+                            callback: function(value) {
+                                return value + ' kW';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#666', maxTicksLimit: 12 }
+                    }
+                }
+            }
+        });
+    }
+
+    function initPowerProfileAnalysisChart() {
+        const ctx = document.getElementById('powerProfileAnalysisChart');
+        if (!ctx) return;
+
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: days,
+                datasets: [
+                    {
+                        label: 'Peak Power',
+                        data: [620, 640, 620, 650, 630, 580, 590],
+                        backgroundColor: '#BF5700',
+                        borderRadius: 8
+                    },
+                    {
+                        label: 'Average Power',
+                        data: [485, 495, 480, 510, 500, 450, 470],
+                        backgroundColor: '#FFA500',
+                        borderRadius: 8
+                    },
+                    {
+                        label: 'Minimum Power',
+                        data: [320, 340, 310, 350, 330, 280, 300],
+                        backgroundColor: '#4ECDC4',
+                        borderRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { 
+                            color: '#2C2C2C',
+                            usePointStyle: true,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' kW';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: false,
+                        grid: { color: '#f0f0f0' },
+                        ticks: { color: '#666' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f0f0f0' },
+                        ticks: { 
+                            color: '#666',
+                            callback: function(value) {
+                                return value + ' kW';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function updatePowerCharts(siteName) {
+        // Update charts based on selected site
+        console.log('Updating charts for:', siteName);
+    }
+
+    function updatePowerProfiles() {
+        // Simulate real-time power profile updates
+        const sites = document.querySelectorAll('.power-site');
+        sites.forEach(site => {
+            const current = parseFloat(site.dataset.current);
+            const change = (Math.random() - 0.5) * (current * 0.05);
+            const newValue = Math.max(0, current + change);
+            
+            site.dataset.current = newValue.toFixed(0);
+            const valueEl = site.querySelector('.power-site-value');
+            if (valueEl) {
+                valueEl.textContent = Math.round(newValue) + 'kW';
+            }
+        });
+    }
+
+    function initShadingMaps() {
+        const mapContainer = document.getElementById('shadingMapContainer');
+        if (!mapContainer) {
+            console.error('Shading map container not found');
+            return;
+        }
+
+        // Clear container
+        mapContainer.innerHTML = '';
+        
+        console.log('Initializing GIS shading maps...');
+
+        // Add base map layer
+        const baseLayer = document.createElement('div');
+        baseLayer.className = 'map-base-layer';
+        mapContainer.appendChild(baseLayer);
+
+        // Add heatmap overlay
+        const heatmapOverlay = document.createElement('div');
+        heatmapOverlay.className = 'heatmap-overlay';
+        heatmapOverlay.id = 'heatmapOverlay';
+        mapContainer.appendChild(heatmapOverlay);
+
+        // Add comparison overlay
+        const beforeAfterOverlay = document.createElement('div');
+        beforeAfterOverlay.className = 'before-after-overlay';
+        beforeAfterOverlay.id = 'beforeAfterOverlay';
+        beforeAfterOverlay.style.display = 'none';
+        mapContainer.appendChild(beforeAfterOverlay);
+
+        const comparisonDivider = document.createElement('div');
+        comparisonDivider.className = 'comparison-divider';
+        comparisonDivider.id = 'comparisonDivider';
+        comparisonDivider.style.display = 'none';
+        mapContainer.appendChild(comparisonDivider);
+
+        // Add comparison labels
+        const beforeLabel = document.createElement('div');
+        beforeLabel.className = 'comparison-label before';
+        beforeLabel.textContent = 'Before';
+        beforeLabel.id = 'beforeLabel';
+        beforeLabel.style.display = 'none';
+        mapContainer.appendChild(beforeLabel);
+
+        const afterLabel = document.createElement('div');
+        afterLabel.className = 'comparison-label after';
+        afterLabel.textContent = 'After Solar Canopies';
+        afterLabel.id = 'afterLabel';
+        afterLabel.style.display = 'none';
+        mapContainer.appendChild(afterLabel);
+
+        // Add map legend scale
+        const mapLegend = document.createElement('div');
+        mapLegend.className = 'map-legend-scale';
+        mapLegend.innerHTML = `
+            <div class="scale-title">Temperature Scale (°C)</div>
+            <div class="scale-gradient"></div>
+            <div class="scale-labels">
+                <span>25°</span>
+                <span>35°</span>
+                <span>45°</span>
+            </div>
+        `;
+        mapContainer.appendChild(mapLegend);
+
+        // Add info panel
+        const infoPanel = document.createElement('div');
+        infoPanel.className = 'map-info-panel';
+        infoPanel.id = 'mapInfoPanel';
+        infoPanel.innerHTML = `
+            <div class="info-panel-title">
+                <i class="fas fa-map-marked-alt"></i>
+                Site Analysis
+            </div>
+            <div class="info-panel-metric">
+                <span class="metric-label">Avg Temperature:</span>
+                <span class="metric-value" id="avgTempValue">38.2°C</span>
+            </div>
+            <div class="info-panel-metric">
+                <span class="metric-label">Max Temperature:</span>
+                <span class="metric-value highlight" id="maxTempValue">42.3°C</span>
+            </div>
+            <div class="info-panel-metric">
+                <span class="metric-label">Shade Coverage:</span>
+                <span class="metric-value" id="shadeCoverageValue">68%</span>
+            </div>
+            <div class="info-panel-metric">
+                <span class="metric-label">Temp Reduction:</span>
+                <span class="metric-value highlight" id="tempReduction">-8.5°C</span>
+            </div>
+            <div class="info-panel-metric">
+                <span class="metric-label">Energy Saved:</span>
+                <span class="metric-value highlight" id="energySaved">2,450 kWh/day</span>
+            </div>
+        `;
+        mapContainer.appendChild(infoPanel);
+
+        // Add comparison toggle
+        const comparisonToggle = document.createElement('div');
+        comparisonToggle.className = 'comparison-toggle';
+        comparisonToggle.innerHTML = `
+            <label>
+                <input type="checkbox" id="comparisonMode">
+                <span>Before/After Comparison</span>
+            </label>
+        `;
+        mapContainer.appendChild(comparisonToggle);
+
+        // Create tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'shading-tooltip';
+        tooltip.id = 'shadingTooltip';
+        mapContainer.appendChild(tooltip);
+
+        // Create heatmap grid data (GIS-style)
+        const gridSize = 20; // 20x20 grid
+        const cellWidth = 100 / gridSize;
+        const cellHeight = 100 / gridSize;
+        
+        // Generate realistic temperature data with hotspots
+        const heatmapData = [];
+        for (let row = 0; row < gridSize; row++) {
+            for (let col = 0; col < gridSize; col++) {
+                const x = col * cellWidth;
+                const y = row * cellHeight;
+                
+                // Create realistic temperature distribution with hotspots
+                let temp = 25 + Math.random() * 5; // Base 25-30°C
+                
+                // Add hotspot areas
+                const dist1 = Math.sqrt(Math.pow(col - 3, 2) + Math.pow(row - 4, 2));
+                const dist2 = Math.sqrt(Math.pow(col - 15, 2) + Math.pow(row - 6, 2));
+                const dist3 = Math.sqrt(Math.pow(col - 8, 2) + Math.pow(row - 12, 2));
+                const dist4 = Math.sqrt(Math.pow(col - 16, 2) + Math.pow(row - 14, 2));
+                
+                if (dist1 < 3) temp += 15 - dist1 * 2; // Hotspot 1
+                if (dist2 < 2.5) temp += 17 - dist2 * 2.5; // Hotspot 2
+                if (dist3 < 2) temp += 12 - dist3 * 2; // Hotspot 3
+                if (dist4 < 3) temp += 16 - dist4 * 2; // Hotspot 4
+                
+                // Add shade areas (cooler)
+                const shadeDist1 = Math.sqrt(Math.pow(col - 5, 2) + Math.pow(row - 9, 2));
+                const shadeDist2 = Math.sqrt(Math.pow(col - 14, 2) + Math.pow(row - 10, 2));
+                const shadeDist3 = Math.sqrt(Math.pow(col - 10, 2) + Math.pow(row - 16, 2));
+                
+                if (shadeDist1 < 4) temp -= 8 - shadeDist1 * 1.5; // Shade area 1
+                if (shadeDist2 < 3.5) temp -= 7 - shadeDist2 * 1.5; // Shade area 2
+                if (shadeDist3 < 3) temp -= 9 - shadeDist3 * 1.5; // Shade area 3
+                
+                temp = Math.max(25, Math.min(45, temp)); // Clamp between 25-45°C
+                
+                heatmapData.push({
+                    x: x,
+                    y: y,
+                    width: cellWidth,
+                    height: cellHeight,
+                    temp: temp,
+                    beforeTemp: temp + 8.5 // Before solar canopies
+                });
+            }
+        }
+
+        // Render heatmap cells
+        heatmapData.forEach(cell => {
+            const cellEl = document.createElement('div');
+            cellEl.className = 'heatmap-cell';
+            cellEl.style.position = 'absolute';
+            cellEl.style.left = cell.x + '%';
+            cellEl.style.top = cell.y + '%';
+            cellEl.style.width = cell.width + '%';
+            cellEl.style.height = cell.height + '%';
+            
+            // Color based on temperature
+            const normalizedTemp = (cell.temp - 25) / 20; // Normalize 25-45°C to 0-1
+            const color = getHeatmapColor(normalizedTemp);
+            cellEl.style.background = color;
+            cellEl.style.opacity = 0.6 + normalizedTemp * 0.4;
+            cellEl.style.zIndex = '2';
+            
+            cellEl.dataset.temp = cell.temp.toFixed(1);
+            cellEl.dataset.beforeTemp = cell.beforeTemp.toFixed(1);
+            
+            // Add hover tooltip
+            cellEl.addEventListener('mouseenter', function() {
+                showCellTooltip(this, cell, tooltip, mapContainer);
+            });
+            
+            cellEl.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+            });
+            
+            heatmapOverlay.appendChild(cellEl);
+        });
+        
+        console.log('Rendered', heatmapData.length, 'heatmap cells in overlay');
+
+        // Define shade areas (after solar installation)
+        const shadeAreas = [
+            { x: 20, y: 35, width: 25, height: 20, coverage: 85, name: 'Solar Canopy Zone 1' },
+            { x: 50, y: 20, width: 30, height: 25, coverage: 90, name: 'Solar Canopy Zone 2' },
+            { x: 45, y: 50, width: 20, height: 30, coverage: 88, name: 'Solar Canopy Zone 3' }
+        ];
+
+        // Render shade areas
+        shadeAreas.forEach((area, index) => {
+            const shadeMarker = document.createElement('div');
+            shadeMarker.className = 'shade-area-marker';
+            shadeMarker.style.left = area.x + '%';
+            shadeMarker.style.top = area.y + '%';
+            shadeMarker.style.width = area.width + '%';
+            shadeMarker.style.height = area.height + '%';
+            
+            const label = document.createElement('div');
+            label.className = 'shade-area-label';
+            label.textContent = `${area.name} (${area.coverage}% shade)`;
+            shadeMarker.appendChild(label);
+            
+            mapContainer.appendChild(shadeMarker);
+        });
+
+        // Heat hotspot markers for critical areas
+        const criticalHotspots = [
+            { x: 15, y: 20, temp: 42.3, area: 'Parking Zone A - Critical' },
+            { x: 75, y: 30, temp: 40.1, area: 'Parking Zone B - Hot' },
+            { x: 80, y: 60, temp: 41.2, area: 'East Parking - Critical' }
+        ];
+
+        criticalHotspots.forEach(hotspot => {
+            const marker = document.createElement('div');
+            marker.style.position = 'absolute';
+            marker.style.left = hotspot.x + '%';
+            marker.style.top = hotspot.y + '%';
+            marker.style.width = '12px';
+            marker.style.height = '12px';
+            marker.style.background = '#CC0000';
+            marker.style.borderRadius = '50%';
+            marker.style.border = '2px solid white';
+            marker.style.boxShadow = '0 0 15px rgba(204, 0, 0, 0.8)';
+            marker.style.transform = 'translate(-50%, -50%)';
+            marker.style.zIndex = '10';
+            marker.style.cursor = 'pointer';
+            marker.style.animation = 'criticalPulse 2s infinite';
+            
+            marker.addEventListener('click', function() {
+                alert(`Critical Hotspot: ${hotspot.area}\nTemperature: ${hotspot.temp}°C\n\nThis area would benefit significantly from solar canopy installation.`);
+            });
+            
+            mapContainer.appendChild(marker);
+        });
+
+        // Initialize comparison mode
+        const comparisonCheckbox = document.getElementById('comparisonMode');
+        if (comparisonCheckbox) {
+            comparisonCheckbox.addEventListener('change', function() {
+                toggleComparisonMode(this.checked, heatmapData, heatmapOverlay);
+            });
+        }
+
+        // Initialize controls
+        initShadingMapControls(mapContainer, heatmapData);
+
+        // Update stats
+        updateShadingStats(heatmapData, shadeAreas);
+
+        // Auto-refresh
+        setInterval(() => {
+            updateShadingMap(heatmapData, heatmapOverlay);
+        }, 5000);
+    }
+
+    function getHeatmapColor(normalizedTemp) {
+        // Create color gradient from blue (cool) to red (hot)
+        if (normalizedTemp < 0.2) {
+            // Cool: Blue
+            const t = normalizedTemp / 0.2;
+            return `rgb(${Math.round(0 + t * 0)}, ${Math.round(102 + t * 153)}, ${Math.round(204 - t * 204)})`;
+        } else if (normalizedTemp < 0.4) {
+            // Moderate: Cyan
+            const t = (normalizedTemp - 0.2) / 0.2;
+            return `rgb(${Math.round(0)}, ${Math.round(255 - t * 153)}, ${Math.round(255 - t * 51)})`;
+        } else if (normalizedTemp < 0.6) {
+            // Warm: Yellow
+            const t = (normalizedTemp - 0.4) / 0.2;
+            return `rgb(${Math.round(255)}, ${Math.round(204 + t * 51)}, ${Math.round(0)})`;
+        } else if (normalizedTemp < 0.8) {
+            // Hot: Orange
+            const t = (normalizedTemp - 0.6) / 0.2;
+            return `rgb(${Math.round(255)}, ${Math.round(102 + t * 153)}, ${Math.round(0)})`;
+        } else {
+            // Critical: Red
+            const t = (normalizedTemp - 0.8) / 0.2;
+            return `rgb(${Math.round(255 - t * 51)}, ${Math.round(0)}, ${Math.round(0)})`;
+        }
+    }
+
+    function showCellTooltip(cellEl, cell, tooltip, container) {
+        const rect = cellEl.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        const tempDiff = (cell.beforeTemp - cell.temp).toFixed(1);
+        const energyImpact = (tempDiff * 2.5).toFixed(0); // kWh saved per cell
+        
+        tooltip.innerHTML = `
+            <div class="shading-tooltip-title">Temperature Analysis</div>
+            <div class="shading-tooltip-metric">
+                <span class="shading-tooltip-label">Current Temp:</span>
+                <span class="shading-tooltip-value">${cell.temp.toFixed(1)}°C</span>
+            </div>
+            <div class="shading-tooltip-metric">
+                <span class="shading-tooltip-label">Before Canopies:</span>
+                <span class="shading-tooltip-value">${cell.beforeTemp.toFixed(1)}°C</span>
+            </div>
+            <div class="shading-tooltip-metric">
+                <span class="shading-tooltip-label">Reduction:</span>
+                <span class="shading-tooltip-value" style="color: #4CAF50;">-${tempDiff}°C</span>
+            </div>
+            <div class="shading-tooltip-metric">
+                <span class="shading-tooltip-label">Energy Impact:</span>
+                <span class="shading-tooltip-value" style="color: #4CAF50;">~${energyImpact} kWh/day</span>
+            </div>
+        `;
+        
+        tooltip.style.display = 'block';
+        const tooltipLeft = rect.left - containerRect.left + rect.width / 2 - 110;
+        const tooltipTop = rect.top - containerRect.top - 200;
+        tooltip.style.left = Math.max(10, Math.min(tooltipLeft, containerRect.width - 230)) + 'px';
+        tooltip.style.top = Math.max(10, tooltipTop) + 'px';
+    }
+
+    function toggleComparisonMode(enabled, heatmapData, overlay) {
+        const beforeAfterOverlay = document.getElementById('beforeAfterOverlay');
+        const comparisonDivider = document.getElementById('comparisonDivider');
+        const beforeLabel = document.getElementById('beforeLabel');
+        const afterLabel = document.getElementById('afterLabel');
+        
+        if (enabled) {
+            beforeAfterOverlay.style.display = 'block';
+            comparisonDivider.style.display = 'block';
+            comparisonDivider.style.left = '50%';
+            beforeLabel.style.display = 'block';
+            beforeLabel.style.left = '25%';
+            afterLabel.style.display = 'block';
+            afterLabel.style.right = '25%';
+            
+            // Update heatmap to show before temperatures on left side
+            const cells = overlay.querySelectorAll('.heatmap-cell');
+            cells.forEach((cell, index) => {
+                const cellData = heatmapData[index];
+                const rect = cell.getBoundingClientRect();
+                const containerRect = overlay.getBoundingClientRect();
+                const centerX = rect.left - containerRect.left + rect.width / 2;
+                const containerWidth = containerRect.width;
+                
+                if (centerX < containerWidth / 2) {
+                    // Left side - show before
+                    const normalizedTemp = ((cellData.beforeTemp - 25) / 20);
+                    const color = getHeatmapColor(normalizedTemp);
+                    cell.style.background = color;
+                    cell.style.opacity = 0.8;
+                } else {
+                    // Right side - show after
+                    const normalizedTemp = ((cellData.temp - 25) / 20);
+                    const color = getHeatmapColor(normalizedTemp);
+                    cell.style.background = color;
+                    cell.style.opacity = 0.6 + normalizedTemp * 0.4;
+                }
+            });
+        } else {
+            beforeAfterOverlay.style.display = 'none';
+            comparisonDivider.style.display = 'none';
+            beforeLabel.style.display = 'none';
+            afterLabel.style.display = 'none';
+            
+            // Reset to current temperatures
+            const cells = overlay.querySelectorAll('.heatmap-cell');
+            cells.forEach((cell, index) => {
+                const cellData = heatmapData[index];
+                const normalizedTemp = ((cellData.temp - 25) / 20);
+                const color = getHeatmapColor(normalizedTemp);
+                cell.style.background = color;
+                cell.style.opacity = 0.6 + normalizedTemp * 0.4;
+            });
+        }
+    }
+
+    function initShadingMapControls(container, hotspots) {
+        // Filter buttons
+        document.querySelectorAll('.shading-filter-group .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.shading-filter-group .filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const view = this.dataset.view;
+                const hotspots = container.querySelectorAll('.heat-hotspot');
+                const shadeAreas = container.querySelectorAll('.shade-coverage-area');
+                
+                if (view === 'heat') {
+                    hotspots.forEach(h => h.style.display = 'block');
+                    shadeAreas.forEach(s => s.style.display = 'none');
+                } else if (view === 'shade') {
+                    hotspots.forEach(h => h.style.display = 'none');
+                    shadeAreas.forEach(s => s.style.display = 'block');
+                } else {
+                    hotspots.forEach(h => h.style.display = 'block');
+                    shadeAreas.forEach(s => s.style.display = 'block');
+                }
+            });
+        });
+
+        // Time select
+        const timeSelect = document.getElementById('shadingTimeSelect');
+        if (timeSelect) {
+            timeSelect.addEventListener('change', function() {
+                updateShadingMapForTime(this.value, container);
+            });
+        }
+
+        // Refresh button
+        const refreshBtn = document.getElementById('refreshShadingMap');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                this.classList.add('spinning');
+                setTimeout(() => {
+                    this.classList.remove('spinning');
+                    updateShadingMap(hotspots, container);
+                }, 500);
+            });
+        }
+    }
+
+    function updateShadingStats(heatmapData, shadeAreas) {
+        const temps = heatmapData.map(c => c.temp);
+        const beforeTemps = heatmapData.map(c => c.beforeTemp);
+        const maxTemp = Math.max(...temps);
+        const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
+        const avgBeforeTemp = beforeTemps.reduce((a, b) => a + b, 0) / beforeTemps.length;
+        const tempReduction = avgBeforeTemp - avgTemp;
+        
+        const criticalCells = heatmapData.filter(c => c.temp >= 40).length;
+        const totalShadeArea = shadeAreas.reduce((sum, a) => sum + (a.width * a.height), 0);
+        const shadeCoverage = (totalShadeArea / 10000) * 100; // Percentage of total area
+        
+        // Calculate energy savings
+        const totalEnergySaved = heatmapData.reduce((sum, cell) => {
+            const tempDiff = cell.beforeTemp - cell.temp;
+            return sum + (tempDiff * 2.5); // 2.5 kWh per degree reduction per cell
+        }, 0);
+
+        document.getElementById('hotspotCount').textContent = criticalCells + ' critical cells';
+        document.getElementById('maxTemp').textContent = maxTemp.toFixed(1) + '°C';
+        document.getElementById('shadeCoverage').textContent = Math.round(shadeCoverage) + '%';
+        
+        // Update info panel
+        document.getElementById('avgTempValue').textContent = avgTemp.toFixed(1) + '°C';
+        document.getElementById('maxTempValue').textContent = maxTemp.toFixed(1) + '°C';
+        document.getElementById('shadeCoverageValue').textContent = Math.round(shadeCoverage) + '%';
+        document.getElementById('tempReduction').textContent = '-' + tempReduction.toFixed(1) + '°C';
+        document.getElementById('energySaved').textContent = Math.round(totalEnergySaved).toLocaleString() + ' kWh/day';
+    }
+
+    function updateShadingMap(heatmapData, overlay) {
+        // Simulate real-time temperature updates
+        const cells = overlay.querySelectorAll('.heatmap-cell');
+        cells.forEach((cell, index) => {
+            const cellData = heatmapData[index];
+            
+            // Random temperature fluctuation
+            const tempChange = (Math.random() - 0.5) * 1.5;
+            const newTemp = Math.max(25, Math.min(45, cellData.temp + tempChange));
+            cellData.temp = newTemp;
+            
+            // Update visual
+            const normalizedTemp = ((newTemp - 25) / 20);
+            const color = getHeatmapColor(normalizedTemp);
+            cell.style.background = color;
+            cell.style.opacity = 0.6 + normalizedTemp * 0.4;
+            cell.dataset.temp = newTemp.toFixed(1);
+        });
+
+        // Recalculate stats
+        const shadeAreas = [
+            { x: 20, y: 35, width: 25, height: 20, coverage: 85 },
+            { x: 50, y: 20, width: 30, height: 25, coverage: 90 },
+            { x: 45, y: 50, width: 20, height: 30, coverage: 88 }
+        ];
+        updateShadingStats(heatmapData, shadeAreas);
+        document.getElementById('lastUpdate').textContent = 'Just now';
+    }
+
+    function updateShadingMapForTime(timePeriod, container) {
+        // Simulate different temperatures based on time of day
+        const timeMultipliers = {
+            'now': 1,
+            'morning': 0.85,
+            'afternoon': 1.15,
+            'evening': 0.95,
+            'day': 1
+        };
+
+        const multiplier = timeMultipliers[timePeriod] || 1;
+        const hotspots = container.querySelectorAll('.heat-hotspot');
+        
+        hotspots.forEach(hotspot => {
+            const baseTemp = parseFloat(hotspot.dataset.temp) || 35;
+            const adjustedTemp = baseTemp * multiplier;
+            // Visual update would happen here
+        });
+    }
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>GridUrban - Virtual Power Plant & DER Coordination | SunUrban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes flowRight {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <div class="sun-icon">☀️</div>
+                    <div class="grid-lines">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                </div>
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Clean like About page -->
+    <section style="padding-top: 120px; padding-bottom: 8rem; background: #fff; min-height: 100vh;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Dramatic Title with Typing -->
+                <div style="margin-bottom: 4rem;">
+                    <h1 id="gridurbanTitle" style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.03em;">
+                        <span id="gridurbanText"></span><span id="gridurbanCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
+                    </h1>
+                </div>
+
+                <!-- Story Content - Large Typography -->
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        The grid is becoming <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">distributed</span>. Solar panels, batteries, EVs, and smart thermostats are everywhere — but they don't talk to each other.
+                    </p>
+                </div>
+
+                <div style="font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.4; color: #1A1A1A; font-weight: 400; margin-bottom: 5rem;">
+                    <p style="margin-bottom: 3rem;">
+                        In <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">ERCOT</span>, grid operators need <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">flexibility</span> — fast and slow responses to keep the lights on. But today's tools can't coordinate millions of devices.
+                    </p>
+                </div>
+
+                <!-- Final Statement -->
+                <div style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.2; color: var(--primary-orange); font-weight: 700; margin-top: 8rem; padding-top: 4rem; border-top: 3px solid var(--primary-orange);">
+                    <div style="margin-bottom: 2rem;">
+                        <span style="display: block;">Grid</span>
+                        <span style="display: block;">Urban</span>
+                        <span style="display: block; font-size: clamp(1.8rem, 3.5vw, 3rem); margin-top: 1rem;">coordinates this.</span>
+                    </div>
+                    <div style="font-size: clamp(1.5rem, 2.5vw, 2rem); color: #1A1A1A; font-weight: 400; margin-top: 3rem; line-height: 1.5;">
+                        <p>
+                            <span style="color: var(--primary-orange); font-weight: 600; background: rgba(191, 87, 0, 0.15); padding: 0.15em 0.3em; border-radius: 4px;">AI-powered flexibility estimation.</span> Distributed optimization. Virtual Power Plant coordination. All built on SunUrban's canopy network.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Context Section -->
+    <section style="padding: 4rem 0; background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
+                <div>
+                    <div style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;">$5.6B</div>
+                    <div style="font-size: 1rem; opacity: 0.95;">VPP Market by 2030</div>
+                </div>
+                <div>
+                    <div style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;">21%</div>
+                    <div style="font-size: 1rem; opacity: 0.95;">CAGR Growth Rate</div>
+                </div>
+                <div>
+                    <div style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;">85 GW</div>
+                    <div style="font-size: 1rem; opacity: 0.95;">ERCOT Peak Demand</div>
+                </div>
+                <div>
+                    <div style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;">$9,000</div>
+                    <div style="font-size: 1rem; opacity: 0.95;">Peak $/MWh (2023)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features - Clean Grid -->
+    <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+                    The GridUrban<br/>
+                    <span style="color: #BF5700;">Platform</span>
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Feature 1 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M18.5 12.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Flexibility Estimation</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Hybrid physics + ML models estimate geo-spatial flexibility of every DER in real-time. Know what can flex, when, and by how much.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Fast Response (4-sec)</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Frequency regulation and ancillary services. Sub-second dispatch signals to batteries and inverters for grid stability.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Slow Response (15-min+)</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Peak shaving, demand response, and TOU optimization. Coordinate EV charging, HVAC, and storage for economic dispatch.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/>
+                                <line x1="12" y1="12" x2="12" y2="16"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">VPP Packaging</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Aggregate distributed assets into market-ready products. Sell into ERCOT ancillary services and capacity markets.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Edge Computing</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            On-device intelligence for latency-critical decisions. Distributed optimization that works even when cloud is down.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div style="background: #fff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                        <div style="margin-bottom: 1.5rem;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 1.5;">
+                                <line x1="12" y1="1" x2="12" y2="23" stroke-linecap="round"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Revenue Sharing</h3>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Transparent value split with asset owners. Track grid services revenue in real-time and automate payouts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Different Section -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 4rem; text-align: center;">
+                    Why GridUrban is<br/>
+                    <span style="color: #BF5700;">different.</span>
+                </h2>
+                
+                <!-- Moat 1 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 1
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Hybrid Physics + ML
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                                Pure ML models fail at grid edge — they don't respect physical constraints. Our <strong style="color: #BF5700;">physics-informed neural networks</strong> combine domain knowledge with learning to estimate flexibility under uncertainty.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 3rem; color: #fff;">
+                            <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Physics + Data</div>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <div style="background: rgba(255,255,255,0.2); padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;">Voltage Limits</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;">Power Flow</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;">Ramp Rates</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;">SOC Bounds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 2 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap-reverse;">
+                        <div style="flex: 1; min-width: 300px; background: #1A1A1A; border-radius: 16px; padding: 3rem; color: #fff;">
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 40px; height: 40px; background: #BF5700; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;"><circle cx="12" cy="12" r="3"/></svg>
+                                    </div>
+                                    <span style="font-size: 0.9rem;">Device 1: Solar + Battery</span>
+                                    <span style="margin-left: auto; color: #28A745;">↔ 15 kW flex</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 40px; height: 40px; background: #BF5700; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;"><circle cx="12" cy="12" r="3"/></svg>
+                                    </div>
+                                    <span style="font-size: 0.9rem;">Device 2: EV Charger</span>
+                                    <span style="margin-left: auto; color: #28A745;">↔ 7.2 kW flex</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 40px; height: 40px; background: #BF5700; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;"><circle cx="12" cy="12" r="3"/></svg>
+                                    </div>
+                                    <span style="font-size: 0.9rem;">Device 3: Smart HVAC</span>
+                                    <span style="margin-left: auto; color: #28A745;">↔ 3.5 kW flex</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 2
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Distributed Optimization
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                Centralized control doesn't scale. Our <strong style="color: #BF5700;">multi-agent optimization</strong> runs on-device, coordinating millions of DERs without a single point of failure.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 3 -->
+                <div style="margin-bottom: 4rem;">
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 3
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Vertical Integration
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                SunUrban canopies give us a <strong style="color: #BF5700;">hardware beachhead</strong>. Every new installation adds to our VPP fleet — solar, battery, sensors, and control in one package.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: #F5F5F5; border-radius: 16px; padding: 3rem; border-left: 4px solid #BF5700;">
+                            <div style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Hardware → Software → Market</div>
+                            <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                                Software-only VPP platforms need to integrate with dozens of OEMs. We control the full stack from panel to grid market.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moat 4 -->
+                <div>
+                    <div style="display: flex; gap: 3rem; align-items: start; flex-wrap: wrap-reverse;">
+                        <div style="flex: 1; min-width: 300px; background: linear-gradient(135deg, #F5F5F5, #E8E8E8); border-radius: 16px; padding: 3rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                                <span style="font-weight: 600; color: #1A1A1A;">Research Partnerships</span>
+                            </div>
+                            <p style="font-size: 1rem; color: #666; line-height: 1.6;">
+                                Joint development with UT Austin's CAEE lab. Publishing peer-reviewed methods. Credible, validated algorithms.
+                            </p>
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="font-size: 1rem; font-weight: 600; color: #BF5700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                                Moat 4
+                            </div>
+                            <h3 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem; line-height: 1.2;">
+                                Academic Credibility
+                            </h3>
+                            <p style="font-size: 1.1rem; line-height: 1.7; color: #666;">
+                                Grid operators and utilities demand validated methods. Our <strong style="color: #BF5700;">NSF I-Corps</strong> research lineage and published algorithms create trust that startups can't fake.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section style="padding: 6rem 0; background: #F5F5F5;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    See the <span style="color: #BF5700;">flexibility.</span>
+                </h2>
+                <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto;">
+                    Real-time flexibility estimation across the SunUrban network
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;" class="demo-grid-container">
+                <!-- Main Visualization -->
+                <div style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+                    <!-- Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin: 0;">Fleet Flexibility Map</h3>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; background: #d4edda; padding: 0.4rem 0.75rem; border-radius: 20px;">
+                                <div style="width: 8px; height: 8px; background: #28A745; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                                <span style="font-size: 0.8rem; font-weight: 600; color: #155724;">LIVE</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">Austin, TX Network</div>
+                    </div>
+                    
+                    <!-- Flexibility Visualization -->
+                    <div style="background: #1A1A1A; border-radius: 12px; padding: 2rem; position: relative; min-height: 400px;">
+                        <!-- Grid Nodes -->
+                        <div id="gridNodes" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                            <!-- Node 1 -->
+                            <div class="grid-node" style="background: rgba(191,87,0,0.2); border: 2px solid #BF5700; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 0.8rem; color: #999; margin-bottom: 0.5rem;">South Congress</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #28A745;">+125 kW</div>
+                                <div style="font-size: 0.75rem; color: #ccc; margin-top: 0.5rem;">Available Flex</div>
+                                <div style="margin-top: 1rem; background: rgba(40,167,69,0.2); border-radius: 8px; padding: 0.5rem;">
+                                    <div style="font-size: 0.75rem; color: #28A745;">Solar: 80kW | Batt: 45kW</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Node 2 -->
+                            <div class="grid-node" style="background: rgba(191,87,0,0.2); border: 2px solid #BF5700; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 0.8rem; color: #999; margin-bottom: 0.5rem;">UT Campus</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #FFC107;">+85 kW</div>
+                                <div style="font-size: 0.75rem; color: #ccc; margin-top: 0.5rem;">Available Flex</div>
+                                <div style="margin-top: 1rem; background: rgba(255,193,7,0.2); border-radius: 8px; padding: 0.5rem;">
+                                    <div style="font-size: 0.75rem; color: #FFC107;">Solar: 55kW | Batt: 30kW</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Node 3 -->
+                            <div class="grid-node" style="background: rgba(191,87,0,0.2); border: 2px solid #BF5700; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 0.8rem; color: #999; margin-bottom: 0.5rem;">Domain</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #28A745;">+210 kW</div>
+                                <div style="font-size: 0.75rem; color: #ccc; margin-top: 0.5rem;">Available Flex</div>
+                                <div style="margin-top: 1rem; background: rgba(40,167,69,0.2); border-radius: 8px; padding: 0.5rem;">
+                                    <div style="font-size: 0.75rem; color: #28A745;">Solar: 150kW | Batt: 60kW</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Node 4 -->
+                            <div class="grid-node" style="background: rgba(191,87,0,0.2); border: 2px solid #BF5700; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 0.8rem; color: #999; margin-bottom: 0.5rem;">Airport</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #28A745;">+180 kW</div>
+                                <div style="font-size: 0.75rem; color: #ccc; margin-top: 0.5rem;">Available Flex</div>
+                                <div style="margin-top: 1rem; background: rgba(40,167,69,0.2); border-radius: 8px; padding: 0.5rem;">
+                                    <div style="font-size: 0.75rem; color: #28A745;">Solar: 120kW | Batt: 60kW</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flow Lines (animated) -->
+                        <div style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #BF5700, transparent); opacity: 0.5;"></div>
+                        
+                        <!-- Aggregate Bar -->
+                        <div style="margin-top: 2rem; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Total Fleet Flexibility</div>
+                                <div style="font-size: 2.5rem; font-weight: 700; color: #fff;">600 kW</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">ERCOT Price Signal</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #fff;">$85/MWh</div>
+                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">↑ +15% from hour ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline -->
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem;">
+                        <div style="flex: 0 0 100px; background: #BF5700; color: #fff; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.8rem; opacity: 0.8;">Now</div>
+                            <div style="font-size: 1.25rem; font-weight: 700;">600 kW</div>
+                        </div>
+                        <div style="flex: 0 0 100px; background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: #666;">+15 min</div>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A;">580 kW</div>
+                        </div>
+                        <div style="flex: 0 0 100px; background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: #666;">+30 min</div>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A;">520 kW</div>
+                        </div>
+                        <div style="flex: 0 0 100px; background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: #666;">+1 hr</div>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A;">450 kW</div>
+                        </div>
+                        <div style="flex: 0 0 100px; background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: #666;">+2 hr</div>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A;">680 kW</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Market Card -->
+                    <div style="background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">ERCOT Market Status</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">Real-Time Price</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #1A1A1A;">$85/MWh</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">Day-Ahead</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #1A1A1A;">$72/MWh</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">Reg Up</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #28A745;">$15/MW</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 0.9rem; color: #666;">Reg Down</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #DC3545;">$8/MW</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dispatch Actions -->
+                    <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 1.5rem; color: #fff;">
+                        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Active Dispatch</h4>
+                        <div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.9rem;">Reg Up Service</span>
+                                <span style="font-weight: 600;">250 kW</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.3); border-radius: 4px; height: 8px; overflow: hidden;">
+                                <div style="background: #fff; height: 100%; width: 42%; border-radius: 4px;"></div>
+                            </div>
+                            <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">42% of available flex committed</div>
+                        </div>
+                        <div style="font-size: 0.9rem; opacity: 0.95; margin-bottom: 0.5rem;">Est. Revenue Today</div>
+                        <div style="font-size: 2rem; font-weight: 700;">$847</div>
+                    </div>
+                    
+                    <!-- Device Status -->
+                    <div style="background: #1A1A1A; border-radius: 16px; padding: 1.5rem; color: #fff;">
+                        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Fleet Status</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #28A745;">12</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8;">Sites Online</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #FFC107;">2</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8;">Dispatching</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700;">1.8 MW</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8;">Total Capacity</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700;">99.2%</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8;">Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Who uses <span style="color: #BF5700;">GridUrban?</span>
+                </h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Use Case 1 -->
+                <div style="background: #F5F5F5; border-radius: 16px; padding: 2.5rem; border-left: 4px solid #BF5700;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Property Portfolios</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                        Aggregate building-level flexibility across geographically spread properties. Offer demand shifting as a service to grid operators.
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">REITs</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Campuses</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Malls</span>
+                    </div>
+                </div>
+                
+                <!-- Use Case 2 -->
+                <div style="background: #F5F5F5; border-radius: 16px; padding: 2.5rem; border-left: 4px solid #BF5700;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">EV Fleet Operators</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                        Coordinate charging schedules across hundreds of EVs. Participate in V2G programs and optimize for lowest-cost charging.
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Rideshare</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Delivery</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Transit</span>
+                    </div>
+                </div>
+                
+                <!-- Use Case 3 -->
+                <div style="background: #F5F5F5; border-radius: 16px; padding: 2.5rem; border-left: 4px solid #BF5700;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Utilities & Coops</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1.5rem;">
+                        Enable DER participation in wholesale markets. Unlock behind-the-meter flexibility for grid services without expensive infrastructure.
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Munis</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">Coops</span>
+                        <span style="background: rgba(191,87,0,0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem;">CCAs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section style="padding: 6rem 0; background: #F5F5F5;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">
+                    Flexible Pricing
+                </h2>
+                <p style="font-size: 1.2rem; color: #666; text-align: center; margin-bottom: 4rem;">
+                    Aligned with your success — we earn when you earn
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Tier 1 -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Starter</h3>
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For pilot deployments</div>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Free</div>
+                        <div style="font-size: 0.9rem; color: #666;">Up to 100 kW capacity</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Flexibility estimation
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Basic dashboard
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Email support
+                            </li>
+                        </ul>
+                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Start Pilot</button>
+                    </div>
+                    
+                    <!-- Tier 2 - Featured -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid #BF5700; position: relative; transform: scale(1.05);">
+                        <div style="position: absolute; top: -12px; right: 2rem; background: #BF5700; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                            Most Popular
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Growth</h3>
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For scaling VPP operations</div>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">15%</div>
+                        <div style="font-size: 0.9rem; color: #666;">Of grid services revenue</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Everything in Starter
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> ERCOT market integration
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Multi-timescale dispatch
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> API access
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Priority support
+                            </li>
+                        </ul>
+                        <button class="btn-primary" style="width: 100%;" onclick="window.location.href='contact.html'">Schedule Demo</button>
+                    </div>
+                    
+                    <!-- Tier 3 -->
+                    <div style="background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #e0e0e0; transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 30px rgba(191,87,0,0.15)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">For utility-scale deployments</div>
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #BF5700; margin: 1.5rem 0;">Custom</div>
+                        <div style="font-size: 0.9rem; color: #666;">Volume-based pricing</div>
+                        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Everything in Growth
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> White-label option
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> On-prem deployment
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="color: #BF5700;">✓</span> Dedicated CSM
+                            </li>
+                        </ul>
+                        <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 6rem 0; background: #1A1A1A; color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2;">
+                    Ready to unlock<br/>grid flexibility?
+                </h2>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #ccc; margin-bottom: 2.5rem;">
+                    Turn your distributed assets into a Virtual Power Plant. Earn revenue from grid services while improving reliability.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                        Schedule Demo
+                    </button>
+                    <button class="btn-outline large" onclick="window.location.href='energy-dashboard.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem; border-color: rgba(255,255,255,0.5); color: #fff;">
+                        View Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="sun-icon">☀️</div>
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                            </div>
+                        </div>
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="index.html#challenges">Challenges</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Typing animation for "GridUrban"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('gridurbanText');
+            const typingCursor = document.getElementById('gridurbanCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: 'Grid', color: '#1A1A1A', isBreak: false },
+                { text: 'Urban', color: '#BF5700', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 100);
+                } else {
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 300);
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                
+                if (currentSegment < fullText.length) {
+                    html += `<span style="color: ${color};">${text}</span>`;
+                    if (isBreak && text === fullText[currentSegment].text) {
+                        html += '<br/>';
+                    }
+                }
+                
+                typingText.innerHTML = html;
+            }
+            
+            setTimeout(() => {
+                typeText();
+            }, 500);
+        });
+        
+        // Simulate live updates for demo
+        setInterval(() => {
+            const nodes = document.querySelectorAll('.grid-node');
+            nodes.forEach(node => {
+                const valueEl = node.querySelector('div[style*="font-size: 2rem"]');
+                if (valueEl) {
+                    const currentVal = parseInt(valueEl.textContent.replace(/[^0-9]/g, ''));
+                    const change = Math.floor(Math.random() * 20) - 10;
+                    const newVal = Math.max(50, currentVal + change);
+                    valueEl.textContent = '+' + newVal + ' kW';
+                }
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
+
