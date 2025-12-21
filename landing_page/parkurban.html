@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>ParkUrban - Smart Parking Intelligence for UT Campus | SunUrban</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -22,7 +22,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">
+            <a ../index.html class="nav-logo">
                 <div class="logo-icon">
                     <div class="sun-icon">☀️</div>
                     <div class="grid-lines">
@@ -37,31 +37,31 @@
                 <div class="nav-dropdown">
                     <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-menu">
-                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
-                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
-                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
+                        <a parkurban.html style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a gridurban.html style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a chargeurban.html style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
                     </div>
                 </div>
-                <a href="how-it-works.html">How it Works</a>
-                <a href="pricing.html">Pricing</a>
+                <a ../pages/how-it-works.html>How it Works</a>
+                <a ../pages/pricing.html>Pricing</a>
                 <div class="nav-dropdown">
                     <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-menu">
-                        <a href="financials.html">Financials</a>
-                        <a href="parkurban-financials.html">ParkUrban Financials</a>
-                        <a href="chargeurban-financials.html">ChargeUrban Financials</a>
-                        <a href="parkurban-dashboard.html">ParkUrban Dashboard</a>
-                        <a href="data-layer.html">Data Layer</a>
-                        <a href="energy-dashboard.html">Energy Dashboard</a>
-                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
-                        <a href="index.html#investor-story">Market Opportunity</a>
+                        <a ../analysis/financials.html>Financials</a>
+                        <a ../analysis/parkurban-financials.html>ParkUrban Financials</a>
+                        <a ../analysis/chargeurban-financials.html>ChargeUrban Financials</a>
+                        <a ../analysis/parkurban-dashboard.html>ParkUrban Dashboard</a>
+                        <a ../analysis/data-layer.html>Data Layer</a>
+                        <a ../analysis/energy-dashboard.html>Energy Dashboard</a>
+                        <a ../analysis/pypsa-analysis.html>PyPSA Analysis</a>
+                        <a ../index.html#investor-story>Market Opportunity</a>
                     </div>
                 </div>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a ../pages/about.html>About</a>
+                <a ../pages/contact.html>Contact</a>
             </div>
             <div class="nav-actions">
-                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+                <button class="btn-primary" onclick="window.location.href='../pages/contact.html'">Get Started</button>
             </div>
         </div>
     </nav>
@@ -309,29 +309,10 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Forecast Display -->
-                                <div id="forecastDisplay" style="margin-top: 1.25rem; background: #f8f9fa; border-radius: 16px; padding: 1.25rem;">
-                                    <div style="font-size: 0.9375rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">📊 Availability Forecast</div>
-                                    <div style="display: flex; gap: 1rem; justify-content: space-around;">
-                                        <div style="text-align: center;">
-                                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">15 min</div>
-                                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">--</div>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">30 min</div>
-                                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">--</div>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">60 min</div>
-                                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">--</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
                                 <!-- Comfort Zone Badge -->
                                 <div style="margin-top: 1.25rem; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 16px; padding: 1.25rem; color: #fff; text-align: center; box-shadow: 0 4px 12px rgba(191,87,0,0.2);">
                                     <div style="font-size: 0.9375rem; opacity: 0.95; margin-bottom: 0.625rem; font-weight: 500;">☀️ Comfort Zone</div>
-                                    <div id="comfortZoneCount" style="font-size: 1.375rem; font-weight: 700; line-height: 1.2;">30 shaded spots</div>
+                                    <div style="font-size: 1.375rem; font-weight: 700; line-height: 1.2;">30 shaded spots</div>
                                     <div style="font-size: 0.8125rem; opacity: 0.85; margin-top: 0.375rem;">Up to 20°C cooler</div>
                                 </div>
                             </div>
@@ -794,7 +775,7 @@
                             <span style="color: #BF5700;">✓</span> User mobile view
                         </li>
                     </ul>
-                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='../pages/contact.html'">Contact Sales</button>
                 </div>
                 
                 <!-- Tier 2 - Featured -->
@@ -823,7 +804,7 @@
                             <span style="color: #BF5700;">✓</span> Priority support
                         </li>
                     </ul>
-                    <button class="btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Schedule Demo</button>
+                    <button class="btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='../pages/contact.html'">Schedule Demo</button>
                 </div>
                 
                 <!-- Tier 3 -->
@@ -848,7 +829,7 @@
                             <span style="color: #BF5700;">✓</span> Research data partnerships
                         </li>
                     </ul>
-                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='contact.html'">Contact Sales</button>
+                    <button class="btn-outline" style="width: 100%; padding: 0.75rem; font-size: 0.875rem;" onclick="window.location.href='../pages/contact.html'">Contact Sales</button>
                 </div>
             </div>
         </div>
@@ -865,10 +846,10 @@
                     Reduce cruising time, optimize utilization, and improve the campus experience. Let's build ParkUrban together.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-primary large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                    <button class="btn-primary large" onclick="window.location.href='../pages/contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
                         Schedule Demo
                     </button>
-                    <button class="btn-outline large" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem; border-color: rgba(255,255,255,0.5); color: #fff;">
+                    <button class="btn-outline large" onclick="window.location.href='../pages/contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem; border-color: rgba(255,255,255,0.5); color: #fff;">
                         Contact Sales
                     </button>
                 </div>
@@ -898,20 +879,20 @@
                 <div class="footer-section">
                     <h4>Products</h4>
                     <ul>
-                        <li><a href="parkurban.html">ParkUrban</a></li>
-                        <li><a href="gridurban.html">GridUrban</a></li>
-                        <li><a href="chargeurban.html">ChargeUrban</a></li>
-                        <li><a href="how-it-works.html">Solar Canopies</a></li>
-                        <li><a href="data-layer.html">Data Layer</a></li>
+                        <li><a parkurban.html>ParkUrban</a></li>
+                        <li><a gridurban.html>GridUrban</a></li>
+                        <li><a chargeurban.html>ChargeUrban</a></li>
+                        <li><a ../pages/how-it-works.html>Solar Canopies</a></li>
+                        <li><a ../analysis/data-layer.html>Data Layer</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="how-it-works.html">How it Works</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="financials.html">Financials</a></li>
+                        <li><a ../pages/how-it-works.html>How it Works</a></li>
+                        <li><a ../pages/pricing.html>Pricing</a></li>
+                        <li><a ../analysis/financials.html>Financials</a></li>
                         <li><a href="index.html#challenges">Challenges</a></li>
                         <li><a href="index.html#faq">FAQ</a></li>
                     </ul>
@@ -920,8 +901,8 @@
                 <div class="footer-section">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a ../pages/about.html>About Us</a></li>
+                        <li><a ../pages/contact.html>Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -933,133 +914,8 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="parkurban-api.js"></script>
+    <script src="../assets/script.js"></script>
     <script>
-        // Initialize API client
-        const api = new ParkUrbanAPI({
-            baseURL: 'http://localhost:3000', // Update to your deployed API URL
-            useSimulatedData: true // Fallback to simulated data if API unavailable
-        });
-        
-        // Global state
-        let lotsData = [];
-        let forecastsData = {};
-        
-        // Fetch and update data from API
-        async function fetchAndUpdateData() {
-            try {
-                // Fetch lots data
-                lotsData = await api.fetchLots();
-                updateMobileMockup(lotsData);
-                updateDemoSection(lotsData);
-                
-                // Fetch forecasts for first lot
-                if (lotsData.length > 0) {
-                    const forecast = await api.fetchForecast(lotsData[0].lot_id);
-                    forecastsData[lotsData[0].lot_id] = forecast;
-                    updateForecastDisplay(forecast);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                // Fallback to simulated data
-                lotsData = api.getSimulatedLots();
-                updateMobileMockup(lotsData);
-                updateDemoSection(lotsData);
-            }
-        }
-        
-        // Update mobile mockup with real data
-        function updateMobileMockup(lots) {
-            const totalOpen = lots.reduce((sum, lot) => sum + lot.current_open, 0);
-            const totalShaded = lots.reduce((sum, lot) => sum + lot.shaded_open, 0);
-            
-            // Update "Available Now" count
-            const availableCountEl = document.querySelector('.mobile-mockup-container [style*="font-size: 2.5rem"]');
-            if (availableCountEl) {
-                availableCountEl.textContent = totalOpen;
-            }
-            
-            // Update comfort zone
-            updateComfortZone(lots);
-            
-            // Update lot cards
-            const lotCards = document.querySelectorAll('.mobile-mockup-container [style*="border-left: 4px"]');
-            lots.slice(0, 3).forEach((lot, index) => {
-                if (lotCards[index]) {
-                    const card = lotCards[index];
-                    // Update lot name
-                    const nameEl = card.querySelector('[style*="font-weight: 700"]');
-                    if (nameEl) nameEl.textContent = lot.name.split(' - ')[1] || lot.name;
-                    
-                    // Update open count
-                    const openEl = card.querySelector('[style*="background: #d4edda"], [style*="background: #fff3cd"]');
-                    if (openEl) {
-                        openEl.textContent = `${lot.current_open} open`;
-                        // Update color based on availability
-                        if (lot.current_open > 50) {
-                            openEl.style.background = '#d4edda';
-                            openEl.style.color = '#155724';
-                        } else if (lot.current_open > 20) {
-                            openEl.style.background = '#fff3cd';
-                            openEl.style.color = '#856404';
-                        } else {
-                            openEl.style.background = '#f8d7da';
-                            openEl.style.color = '#721c24';
-                        }
-                    }
-                    
-                    // Update shaded/EV info
-                    const infoEl = card.querySelector('[style*="font-size: 0.8125rem"]');
-                    if (infoEl && lot.shaded_open > 0) {
-                        infoEl.innerHTML = `<span style="font-size: 1rem;">☀️</span><span>${lot.shaded_open} shaded spots available</span>`;
-                    }
-                }
-            });
-            
-            // Update comfort zone badge
-            const comfortBadge = document.querySelector('.mobile-mockup-container [style*="Comfort Zone"]');
-            if (comfortBadge) {
-                const shadedCount = comfortBadge.parentElement.querySelector('[style*="font-size: 1.375rem"]');
-                if (shadedCount) shadedCount.textContent = `${totalShaded} shaded spots`;
-            }
-        }
-        
-        // Update forecast display
-        function updateForecastDisplay(forecast) {
-            const forecastEl = document.getElementById('forecastDisplay');
-            if (forecastEl && forecast.forecasts) {
-                const forecasts = forecast.forecasts;
-                const forecastHTML = `
-                    <div style="font-size: 0.9375rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem; text-align: center;">📊 Availability Forecast</div>
-                    <div style="display: flex; gap: 1rem; justify-content: space-around;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">15 min</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">${forecasts['15']?.predicted_open || '--'}</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">30 min</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">${forecasts['30']?.predicted_open || '--'}</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 0.25rem;">60 min</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">${forecasts['60']?.predicted_open || '--'}</div>
-                        </div>
-                    </div>
-                `;
-                forecastEl.innerHTML = forecastHTML;
-            }
-        }
-        
-        // Update comfort zone count
-        function updateComfortZone(lots) {
-            const totalShaded = lots.reduce((sum, lot) => sum + (lot.shaded_open || 0), 0);
-            const comfortZoneEl = document.getElementById('comfortZoneCount');
-            if (comfortZoneEl) {
-                comfortZoneEl.textContent = `${totalShaded} shaded spots`;
-            }
-        }
-        
         // Typing animation for "ParkUrban"
         document.addEventListener('DOMContentLoaded', function() {
             const typingText = document.getElementById('parkurbanText');
@@ -1113,26 +969,15 @@
             setTimeout(typeText, 500);
         });
         
-        // Parking Demo Data - Will be populated from API
-        let utCampusLots = [];
+        // Parking Demo Data
+        const utCampusLots = [
+            { name: 'San Jacinto Garage', totalSpots: 450, vacantSpots: 138, rate: 1.75, evSpots: 45, shadedSpots: 60 },
+            { name: 'Speedway Garage', totalSpots: 320, vacantSpots: 122, rate: 1.75, evSpots: 32, shadedSpots: 40 },
+            { name: 'Manor Garage', totalSpots: 280, vacantSpots: 95, rate: 1.50, evSpots: 28, shadedSpots: 35 }
+        ];
+        
         let currentLotIndex = 0;
         let spotsData = [];
-        
-        // Convert API lot data to demo format
-        function convertLotToDemoFormat(lot) {
-            return {
-                lot_id: lot.lot_id,
-                name: lot.name,
-                totalSpots: lot.capacity,
-                vacantSpots: lot.current_open,
-                occupied: lot.current_occupied,
-                rate: 1.75,
-                evSpots: lot.ev_total || 0,
-                evAvailable: lot.ev_available || 0,
-                shadedSpots: lot.shaded_capacity,
-                shadedOpen: lot.shaded_open
-            };
-        }
         
         // Generate spots for a lot
         function generateSpots(lot) {
@@ -1229,49 +1074,22 @@
             document.getElementById('spotTooltip').style.display = 'none';
         }
         
-        // Update demo section with API data
-        function updateDemoSection(lots) {
-            utCampusLots = lots.map(convertLotToDemoFormat);
-            
-            if (utCampusLots.length > 0) {
-                renderParkingGrid(0);
-                updateGlobalStats();
-            }
-        }
-        
         // Update global stats
         function updateGlobalStats() {
-            if (utCampusLots.length === 0) return;
-            
             const totalSpots = utCampusLots.reduce((sum, lot) => sum + lot.totalSpots, 0);
             const totalVacant = utCampusLots.reduce((sum, lot) => sum + lot.vacantSpots, 0);
             const avgOccupancy = Math.round((totalSpots - totalVacant) / totalSpots * 100);
             
-            const totalSpotsEl = document.getElementById('demoTotalSpots');
-            const vacantCountEl = document.getElementById('demoVacantCount');
-            const avgOccupancyEl = document.getElementById('demoAvgOccupancy');
-            
-            if (totalSpotsEl) totalSpotsEl.textContent = totalSpots.toLocaleString();
-            if (vacantCountEl) vacantCountEl.textContent = totalVacant;
-            if (avgOccupancyEl) avgOccupancyEl.textContent = avgOccupancy + '%';
+            document.getElementById('demoTotalSpots').textContent = totalSpots.toLocaleString();
+            document.getElementById('demoVacantCount').textContent = totalVacant;
+            document.getElementById('demoAvgOccupancy').textContent = avgOccupancy + '%';
         }
         
         // Initialize parking demo
         function initParkingDemo() {
-            // If we have data from API, use it; otherwise use simulated
-            if (utCampusLots.length === 0) {
-                utCampusLots = [
-                    { name: 'San Jacinto Garage', totalSpots: 450, vacantSpots: 138, rate: 1.75, evSpots: 45, shadedSpots: 60 },
-                    { name: 'Speedway Garage', totalSpots: 320, vacantSpots: 122, rate: 1.75, evSpots: 32, shadedSpots: 40 },
-                    { name: 'Manor Garage', totalSpots: 280, vacantSpots: 95, rate: 1.50, evSpots: 28, shadedSpots: 35 }
-                ];
-            }
-            
             // Render initial lot
-            if (utCampusLots.length > 0) {
-                renderParkingGrid(0);
-                updateGlobalStats();
-            }
+            renderParkingGrid(0);
+            updateGlobalStats();
             
             // Tab switching
             document.querySelectorAll('.lot-tab').forEach(tab => {
@@ -1299,21 +1117,17 @@
                     const icon = this.querySelector('i');
                     icon.classList.add('fa-spin');
                     
-                    setTimeout(async () => {
+                    setTimeout(() => {
                         icon.classList.remove('fa-spin');
                         
-                        // Fetch fresh data from API
-                        try {
-                            await fetchAndUpdateData();
-                        } catch (error) {
-                            // Fallback: randomize vacancy counts
-                            utCampusLots.forEach(lot => {
-                                const change = Math.floor(Math.random() * 20) - 10;
-                                lot.vacantSpots = Math.max(50, Math.min(lot.totalSpots - 50, lot.vacantSpots + change));
-                            });
-                            renderParkingGrid(currentLotIndex);
-                            updateGlobalStats();
-                        }
+                        // Randomize vacancy counts
+                        utCampusLots.forEach(lot => {
+                            const change = Math.floor(Math.random() * 20) - 10;
+                            lot.vacantSpots = Math.max(50, Math.min(lot.totalSpots - 50, lot.vacantSpots + change));
+                        });
+                        
+                        renderParkingGrid(currentLotIndex);
+                        updateGlobalStats();
                     }, 800);
                 });
             }
@@ -1341,22 +1155,7 @@
         }
         
         // Initialize on page load
-        window.addEventListener('load', async () => {
-            // Fetch data from API first
-            await fetchAndUpdateData();
-            
-            // Then initialize demo
-            initParkingDemo();
-            
-            // Set up auto-refresh every 30 seconds
-            setInterval(async () => {
-                await fetchAndUpdateData();
-                if (utCampusLots.length > 0) {
-                    renderParkingGrid(currentLotIndex);
-                    updateGlobalStats();
-                }
-            }, 30000); // 30 seconds
-        });
+        window.addEventListener('load', initParkingDemo);
     </script>
 </body>
 </html>
