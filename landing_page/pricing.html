@@ -10,20 +10,19 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
-                <div class="logo-icon">
-                    <div class="sun-icon">☀️</div>
-                    <div class="grid-lines">
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                    </div>
-                </div>
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
                 <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
             </a>
             <div class="nav-menu">
@@ -60,22 +59,15 @@
     </nav>
 
     <!-- Hero Section -->
-    <section style="padding-top: 140px; padding-bottom: 6rem; background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); color: #fff; position: relative; overflow: hidden;">
-        <!-- Decorative background elements -->
-        <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
-        <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1;">
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <h1 style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -0.02em;">
-                    Solar canopies have never been<br/><span style="color: #FFE66D;">so affordable</span>
+    <section style="padding-top: 140px; padding-bottom: 6rem; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h1 style="font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                    <span id="pricingTypingText"></span><span id="pricingTypingCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
                 </h1>
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; opacity: 0.95; margin-bottom: 2rem;">
-                    SunUrban powers your property when the sun is up—and saves you money every month.
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; color: #666; max-width: 780px;">
+                    In Austin Energy territory, SunUrban does <strong>not</strong> sell you power. We develop and operate solar canopies that participate in Austin Energy’s solar programs, then share a portion of that utility revenue back with you as a predictable <strong>site host payment</strong>.
                 </p>
-                <a href="contact.html" class="btn-primary" style="font-size: 1.2rem; padding: 1rem 2.5rem; display: inline-block; background: #fff; color: #BF5700; text-decoration: none; border-radius: 8px;">
-                    Talk to a SunUrban Advisor
-                </a>
             </div>
         </div>
     </section>
@@ -85,37 +77,82 @@
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.02em;">
-                    Choose Your System Size
+                    Austin Energy–compatible canopy plans
                 </h2>
-                <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); color: #666; max-width: 700px; margin: 0 auto; line-height: 1.7;">
-                    No upfront costs. Simple pricing. Maximum savings.
+                <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); color: #666; max-width: 720px; margin: 0 auto; line-height: 1.7;">
+                    Membership-style pricing for solar canopies: a simple monthly platform fee plus a transparent per‑kWh rate, inspired by modern energy plans like Base Power.
                 </p>
             </div>
+            <!-- Interactive calculator -->
+            <div style="max-width: 100%; margin: 0 0 4rem 0; padding: 2rem; border-radius: 20px; background: #F5F5F5; border: 1px solid #E0E0E0; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+                    <div style="flex: 1 1 260px;">
+                        <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.75rem;">Solar canopy size (Austin Energy)</h3>
+                        <p style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            Drag to see annual Austin Energy solar revenue and your estimated host payment.
+                        </p>
+                        <input id="pricingSizeSlider" type="range" min="250" max="1000" step="250" value="500" style="width: 100%; accent-color: #BF5700;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #777; margin-top: 0.5rem;">
+                            <span>250 kW</span>
+                            <span>500 kW</span>
+                            <span>1,000 kW</span>
+                        </div>
+                    </div>
+                    <div style="flex: 1 1 260px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem;">
+                        <div style="padding: 1rem 1.25rem; border-radius: 12px; background: #fff;">
+                            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 0.25rem;">System size</div>
+                            <div id="calcSizeLabel" style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">500 kW</div>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; border-radius: 12px; background: #fff;">
+                            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 0.25rem;">Annual generation</div>
+                            <div id="calcKwh" style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">700,000 kWh</div>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; border-radius: 12px; background: #fff;">
+                            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 0.25rem;">Austin Energy solar revenue*</div>
+                            <div id="calcHostCost" style="font-size: 1.5rem; font-weight: 700; color: #BF5700;">$52,800/yr</div>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; border-radius: 12px; background: #fff;">
+                            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 0.25rem;">Estimated host payment (30% share)</div>
+                            <div id="calcBaselineCost" style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">$77,000/yr</div>
+                        </div>
+                    </div>
+                    <div style="flex: 1 1 220px;">
+                        <div style="padding: 1.5rem 1.25rem; border-radius: 16px; background: #1A1A1A; color: #fff; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: #F5F5F5; margin-bottom: 0.25rem;">Modeled “value stack”</div>
+                            <div id="calcSavings" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;">$0/yr</div>
+                            <div style="font-size: 0.9rem; color: #E0E0E0;">We’re paid by Austin Energy; you receive a portion back as a predictable site payment. Numbers assume current Austin Energy solar rates and a 30% host share.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Plans Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2.5rem; margin-bottom: 6rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-bottom: 6rem; max-width: 100%;">
                 
-                <!-- Plan 1: Standard System -->
+                <!-- Plan 1: 250 kW -->
                 <div style="background: #fff; border: 2px solid #E0E0E0; border-radius: 24px; padding: 3rem; transition: all 0.3s ease; position: relative;"
                      onmouseover="this.style.borderColor='#BF5700'; this.style.boxShadow='0 8px 30px rgba(191,87,0,0.15)'"
                      onmouseout="this.style.borderColor='#E0E0E0'; this.style.boxShadow='none'">
                     <div style="margin-bottom: 2rem;">
-                        <div style="font-size: 0.9rem; font-weight: 600; color: #BF5700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Standard System</div>
-                        <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">500kW System</h2>
-                        <p style="font-size: 1rem; color: #666; line-height: 1.6;">Up to 700,000 kWh/year generation</p>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #BF5700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Starter canopy</div>
+                        <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">250 kW canopy</h2>
+                        <p style="font-size: 1rem; color: #666; line-height: 1.6;">Up to 350,000 kWh/year generation</p>
                     </div>
 
                     <div style="margin-bottom: 2rem; padding: 1.5rem; background: #F5F5F5; border-radius: 12px;">
                         <div style="display: flex; align-items: baseline; margin-bottom: 1rem;">
                             <span style="font-size: 2.5rem; font-weight: 700; color: #1A1A1A;">$0</span>
-                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">One-time installation</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">capital from SunUrban & partners</span>
                         </div>
-                        <div style="display: flex; align-items: baseline;">
-                            <span style="font-size: 2rem; font-weight: 700; color: #1A1A1A;">7.54¢</span>
-                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">/kWh</span>
+                        <div style="display: flex; align-items: baseline; margin-top: 0.25rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #1A1A1A;">≈$39k</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">/yr paid by Austin Energy*</span>
                         </div>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">PPA rate (includes all delivery charges)</div>
+                        <div style="display: flex; align-items: baseline; margin-top: 0.5rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #1A1A1A;">≈$12k</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">/yr host payment (30% share)</span>
+                        </div>
                         <div style="font-size: 0.85rem; color: #666; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E0E0E0;">
-                            Example at 700,000 kWh/year
+                            Example at 350,000 kWh/year under Austin Energy solar program & a 30% host share. All energy revenue flows through Austin Energy—not behind the meter.
                         </div>
                     </div>
 
@@ -124,7 +161,7 @@
                         <ul style="list-style: none; padding: 0; margin: 0;">
                             <li style="padding: 0.75rem 0; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; gap: 0.75rem;">
                                 <i class="fas fa-check-circle" style="color: #BF5700;"></i>
-                                <span style="color: #333;">Solar canopy installation</span>
+                                <span style="color: #333;">Solar canopy installation & interconnection</span>
                             </li>
                             <li style="padding: 0.75rem 0; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; gap: 0.75rem;">
                                 <i class="fas fa-check-circle" style="color: #BF5700;"></i>
@@ -136,7 +173,7 @@
                             </li>
                             <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
                                 <i class="fas fa-check-circle" style="color: #BF5700;"></i>
-                                <span style="color: #333;">20-year PPA agreement</span>
+                                <span style="color: #333;">20‑year energy agreement</span>
                             </li>
                         </ul>
                     </div>
@@ -150,7 +187,7 @@
                     </div>
                 </div>
 
-                <!-- Plan 2: Large System -->
+                <!-- Plan 2: 500 kW (Most popular) -->
                 <div style="background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); border: 2px solid #BF5700; border-radius: 24px; padding: 3rem; color: #fff; transition: all 0.3s ease; position: relative;"
                      onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 40px rgba(191,87,0,0.3)'"
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -159,23 +196,26 @@
                     </div>
 
                     <div style="margin-bottom: 2rem; margin-top: 1rem;">
-                        <div style="font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Large System</div>
-                        <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">1MW System</h2>
-                        <p style="font-size: 1rem; color: rgba(255,255,255,0.9); line-height: 1.6;">Up to 1,400,000 kWh/year generation</p>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">1 Canopy + Energy</div>
+                        <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">500 kW canopy</h2>
+                        <p style="font-size: 1rem; color: rgba(255,255,255,0.9); line-height: 1.6;">Up to 700,000 kWh/year generation</p>
                     </div>
 
                     <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.15); border-radius: 12px; backdrop-filter: blur(10px);">
                         <div style="display: flex; align-items: baseline; margin-bottom: 1rem;">
                             <span style="font-size: 2.5rem; font-weight: 700;">$0</span>
-                            <span style="font-size: 1rem; color: rgba(255,255,255,0.9); margin-left: 0.5rem;">One-time installation</span>
+                            <span style="font-size: 1rem; color: rgba(255,255,255,0.9); margin-left: 0.5rem;">capital from SunUrban & partners</span>
                         </div>
-                        <div style="display: flex; align-items: baseline;">
-                            <span style="font-size: 2rem; font-weight: 700;">7.54¢</span>
-                            <span style="font-size: 1rem; color: rgba(255,255,255,0.9); margin-left: 0.5rem;">/kWh</span>
+                        <div style="display: flex; align-items: baseline; margin-top: 0.25rem;">
+                            <span style="font-size: 1.6rem; font-weight: 700;">≈$79k</span>
+                            <span style="font-size: 1rem; color: rgba(255,255,255,0.9); margin-left: 0.5rem;">/yr paid by Austin Energy*</span>
                         </div>
-                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.9); margin-top: 0.5rem;">PPA rate (includes all delivery charges)</div>
+                        <div style="display: flex; align-items: baseline; margin-top: 0.5rem;">
+                            <span style="font-size: 1.6rem; font-weight: 700;">≈$24k</span>
+                            <span style="font-size: 1rem; color: rgba(255,255,255,0.9); margin-left: 0.5rem;">/yr host payment (30% share)</span>
+                        </div>
                         <div style="font-size: 0.85rem; color: rgba(255,255,255,0.9); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
-                            Example at 1,400,000 kWh/year
+                            Example at 700,000 kWh/year using Austin Energy commercial solar rate & a 30% host share. All energy revenue flows through Austin Energy—not behind the meter.
                         </div>
                     </div>
 
@@ -184,7 +224,7 @@
                         <ul style="list-style: none; padding: 0; margin: 0;">
                             <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.75rem;">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Everything in Standard, plus:</span>
+                                <span>Everything in Starter, plus:</span>
                             </li>
                             <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.75rem;">
                                 <i class="fas fa-check-circle"></i>
@@ -209,6 +249,61 @@
                         <a href="#plan-details-2" style="color: #fff; text-decoration: underline;">Plan overview →</a>
                     </div>
                 </div>
+
+                <!-- Plan 3: 1 MW -->
+                <div style="background: #fff; border: 2px solid #E0E0E0; border-radius: 24px; padding: 3rem; transition: all 0.3s ease; position: relative;"
+                     onmouseover="this.style.borderColor='#BF5700'; this.style.boxShadow='0 8px 30px rgba(191,87,0,0.15)'"
+                     onmouseout="this.style.borderColor='#E0E0E0'; this.style.boxShadow='none'">
+                    <div style="margin-bottom: 2rem;">
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #BF5700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">2 Canopies + Energy</div>
+                        <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">1 MW canopy bundle</h2>
+                        <p style="font-size: 1rem; color: #666; line-height: 1.6;">Up to 1,400,000 kWh/year generation</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem; padding: 1.5rem; background: #F5F5F5; border-radius: 12px;">
+                        <div style="display: flex; align-items: baseline; margin-bottom: 1rem;">
+                            <span style="font-size: 2.5rem; font-weight: 700; color: #1A1A1A;">$0</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">site activation (multi‑site pilots)</span>
+                        </div>
+                        <div style="display: flex; align-items: baseline;">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">≈$118k</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">/yr paid by Austin Energy*</span>
+                        </div>
+                        <div style="display: flex; align-items: baseline; margin-top: 0.5rem;">
+                            <span style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">≈$35k</span>
+                            <span style="font-size: 1rem; color: #666; margin-left: 0.5rem;">/yr host payment (30% share)</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E0E0E0;">
+                            Example at 1,400,000 kWh/year using Austin Energy ≥1 MW solar rate & a 30% host share. All energy revenue flows through Austin Energy—not behind the meter.
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">What's included:</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-check-circle" style="color: #BF5700;"></i>
+                                <span style="color: #333;">Everything in 500 kW, scaled to 1 MW</span>
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-check-circle" style="color: #BF5700;"></i>
+                                <span style="color: #333;">Multi‑canopy optimization</span>
+                            </li>
+                            <li style="padding: 0.75rem 0; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-check-circle" style="color: #BF5700;"></i>
+                                <span style="color: #333;">Enhanced grid services revenue share</span>
+                            </li>
+                            <li style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-check-circle" style="color: #BF5700;"></i>
+                                <span style="color: #333;">Best fit for campuses & large lots</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="contact.html" class="btn-primary" style="width: 100%; text-align: center; display: block; padding: 1rem; font-size: 1.1rem; text-decoration: none;">
+                        Talk to Sales
+                    </a>
+                </div>
             </div>
 
             <!-- Comparison Table -->
@@ -225,9 +320,9 @@
                     <table style="width: 100%; border-collapse: collapse; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
                         <thead>
                             <tr style="background: #F5F5F5;">
-                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;">500kW System</th>
-                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;">1MW System</th>
-                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;"></th>
+                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;">250 kW</th>
+                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;">500 kW</th>
+                                <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: #1A1A1A; border-bottom: 2px solid #E0E0E0;">1 MW</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -236,36 +331,50 @@
                                     <strong style="color: #1A1A1A;">Energy Generation</strong>
                                 </td>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">700,000 kWh/year</div>
+                        <div style="color: #333;">350,000 kWh/year</div>
                                 </td>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">1,400,000 kWh/year</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <strong style="color: #1A1A1A;">Cost</strong>
+                        <div style="color: #333;">700,000 kWh/year</div>
                                 </td>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">$0 installation</div>
-                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">7.54¢/kWh PPA rate</div>
-                                </td>
-                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">$0 installation</div>
-                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">7.54¢/kWh PPA rate</div>
+                        <div style="color: #333;">1,400,000 kWh/year</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <strong style="color: #1A1A1A;">Host Savings</strong>
+                                    <strong style="color: #1A1A1A;">Cost structure</strong>
                                 </td>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">25-35% reduction</div>
-                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">~$45,000/year</div>
+                                    <div style="color: #333;">$0 site activation (early hosts)</div>
+                                    <div style="color: #333;">$1,100/mo membership</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">7.54¢/kWh energy (plus delivery)</div>
                                 </td>
                                 <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
-                                    <div style="color: #333;">25-35% reduction</div>
-                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">~$90,000/year</div>
+                                    <div style="color: #333;">$0 site activation (pilot hosts)</div>
+                                    <div style="color: #333;">$1,950/mo membership</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">7.54¢/kWh energy (plus delivery)</div>
+                                </td>
+                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
+                                    <div style="color: #333;">$0 site activation (multi‑site pilots)</div>
+                                    <div style="color: #333;">$3,500/mo membership</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">7.54¢/kWh energy (plus delivery)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
+                                    <strong style="color: #1A1A1A;">Illustrative host payment</strong>
+                                </td>
+                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
+                                    <div style="color: #333;">≈$12k/yr</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">30% of Austin Energy solar revenue</div>
+                                </td>
+                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
+                                    <div style="color: #333;">≈$24k/yr</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">30% of Austin Energy solar revenue</div>
+                                </td>
+                                <td style="padding: 1.5rem; border-bottom: 1px solid #F0F0F0;">
+                                    <div style="color: #333;">≈$35k/yr</div>
+                                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">30% of Austin Energy solar revenue</div>
                                 </td>
                             </tr>
                             <tr>
@@ -634,42 +743,42 @@
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗺️</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-map-marked-alt"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Shading Maps</div>
                         <div style="font-size: 0.85rem; color: #666;">Solar & thermal data</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌡️</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-thermometer-half"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Thermal Data</div>
                         <div style="font-size: 0.85rem; color: #666;">Heat island analysis</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🅿️</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-parking"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Parking Data</div>
                         <div style="font-size: 0.85rem; color: #666;">Spot availability & rates</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-bolt"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Power Profiles</div>
                         <div style="font-size: 0.85rem; color: #666;">Generation data</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔌</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-charging-station"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">EV Charging</div>
                         <div style="font-size: 0.85rem; color: #666;">Usage patterns</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-users"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Footfall</div>
                         <div style="font-size: 0.85rem; color: #666;">Traffic analytics</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌤️</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-cloud-sun"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Weather Data</div>
                         <div style="font-size: 0.85rem; color: #666;">Temperature & wind</div>
                     </div>
                     <div style="background: #fff; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💨</div>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #1A1A1A;"><i class="fas fa-wind"></i></div>
                         <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.25rem;">Air Quality</div>
                         <div style="font-size: 0.85rem; color: #666;">Pollution & CO2</div>
                     </div>
@@ -678,48 +787,6 @@
                     <a href="data-layer.html" style="color: #BF5700; text-decoration: none; font-weight: 600; font-size: 1rem;">
                         View all 14 data types →
                     </a>
-                </div>
-            </div>
-
-            <!-- Why Data Layer Section -->
-            <div style="background: linear-gradient(135deg, rgba(191, 87, 0, 0.05) 0%, rgba(191, 87, 0, 0.02) 100%); border-radius: 24px; padding: 4rem 3rem; margin-bottom: 4rem;">
-                <div style="text-align: center; margin-bottom: 3rem;">
-                    <h3 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.02em;">
-                        Why the Data Layer is Our Moat
-                    </h3>
-                    <p style="font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto; line-height: 1.7;">
-                        What makes SunUrban's data offering unique and defensible
-                    </p>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <div>
-                        <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">🏗️</div>
-                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.75rem;">Built-in Infrastructure</h4>
-                        <p style="color: #666; line-height: 1.7;">
-                            Every solar canopy installation includes sensors and IoT devices, creating a distributed data network at no additional cost.
-                        </p>
-                    </div>
-                    <div>
-                        <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">📊</div>
-                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.75rem;">Unique Urban Insights</h4>
-                        <p style="color: #666; line-height: 1.7;">
-                            Real-time data on parking patterns, thermal conditions, and energy flows that no other provider can offer at this scale.
-                        </p>
-                    </div>
-                    <div>
-                        <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">💰</div>
-                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.75rem;">High-Margin Revenue</h4>
-                        <p style="color: #666; line-height: 1.7;">
-                            $75k/year per installation from data licensing—pure SaaS revenue with minimal marginal costs.
-                        </p>
-                    </div>
-                    <div>
-                        <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">🔒</div>
-                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.75rem;">Network Effects</h4>
-                        <p style="color: #666; line-height: 1.7;">
-                            More installations = more valuable data. Each new site increases the value of the entire network.
-                        </p>
-                    </div>
                 </div>
             </div>
 
@@ -746,41 +813,41 @@
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; letter-spacing: -0.02em;">
-                    What You Pay and When
+                    How the money actually flows
                 </h2>
-                <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); color: #666; max-width: 700px; margin: 0 auto; line-height: 1.7;">
-                    Transparent pricing with no hidden fees
+                <p style="font-size: clamp(1.1rem, 2vw, 1.3rem); color: #666; max-width: 760px; margin: 0 auto; line-height: 1.7;">
+                    No retail power sales, no behind‑the‑meter tricks. Austin Energy pays SunUrban for solar; SunUrban pays you a contractually defined site host fee.
                 </p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 <div style="background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Installation</h3>
+                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Reservation deposit</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin-bottom: 0.5rem;">$5,000</div>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">One-time, fully credited</p>
+                    <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">
+                        <strong>What is this for?</strong><br/>
+                        We use a small, refundable deposit to reserve engineering capacity and run interconnection and structural checks with Austin Energy. If you move forward, it is fully applied to your site payment schedule.
+                    </p>
+                </div>
+
+                <div style="background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Capex & operations</h3>
                     <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin-bottom: 0.5rem;">$0</div>
-                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">One-time payment</p>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">for the site host</p>
                     <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">
                         <strong>What is this for?</strong><br/>
-                        Includes full installation by our professional electrical crew. No upfront costs—we cover everything.
+                        SunUrban and our capital partners fund equipment, installation, and ongoing operations & maintenance. You provide the site and easements, not capex.
                     </p>
                 </div>
 
                 <div style="background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">After installation</h3>
-                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin-bottom: 0.5rem;">7.54¢/kWh</div>
-                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">+ standard utility delivery charges</p>
+                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Energy & host payment</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin-bottom: 0.5rem;">Austin Energy pays us</div>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">SunUrban pays you</p>
                     <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">
                         <strong>What is this for?</strong><br/>
-                        Energy used by your property for the month. Billed monthly based on actual generation.
-                    </p>
-                </div>
-
-                <div style="background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-                    <h3 style="font-size: 1.3rem; font-weight: 600; color: #1A1A1A; margin-bottom: 1rem;">Host Savings</h3>
-                    <div style="font-size: 2rem; font-weight: 700; color: #BF5700; margin-bottom: 0.5rem;">25-35%</div>
-                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">reduction in energy costs</p>
-                    <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">
-                        <strong>What is this?</strong><br/>
-                        Compared to your current utility rates. Savings increase as utility rates rise.
+                        Austin Energy compensates SunUrban for solar production (e.g., ~11.24¢/kWh &lt; 1 MW, ~8.41¢/kWh ≥ 1 MW). We then share a defined percentage of that revenue back with you as a site host fee—no behind‑the‑meter retail energy sales.
                     </p>
                 </div>
             </div>
@@ -814,14 +881,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <div class="logo-icon">
-                            <div class="sun-icon">☀️</div>
-                            <div class="grid-lines">
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                            </div>
-                        </div>
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
                         <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
                     </div>
                     <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
@@ -864,5 +924,289 @@
             </div>
         </div>
     </footer>
+    <script src="script.js"></script>
+    <script>
+        // Typing animation for pricing hero
+        document.addEventListener('DOMContentLoaded', function () {
+            const typingText = document.getElementById('pricingTypingText');
+            const typingCursor = document.getElementById('pricingTypingCursor');
+            if (!typingText) return;
+
+            const segments = [
+                { text: 'Simple pricing,', color: '#1A1A1A', isBreak: true },
+                { text: 'no upfront cost.', color: '#BF5700', isBreak: false }
+            ];
+
+            let currentSegment = 0;
+            let currentChar = 0;
+
+            function typeNext() {
+                if (currentSegment >= segments.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 800);
+                    return;
+                }
+
+                const seg = segments[currentSegment];
+                const full = seg.text;
+
+                if (currentChar < full.length) {
+                    currentChar++;
+                    render(seg, full.substring(0, currentChar));
+                    setTimeout(typeNext, 80);
+                } else {
+                    currentSegment++;
+                    currentChar = 0;
+                    setTimeout(typeNext, 250);
+                }
+            }
+
+            function render(activeSegment, activeText) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const s = segments[i];
+                    html += `<span style="color:${s.color};">${s.text}</span>`;
+                    if (s.isBreak) html += '<br/>';
+                }
+                if (currentSegment < segments.length) {
+                    html += `<span style="color:${activeSegment.color};">${activeText}</span>`;
+                    if (activeSegment.isBreak && activeText === activeSegment.text) {
+                        html += '<br/>';
+                    }
+                }
+                typingText.innerHTML = html;
+            }
+
+            setTimeout(typeNext, 400);
+        });
+
+        // Interactive pricing calculator (Austin Energy model)
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.getElementById('pricingSizeSlider');
+            if (!slider) return;
+
+            const sizeLabel = document.getElementById('calcSizeLabel');
+            const kwhLabel = document.getElementById('calcKwh');
+            const aeRevenueLabel = document.getElementById('calcHostCost');
+            const hostPaymentLabel = document.getElementById('calcBaselineCost');
+            const valueStackLabel = document.getElementById('calcSavings');
+
+            function formatCurrency(value) {
+                return '$' + value.toLocaleString('en-US', { maximumFractionDigits: 0 }) + '/yr';
+            }
+
+            function update() {
+                const kw = Number(slider.value); // system size in kW
+                const annualKwh = kw * 1400; // 1.4 MWh per kW-year
+
+                // Austin Energy solar rates (approximate, from current Value of Solar / Standard Offer)
+                // < 1 MW AC: ~11.24¢/kWh, ≥ 1 MW AC: ~8.41¢/kWh
+                const aeRate = kw < 1000 ? 0.1124 : 0.0841; // $/kWh
+                const aeRevenue = annualKwh * aeRate;
+
+                // Example host share of solar value (e.g., 30% site payment)
+                const hostShare = 0.30;
+                const hostPayment = aeRevenue * hostShare;
+
+                // For value stack, show combined host payment + implied avoided utility spend
+                const baselineRate = 0.11; // $/kWh benchmark retail value
+                const baselineValue = annualKwh * baselineRate;
+                const valueStack = hostPayment + (baselineValue - aeRevenue); // simple illustrative stack
+
+                if (sizeLabel) sizeLabel.textContent = kw.toLocaleString('en-US') + ' kW';
+                if (kwhLabel) kwhLabel.textContent = annualKwh.toLocaleString('en-US') + ' kWh';
+                if (aeRevenueLabel) aeRevenueLabel.textContent = formatCurrency(aeRevenue);
+                if (hostPaymentLabel) hostPaymentLabel.textContent = formatCurrency(hostPayment);
+                if (valueStackLabel) valueStackLabel.textContent = formatCurrency(valueStack);
+            }
+
+            slider.addEventListener('input', update);
+            update();
+        });
+    </script>
+
+    <!-- AI Chatbot Widget -->
+    <div id="chatbotWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; font-family: 'Inter', sans-serif;">
+        <!-- Chat Button -->
+        <button id="chatbotToggle" onclick="toggleChatbot()" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(191, 87, 0, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-comments" id="chatbotIcon"></i>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatbotWindow" style="position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 600px; max-height: calc(100vh - 120px); background: #fff; border-radius: 20px; box-shadow: 0 8px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden;">
+            <!-- Chat Header -->
+            <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 1rem;">SunUrban AI Assistant</div>
+                        <div style="font-size: 0.75rem; opacity: 0.9;">Online now</div>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" style="background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatbotMessages" style="flex: 1; padding: 1.5rem; overflow-y: auto; background: #F5F5F5;">
+                <div class="chat-message bot-message" style="margin-bottom: 1rem; display: flex; gap: 0.75rem;">
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            Hi! I'm SunUrban's AI assistant. I can help you learn about our solar canopy solutions, parking intelligence, EV charging, and grid coordination services. What would you like to know?
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Replies -->
+            <div id="chatbotQuickReplies" style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="quick-reply-btn" onclick="sendQuickMessage('Tell me about solar canopies')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Solar Canopies</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('What is ParkUrban?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">ParkUrban</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('How much does it cost?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Pricing</button>
+            </div>
+
+            <!-- Chat Input -->
+            <div style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; gap: 0.75rem;">
+                <input type="text" id="chatbotInput" placeholder="Type your message..." style="flex: 1; padding: 0.75rem 1rem; border: 1px solid #E0E0E0; border-radius: 25px; font-size: 0.9rem; outline: none; transition: all 0.3s ease;" onkeypress="handleChatbotKeyPress(event)" onfocus="this.style.borderColor='#BF5700'" onblur="this.style.borderColor='#E0E0E0'">
+                <button onclick="sendChatbotMessage()" style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot functionality
+        function toggleChatbot() {
+            const window = document.getElementById('chatbotWindow');
+            const icon = document.getElementById('chatbotIcon');
+            if (window.style.display === 'none' || window.style.display === '') {
+                window.style.display = 'flex';
+                icon.className = 'fas fa-times';
+            } else {
+                window.style.display = 'none';
+                icon.className = 'fas fa-comments';
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatbotInput').value = message;
+            sendChatbotMessage();
+        }
+
+        function handleChatbotKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatbotMessage();
+            }
+        }
+
+        function sendChatbotMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Simulate AI response (replace with actual API call)
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addChatMessage(response, 'bot');
+            }, 500);
+        }
+
+        function addChatMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.style.cssText = 'margin-bottom: 1rem; display: flex; gap: 0.75rem; animation: slideIn 0.3s ease;';
+            
+            if (sender === 'user') {
+                messageDiv.style.flexDirection = 'row-reverse';
+                messageDiv.innerHTML = `
+                    <div style="flex: 1; text-align: right;">
+                        <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 0.75rem 1rem; border-radius: 12px; display: inline-block; max-width: 80%; box-shadow: 0 2px 8px rgba(191,87,0,0.2); line-height: 1.5;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-right: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Simple keyword-based responses (replace with actual AI API)
+            if (lowerMessage.includes('solar') || lowerMessage.includes('canopy')) {
+                return "SunUrban builds solar canopy infrastructure on parking lots. We install solar panels above parking spaces, providing shade while generating clean energy. The canopies reduce surface temperatures by 10-20°C and generate up to 1.4 MWh per kW per year. Would you like to know more about our installation process?";
+            } else if (lowerMessage.includes('parkurban') || lowerMessage.includes('parking')) {
+                return "ParkUrban is our smart parking intelligence platform. It provides real-time parking availability, predictive forecasting, and comfort-aware routing. Using sensors on our solar canopies, ParkUrban helps drivers find shaded spots instantly, reducing search time and improving the parking experience. It's perfect for campuses, malls, and large parking facilities.";
+            } else if (lowerMessage.includes('cost') || lowerMessage.includes('price') || lowerMessage.includes('pricing')) {
+                return "SunUrban offers zero upfront cost installations through our Power Purchase Agreement (PPA) model. We cover all installation and maintenance costs. You pay a fixed rate for the energy generated, typically 7.54¢/kWh, which is below retail rates. Plus, you receive a share of the revenue from Austin Energy. Would you like to see our pricing plans?";
+            } else if (lowerMessage.includes('ev') || lowerMessage.includes('charging') || lowerMessage.includes('electric')) {
+                return "ChargeUrban is our EV charging network integrated with solar canopies. We offer Level 2 and DC fast charging stations powered by clean solar energy. The charging infrastructure is included in our 500kW and 1MW canopy plans. This creates additional revenue streams while supporting electric mobility. Interested in learning more?";
+            } else if (lowerMessage.includes('grid') || lowerMessage.includes('gridurban')) {
+                return "GridUrban coordinates distributed energy resources (DERs) to provide grid services. Our platform uses AI to estimate flexibility and coordinate multiple solar installations as a virtual power plant. This helps stabilize the grid during peak demand and creates additional revenue through grid services. It's particularly valuable in ERCOT territory.";
+            } else if (lowerMessage.includes('data') || lowerMessage.includes('saas')) {
+                return "Our Data Layer provides valuable urban intelligence from our sensor network. We collect data on parking patterns, thermal conditions, EV charging behavior, and more. This data is licensed to city planners, researchers, and businesses. It's a scalable SaaS revenue stream that complements our energy infrastructure.";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello! I'm here to help you learn about SunUrban's energy and intelligence solutions. We transform parking lots into solar-powered infrastructure with parking intelligence, EV charging, and grid coordination. What interests you most?";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('get in touch')) {
+                return "You can reach us at info@solarcanopy.com or visit our contact page. We'd love to discuss how SunUrban can work for your property. Would you like me to help you find the contact form?";
+            } else {
+                return "That's a great question! SunUrban is an energy + SaaS platform that builds solar canopy infrastructure on parking lots, then layers on parking intelligence (ParkUrban), EV charging (ChargeUrban), and grid coordination (GridUrban). We're America's first near-load urban coordinated energy company. Would you like to know more about any specific aspect?";
+            }
+        }
+
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            #chatbotToggle:hover {
+                transform: scale(1.1);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

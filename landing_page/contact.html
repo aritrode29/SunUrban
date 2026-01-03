@@ -22,14 +22,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
-                <div class="logo-icon">
-                    <div class="sun-icon">☀️</div>
-                    <div class="grid-lines">
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                    </div>
-                </div>
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
                 <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
             </a>
             <div class="nav-menu">
@@ -66,18 +59,14 @@
     </nav>
 
     <!-- Contact Hero Section -->
-    <section style="padding-top: 140px; padding-bottom: 6rem; background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); color: #fff; position: relative; overflow: hidden;">
-        <!-- Decorative background elements -->
-        <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
-        <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1;">
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <h1 id="buildTogetherTitle" style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; margin-bottom: 2rem; line-height: 1.1; letter-spacing: -0.02em;">
-                    <span id="buildTogetherText"></span><span id="buildTogetherCursor" style="border-right: 3px solid white; animation: blink 1s infinite;">|</span>
+    <section style="padding-top: 140px; padding-bottom: 6rem; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h1 id="buildTogetherTitle" style="font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 1.1; color: #1A1A1A; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                    <span id="buildTogetherText"></span><span id="buildTogetherCursor" style="border-right: 3px solid #BF5700; animation: blink 1s infinite;">|</span>
                 </h1>
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; opacity: 0.95; margin-bottom: 2rem;">
-                    Whether you're a property owner, investor, or partner, we'd love to hear from you. Let's transform parking lots into power plants.
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; color: #666; max-width: 700px;">
+                    Whether you're a property owner, operator, investor, or research partner, this is the starting point. Tell us about your site or idea and we'll follow up with a concrete next step.
                 </p>
             </div>
         </div>
@@ -88,9 +77,10 @@
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
                 <!-- General Inquiry Card -->
-                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 2px solid transparent;" 
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.25s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.06); border: 1px solid #E0E0E0; cursor: pointer;" 
+                     onclick="scrollToForm('generalForm')"
+                     onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 14px 30px rgba(0,0,0,0.12)'; this.style.borderColor='#BF5700'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.06)'; this.style.borderColor='#E0E0E0'">
                     <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
@@ -105,9 +95,10 @@
                 </div>
 
                 <!-- Host Parking Lot Card -->
-                <div style="background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); border-radius: 20px; padding: 3rem; text-align: center; color: #fff; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(191,87,0,0.2); border: 2px solid transparent;" 
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.4)'"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(191,87,0,0.2)'">
+                <div style="background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); border-radius: 20px; padding: 3rem; text-align: center; color: #fff; transition: all 0.25s ease; box-shadow: 0 10px 32px rgba(191,87,0,0.3); border: 1px solid rgba(255,255,255,0.25); position: relative; overflow: hidden; cursor: pointer;" 
+                     onclick="scrollToForm('hostForm')"
+                     onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 18px 42px rgba(191,87,0,0.45)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 32px rgba(191,87,0,0.3)'">
                     <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: white; stroke-width: 2;">
                             <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v0M9 13v0M9 17v0M15 13v0M15 17v0" stroke-linecap="round" stroke-linejoin="round"/>
@@ -121,9 +112,10 @@
                 </div>
 
                 <!-- Early Access Card -->
-                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 2px solid transparent;" 
-                     onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(191,87,0,0.15)'; this.style.borderColor='#BF5700'"
-                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)'; this.style.borderColor='transparent'">
+                <div style="background: #fff; border-radius: 20px; padding: 3rem; text-align: center; transition: all 0.25s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.06); border: 1px solid #E0E0E0; cursor: pointer;" 
+                     onclick="scrollToForm('earlyAccessForm')"
+                     onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 14px 30px rgba(0,0,0,0.12)'; this.style.borderColor='#BF5700'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.06)'; this.style.borderColor='#E0E0E0'">
                     <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #BF5700; stroke-width: 2;">
                             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
@@ -367,17 +359,10 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <div class="logo-icon">
-                            <div class="sun-icon">☀️</div>
-                            <div class="grid-lines">
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                            </div>
-                        </div>
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
                         <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
                     </div>
-                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                    <p>We partner with property owners to install solar canopies and layer in ParkUrban analytics and data infrastructure—turning parking lots into energy, shade, and urban intelligence.</p>
                 </div>
                 
                 <div class="footer-section">
@@ -512,10 +497,10 @@
             
             if (!typingText) return;
             
+            // Single segment so the browser lays out the full line once,
+            // which prevents awkward mid-animation wrapping.
             const fullText = [
-                { text: "Let's", color: '#fff', isBreak: false },
-                { text: 'Build', color: '#fff', isBreak: false },
-                { text: 'Together', color: '#fff', isBreak: false }
+                { text: "Let's build together.", color: '#1A1A1A', isBreak: false }
             ];
             
             let currentSegment = 0;
@@ -525,7 +510,7 @@
                 if (currentSegment >= fullText.length) {
                     setTimeout(() => {
                         if (typingCursor) typingCursor.style.display = 'none';
-                    }, 1000);
+                    }, 800);
                     return;
                 }
                 
@@ -534,43 +519,223 @@
                 
                 if (currentCharIndex < targetText.length) {
                     const currentText = targetText.substring(0, currentCharIndex + 1);
-                    updateText(currentText, segment.color, segment.isBreak);
+                    updateText(currentText, segment.color);
                     currentCharIndex++;
-                    setTimeout(typeText, 80);
+                    setTimeout(typeText, 70);
                 } else {
-                    // Add space after each word except the last
-                    if (currentSegment < fullText.length - 1) {
-                        updateText(targetText + ' ', segment.color, segment.isBreak);
-                        setTimeout(() => {
-                            currentSegment++;
-                            currentCharIndex = 0;
-                            typeText();
-                        }, 200);
-                    } else {
-                        currentSegment++;
-                        currentCharIndex = 0;
-                        setTimeout(() => {
-                            if (typingCursor) typingCursor.style.display = 'none';
-                        }, 1000);
-                    }
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 800);
                 }
             }
             
-            function updateText(text, color, isBreak) {
-                let html = '';
-                for (let i = 0; i < currentSegment; i++) {
-                    const seg = fullText[i];
-                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
-                    if (seg.isBreak) html += '<br/>';
-                    else if (i < fullText.length - 1) html += ' ';
+            function updateText(text, color) {
+                const full = fullText[0].text;
+                const togetherStart = full.indexOf('together');
+                
+                let inner = '';
+                if (togetherStart === -1 || text.length <= togetherStart) {
+                    // Haven't reached "together" yet – all dark
+                    inner = `<span style="color: ${color};">${text}</span>`;
+                } else {
+                    const before = text.slice(0, togetherStart);
+                    const during = text.slice(togetherStart);
+                    inner =
+                        `<span style="color: #1A1A1A;">${before}</span>` +
+                        `<span style="color: #BF5700;">${during}</span>`;
                 }
-                html += `<span style="color: ${color};">${text}</span>`;
-                typingText.innerHTML = html;
+                // Keep line from wrapping while animating
+                typingText.innerHTML = `<span style="white-space: nowrap;">${inner}</span>`;
             }
             
             // Start typing animation after a short delay
             setTimeout(typeText, 500);
         });
+    </script>
+
+    <!-- AI Chatbot Widget -->
+    <div id="chatbotWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; font-family: 'Inter', sans-serif;">
+        <!-- Chat Button -->
+        <button id="chatbotToggle" onclick="toggleChatbot()" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(191, 87, 0, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-comments" id="chatbotIcon"></i>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatbotWindow" style="position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 600px; max-height: calc(100vh - 120px); background: #fff; border-radius: 20px; box-shadow: 0 8px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden;">
+            <!-- Chat Header -->
+            <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 1rem;">SunUrban AI Assistant</div>
+                        <div style="font-size: 0.75rem; opacity: 0.9;">Online now</div>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" style="background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatbotMessages" style="flex: 1; padding: 1.5rem; overflow-y: auto; background: #F5F5F5;">
+                <div class="chat-message bot-message" style="margin-bottom: 1rem; display: flex; gap: 0.75rem;">
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            Hi! I'm SunUrban's AI assistant. I can help you learn about our solar canopy solutions, parking intelligence, EV charging, and grid coordination services. What would you like to know?
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Replies -->
+            <div id="chatbotQuickReplies" style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="quick-reply-btn" onclick="sendQuickMessage('Tell me about solar canopies')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Solar Canopies</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('What is ParkUrban?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">ParkUrban</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('How much does it cost?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Pricing</button>
+            </div>
+
+            <!-- Chat Input -->
+            <div style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; gap: 0.75rem;">
+                <input type="text" id="chatbotInput" placeholder="Type your message..." style="flex: 1; padding: 0.75rem 1rem; border: 1px solid #E0E0E0; border-radius: 25px; font-size: 0.9rem; outline: none; transition: all 0.3s ease;" onkeypress="handleChatbotKeyPress(event)" onfocus="this.style.borderColor='#BF5700'" onblur="this.style.borderColor='#E0E0E0'">
+                <button onclick="sendChatbotMessage()" style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot functionality
+        function toggleChatbot() {
+            const window = document.getElementById('chatbotWindow');
+            const icon = document.getElementById('chatbotIcon');
+            if (window.style.display === 'none' || window.style.display === '') {
+                window.style.display = 'flex';
+                icon.className = 'fas fa-times';
+            } else {
+                window.style.display = 'none';
+                icon.className = 'fas fa-comments';
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatbotInput').value = message;
+            sendChatbotMessage();
+        }
+
+        function handleChatbotKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatbotMessage();
+            }
+        }
+
+        function sendChatbotMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Simulate AI response (replace with actual API call)
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addChatMessage(response, 'bot');
+            }, 500);
+        }
+
+        function addChatMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.style.cssText = 'margin-bottom: 1rem; display: flex; gap: 0.75rem; animation: slideIn 0.3s ease;';
+            
+            if (sender === 'user') {
+                messageDiv.style.flexDirection = 'row-reverse';
+                messageDiv.innerHTML = `
+                    <div style="flex: 1; text-align: right;">
+                        <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 0.75rem 1rem; border-radius: 12px; display: inline-block; max-width: 80%; box-shadow: 0 2px 8px rgba(191,87,0,0.2); line-height: 1.5;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-right: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Simple keyword-based responses (replace with actual AI API)
+            if (lowerMessage.includes('solar') || lowerMessage.includes('canopy')) {
+                return "SunUrban builds solar canopy infrastructure on parking lots. We install solar panels above parking spaces, providing shade while generating clean energy. The canopies reduce surface temperatures by 10-20°C and generate up to 1.4 MWh per kW per year. Would you like to know more about our installation process?";
+            } else if (lowerMessage.includes('parkurban') || lowerMessage.includes('parking')) {
+                return "ParkUrban is our smart parking intelligence platform. It provides real-time parking availability, predictive forecasting, and comfort-aware routing. Using sensors on our solar canopies, ParkUrban helps drivers find shaded spots instantly, reducing search time and improving the parking experience. It's perfect for campuses, malls, and large parking facilities.";
+            } else if (lowerMessage.includes('cost') || lowerMessage.includes('price') || lowerMessage.includes('pricing')) {
+                return "SunUrban offers zero upfront cost installations through our Power Purchase Agreement (PPA) model. We cover all installation and maintenance costs. You pay a fixed rate for the energy generated, typically 7.54¢/kWh, which is below retail rates. Plus, you receive a share of the revenue from Austin Energy. Would you like to see our pricing plans?";
+            } else if (lowerMessage.includes('ev') || lowerMessage.includes('charging') || lowerMessage.includes('electric')) {
+                return "ChargeUrban is our EV charging network integrated with solar canopies. We offer Level 2 and DC fast charging stations powered by clean solar energy. The charging infrastructure is included in our 500kW and 1MW canopy plans. This creates additional revenue streams while supporting electric mobility. Interested in learning more?";
+            } else if (lowerMessage.includes('grid') || lowerMessage.includes('gridurban')) {
+                return "GridUrban coordinates distributed energy resources (DERs) to provide grid services. Our platform uses AI to estimate flexibility and coordinate multiple solar installations as a virtual power plant. This helps stabilize the grid during peak demand and creates additional revenue through grid services. It's particularly valuable in ERCOT territory.";
+            } else if (lowerMessage.includes('data') || lowerMessage.includes('saas')) {
+                return "Our Data Layer provides valuable urban intelligence from our sensor network. We collect data on parking patterns, thermal conditions, EV charging behavior, and more. This data is licensed to city planners, researchers, and businesses. It's a scalable SaaS revenue stream that complements our energy infrastructure.";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello! I'm here to help you learn about SunUrban's energy and intelligence solutions. We transform parking lots into solar-powered infrastructure with parking intelligence, EV charging, and grid coordination. What interests you most?";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('get in touch')) {
+                return "You can reach us at info@solarcanopy.com or visit our contact page. We'd love to discuss how SunUrban can work for your property. Would you like me to help you find the contact form?";
+            } else {
+                return "That's a great question! SunUrban is an energy + SaaS platform that builds solar canopy infrastructure on parking lots, then layers on parking intelligence (ParkUrban), EV charging (ChargeUrban), and grid coordination (GridUrban). We're America's first near-load urban coordinated energy company. Would you like to know more about any specific aspect?";
+            }
+        }
+
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            #chatbotToggle:hover {
+                transform: scale(1.1);
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

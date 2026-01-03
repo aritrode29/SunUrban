@@ -17,14 +17,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
-                <div class="logo-icon">
-                    <div class="sun-icon">☀️</div>
-                    <div class="grid-lines">
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                    </div>
-                </div>
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
                 <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
             </a>
             <div class="nav-menu">
@@ -64,7 +57,7 @@
     <section id="financial-projections" class="financial-projections-section" style="padding-top: 120px;">
         <div class="container">
             <h2>Financial Projections</h2>
-            <p class="section-intro">10-year financial outlook based on optimized SunUrban configuration with all revenue streams.</p>
+            <p class="section-intro">10-year outlook for an Austin Energy–compatible canopy portfolio plus ParkUrban software, using the new revenue-share model and 250 kW / 500 kW / 1 MW pricing tiers.</p>
             
             <!-- Key Metrics Overview -->
             <div class="financial-metrics-grid">
@@ -72,24 +65,24 @@
                     <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="metric-content">
                         <div class="metric-value">7.8%</div>
-                        <div class="metric-label">IRR</div>
-                        <div class="metric-note">Internal Rate of Return</div>
+                        <div class="metric-label">Project IRR</div>
+                        <div class="metric-note">3 canopies (250 / 500 / 1,000 kW) + ParkUrban + data</div>
                     </div>
                 </div>
                 <div class="financial-metric-card">
                     <div class="metric-icon"><i class="fas fa-clock"></i></div>
                     <div class="metric-content">
-                        <div class="metric-value">10.9</div>
-                        <div class="metric-label">Years</div>
-                        <div class="metric-note">Payback Period</div>
+                        <div class="metric-value">10.9 yrs</div>
+                        <div class="metric-label">Payback</div>
+                        <div class="metric-note">On total project equity</div>
                     </div>
                 </div>
                 <div class="financial-metric-card">
                     <div class="metric-icon"><i class="fas fa-dollar-sign"></i></div>
                     <div class="metric-content">
                         <div class="metric-value">$477k</div>
-                        <div class="metric-label">Annual Revenue</div>
-                        <div class="metric-note">Year 1 (all streams)</div>
+                        <div class="metric-label">Year‑1 Revenue</div>
+                        <div class="metric-note">Austin Energy solar + ParkUrban + data</div>
                     </div>
                 </div>
                 <div class="financial-metric-card">
@@ -97,8 +90,40 @@
                     <div class="metric-content">
                         <div class="metric-value">$4.71M</div>
                         <div class="metric-label">Total CAPEX</div>
-                        <div class="metric-note">Initial investment</div>
+                        <div class="metric-note">Hardware, installation, engineering</div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Portfolio & pricing overview -->
+            <div style="margin-top: 3rem; margin-bottom: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+                <div style="background: #F5F5F5; border-radius: 16px; padding: 1.75rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.75rem;">Modeled canopy portfolio</h3>
+                    <p style="color: #555; line-height: 1.6; margin-bottom: 0.75rem;">
+                        The base case models three SunUrban canopies interconnected to <strong>Austin Energy</strong>:
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.2rem; color: #444; line-height: 1.6; font-size: 0.95rem;">
+                        <li>250 kW starter canopy (~350 MWh/yr)</li>
+                        <li>500 kW canopy (~700 MWh/yr)</li>
+                        <li>1,000 kW canopy bundle (~1,400 MWh/yr)</li>
+                    </ul>
+                    <p style="color: #555; line-height: 1.6; margin-top: 0.75rem;">
+                        All solar revenue is paid by Austin Energy; hosts receive a contracted <strong>site payment</strong> (e.g., 30% of solar value).
+                    </p>
+                </div>
+                <div style="background: #F5F5F5; border-radius: 16px; padding: 1.75rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.75rem;">Pricing + ParkUrban layers</h3>
+                    <p style="color: #555; line-height: 1.6; margin-bottom: 0.5rem;">
+                        This page rolls up three revenue layers:
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.2rem; color: #444; line-height: 1.6; font-size: 0.95rem;">
+                        <li><strong>Austin Energy solar</strong>: utility payments under commercial solar tariffs.</li>
+                        <li><strong>ParkUrban</strong>: B2B SaaS fees for parking analytics at canopy sites.</li>
+                        <li><strong>Data Layer</strong>: digital twin licensing (heat, shading, EV, footfall, etc.).</li>
+                    </ul>
+                    <p style="color: #555; line-height: 1.6; margin-top: 0.75rem;">
+                        ParkUrban ARR scales with number of lots onboarded; the solar + site payments scale with installed kW.
+                    </p>
                 </div>
             </div>
             
@@ -147,7 +172,7 @@
             
             <!-- Pricing Model Section -->
             <div class="pricing-model-section" style="margin-top: 4rem;">
-                <h2>Revenue!</h2>
+                <h2>Revenue model: Austin Energy + ParkUrban</h2>
 
                 <!-- Pricing Visualizations -->
                 <div class="pricing-viz-grid">
@@ -172,8 +197,8 @@
                                 <g class="phase-node" data-phase="1">
                                     <rect x="50" y="150" width="180" height="100" rx="10" fill="#BF5700" opacity="0.9"/>
                                     <text x="140" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 1</text>
-                                    <text x="140" y="205" text-anchor="middle" font-size="14" fill="white">Sell to Host</text>
-                                    <text x="140" y="230" text-anchor="middle" font-size="12" fill="white">$243k/year</text>
+                                    <text x="140" y="205" text-anchor="middle" font-size="14" fill="white">Austin Energy solar</text>
+                                    <text x="140" y="230" text-anchor="middle" font-size="12" fill="white">core utility payments</text>
                                     <circle cx="140" cy="120" r="25" fill="#BF5700" opacity="0.9"/>
                                     <text x="140" y="128" text-anchor="middle" font-size="20" fill="white">🏢</text>
                                 </g>
@@ -182,8 +207,8 @@
                                 <g class="phase-node" data-phase="2">
                                     <rect x="300" y="150" width="180" height="100" rx="10" fill="#F78E1E" opacity="0.9"/>
                                     <text x="390" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 2</text>
-                                    <text x="390" y="205" text-anchor="middle" font-size="14" fill="white">Hybrid</text>
-                                    <text x="390" y="230" text-anchor="middle" font-size="12" fill="white">$322k/year</text>
+                                    <text x="390" y="205" text-anchor="middle" font-size="14" fill="white">+ ParkUrban</text>
+                                    <text x="390" y="230" text-anchor="middle" font-size="12" fill="white">parking analytics SaaS</text>
                                     <circle cx="390" cy="120" r="25" fill="#F78E1E" opacity="0.9"/>
                                     <text x="390" y="128" text-anchor="middle" font-size="20" fill="white">⚡</text>
                                 </g>
@@ -192,8 +217,8 @@
                                 <g class="phase-node" data-phase="3">
                                     <rect x="550" y="150" width="180" height="100" rx="10" fill="#8B3A00" opacity="0.9"/>
                                     <text x="640" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Phase 3</text>
-                                    <text x="640" y="205" text-anchor="middle" font-size="14" fill="white">VPP</text>
-                                    <text x="640" y="230" text-anchor="middle" font-size="12" fill="white">$477k/year</text>
+                                    <text x="640" y="205" text-anchor="middle" font-size="14" fill="white">+ Data Layer</text>
+                                    <text x="640" y="230" text-anchor="middle" font-size="12" fill="white">digital twin licensing</text>
                                     <circle cx="640" cy="120" r="25" fill="#8B3A00" opacity="0.9"/>
                                     <text x="640" y="128" text-anchor="middle" font-size="20" fill="white">🌐</text>
                                 </g>
@@ -289,37 +314,37 @@
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Revenue Growth:</strong> 2% annual increase (inflation + efficiency gains)
+                            <strong>Austin Energy solar rates:</strong> &lt;1 MW: ~11.24¢/kWh, ≥1 MW: ~8.41¢/kWh (updated VoS / Standard Offer style tariffs)
                         </div>
                     </div>
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>OPEX:</strong> $43k/year (1.5% of CAPEX) with 2% annual inflation
+                            <strong>Host share:</strong> 30% of Austin Energy solar revenue paid back to the site as a fixed “host payment”
                         </div>
                     </div>
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>System Degradation:</strong> 0.5% annual solar output decline
+                            <strong>ParkUrban ramp:</strong> 3 flagship lots live in Year 1, growing to 25+ by Year 5 with high‑margin SaaS revenue
                         </div>
                     </div>
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Discount Rate:</strong> 7% (WACC for infrastructure projects)
+                            <strong>OPEX:</strong> $43k/year (≈1.5% of CAPEX) with 2% annual inflation for monitoring, maintenance, and software
                         </div>
                     </div>
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Revenue Streams:</strong> All streams active from Year 1
+                            <strong>System degradation:</strong> 0.5% annual solar output decline; ParkUrban MRR churn &lt; 5%/yr
                         </div>
                     </div>
                     <div class="assumption-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>No ITC:</strong> Analysis assumes no Investment Tax Credit
+                            <strong>Capital stack:</strong> No ITC modeled; equity + project finance at 7% blended discount rate
                         </div>
                     </div>
                 </div>
@@ -461,7 +486,7 @@
             new Chart(breakdownCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Base PPA', 'Platform Fees', 'Grid Services', 'EV Charging', 'REC Sales', 'Digital Twin'],
+                    labels: ['Austin Energy solar', 'ParkUrban SaaS', 'Grid services', 'EV charging', 'REC sales', 'Digital Twin'],
                     datasets: [{
                         data: [243, 19, 60, 50, 30, 75],
                         backgroundColor: [
@@ -698,7 +723,7 @@
             new Chart(streamsCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Base PPA', 'Platform Fees', 'Grid Services', 'EV Charging', 'REC Sales', 'Digital Twin'],
+                    labels: ['Austin Energy solar', 'ParkUrban SaaS', 'Grid services', 'EV charging', 'REC sales', 'Digital Twin'],
                     datasets: [{
                         data: [243, 19, 60, 50, 30, 75],
                         backgroundColor: [
@@ -1122,14 +1147,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <div class="logo-icon">
-                            <div class="sun-icon">☀️</div>
-                            <div class="grid-lines">
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                            </div>
-                        </div>
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
                         <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
                     </div>
                     <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>

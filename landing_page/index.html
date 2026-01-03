@@ -132,14 +132,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-                <div class="logo-icon">
-                    <div class="sun-icon">☀️</div>
-                    <div class="grid-lines">
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                    </div>
-                </div>
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
                 <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
             </a>
             <div class="nav-menu">
@@ -186,14 +179,11 @@
                     </h1>
                     
                     <p style="font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.6; color: #666; margin-bottom: 3rem; max-width: 550px;">
-                        Cities are running out of space, but <span style="color: #BF5700; font-weight: 600;">parking lots are everywhere</span>. We transform these heat-intensive surfaces into distributed solar microgrids.
+                        We build solar canopy infrastructure on <span style="color: #BF5700; font-weight: 600;">parking lots</span>, then layer on <span style="color: #BF5700; font-weight: 600;">parking intelligence</span>, <span style="color: #BF5700; font-weight: 600;">EV charging</span>, and <span style="color: #BF5700; font-weight: 600;">grid coordination</span> — all powered by data.
                     </p>
                     
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;">
-                        <button class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;" onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})">
-                            Calculate Your Savings
-                        </button>
-                        <button class="btn-outline" style="font-size: 1.1rem; padding: 1rem 2rem;" onclick="window.location.href='how-it-works.html'">
+                        <button class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;" onclick="window.location.href='how-it-works.html'">
                             See How It Works
                         </button>
                     </div>
@@ -298,11 +288,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Floating badges -->
-                    <div style="position: absolute; top: -20px; right: -20px; background: #BF5700; color: #fff; padding: 1rem 1.5rem; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 30px rgba(191,87,0,0.4); animation: float 4s ease-in-out infinite;">
-                        No Upfront Cost
-                    </div>
                 </div>
             </div>
         </div>
@@ -366,90 +351,10 @@
         </div>
     </section>
 
-    <!-- Interactive Savings Calculator -->
-    <section id="calculator" style="padding: 6rem 0; background: linear-gradient(135deg, #BF5700 0%, #8B3A00 100%); color: #fff;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
-            <div style="text-align: center; margin-bottom: 4rem;">
-                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem;">
-                    Calculate Your Savings
-                </h2>
-                <p style="font-size: 1.2rem; opacity: 0.95; max-width: 600px; margin: 0 auto;">
-                    Drag the slider to see your potential savings with SunUrban
-                </p>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-                <!-- Calculator Controls -->
-                <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 3rem;">
-                    <div style="margin-bottom: 2.5rem;">
-                        <label style="display: block; font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">
-                            Parking Lot Size: <span id="lotSizeValue" style="color: #FFD700;">2</span> acres
-                        </label>
-                        <input type="range" id="lotSizeSlider" min="1" max="20" value="2" 
-                               style="width: 100%; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.3); -webkit-appearance: none; cursor: pointer;"
-                               oninput="updateCalculator()">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem;">
-                            <span>1 acre</span>
-                            <span>20 acres</span>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 2.5rem;">
-                        <label style="display: block; font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">
-                            Current Electric Rate: <span id="rateValue" style="color: #FFD700;">$0.12</span>/kWh
-                        </label>
-                        <input type="range" id="rateSlider" min="8" max="25" value="12" 
-                               style="width: 100%; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.3); -webkit-appearance: none; cursor: pointer;"
-                               oninput="updateCalculator()">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem;">
-                            <span>$0.08</span>
-                            <span>$0.25</span>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.15); border-radius: 12px; padding: 1.5rem;">
-                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Your SunUrban Rate</div>
-                        <div style="font-size: 2rem; font-weight: 700; color: #FFD700;">$0.09/kWh</div>
-                        <div style="font-size: 0.85rem; opacity: 0.8;">Fixed for 20 years</div>
-                    </div>
-                </div>
-                
-                <!-- Results Display -->
-                <div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; text-align: center;">
-                            <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;" id="annualSavings">$7,200</div>
-                            <div style="font-size: 1rem; opacity: 0.9;">Annual Savings</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; text-align: center;">
-                            <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;" id="twentyYearSavings">$144K</div>
-                            <div style="font-size: 1rem; opacity: 0.9;">20-Year Savings</div>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;" id="kwhGenerated">600K</div>
-                            <div style="font-size: 1rem; opacity: 0.9;">kWh/Year Generated</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;" id="co2Saved">450</div>
-                            <div style="font-size: 1rem; opacity: 0.9;">Tons CO₂ Saved/Year</div>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-primary" style="width: 100%; background: #fff; color: #BF5700; font-size: 1.1rem; padding: 1.25rem;" onclick="window.location.href='contact.html'">
-                        Get Your Custom Quote
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Problems We Solve - Interactive Carousel -->
     <section style="padding: 6rem 0; background: #fff;">
         <div style="max-width: 1400px; margin: 0 auto; padding: 0 1.5rem;">
-            <div style="text-align: center; margin-bottom: 4rem;">
+            <div style="text-align: center; margin-bottom: 5rem;">
                 <div style="display: inline-block; background: rgba(191,87,0,0.1); padding: 0.5rem 1.5rem; border-radius: 50px; margin-bottom: 1.5rem;">
                     <span style="font-weight: 600; color: #BF5700; font-size: 0.9rem; letter-spacing: 1px;">WHY THIS MATTERS</span>
                 </div>
@@ -457,14 +362,14 @@
                     The Problems<br/><span style="color: #BF5700;">We Solve</span>
                 </h2>
                 <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto;">
-                    Every challenge is an opportunity. Click to explore our solutions.
+                    Every challenge is an opportunity. Here's how we turn problems into solutions.
                 </p>
             </div>
             
             <!-- Problem Cards - 5 Problems -->
-            <div id="problemsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            <div id="problemsGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
                 <!-- Problem 1 -->
-                <div class="problem-card-interactive animate-on-scroll" onclick="toggleProblem(this)" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.4s ease; border: 3px solid transparent; position: relative; overflow: hidden;">
+                <div class="problem-card-interactive animate-on-scroll" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 2px solid rgba(191,87,0,0.1); position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
                         <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -476,21 +381,17 @@
                         <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">5,000+</div>
                     </div>
                     <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Square Miles of Wasted Parking</h3>
-                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.25rem; font-size: 0.95rem;">
+                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem;">
                         US parking lots sit idle, absorbing heat, producing nothing. <strong style="color: #BF5700;">That's 300 MWh/acre of untapped energy.</strong>
                     </p>
-                    <div class="solution-reveal" style="background: linear-gradient(135deg, rgba(191,87,0,0.1), rgba(247,142,30,0.1)); border-radius: 12px; padding: 1rem; border-left: 4px solid #BF5700; display: none;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #1A1A1A; font-weight: 600; margin-bottom: 0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
-                        <div style="font-size: 0.9rem; color: #666;">Transform every parking lot into a solar power plant. Generate clean energy where people already park.</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: #BF5700; font-weight: 600; font-size: 0.9rem;">
-                        <span class="click-text">Click to see solution</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: currentColor; stroke-width: 2; transition: transform 0.3s;"><path d="M6 9l6 6 6-6"/></svg>
+                    <div style="background: linear-gradient(135deg, rgba(191,87,0,0.08), rgba(247,142,30,0.05)); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #BF5700; margin-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #BF5700; font-weight: 700; margin-bottom: 0.75rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
+                        <div style="font-size: 0.95rem; color: #333; line-height: 1.6;">Transform every parking lot into a solar power plant. Generate clean energy where people already park.</div>
                     </div>
                 </div>
                 
                 <!-- Problem 2 -->
-                <div class="problem-card-interactive animate-on-scroll stagger-1" onclick="toggleProblem(this)" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.4s ease; border: 3px solid transparent; position: relative; overflow: hidden;">
+                <div class="problem-card-interactive animate-on-scroll stagger-1" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 2px solid rgba(191,87,0,0.1); position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
                         <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -501,21 +402,17 @@
                         <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">100°F+</div>
                     </div>
                     <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Texas Summer Heat Is Deadly</h3>
-                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.25rem; font-size: 0.95rem;">
+                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem;">
                         Unshaded parking lots hit <strong style="color: #BF5700;">140°F surface temps</strong>. Shoppers avoid stores. Cars overheat. Workers suffer.
                     </p>
-                    <div class="solution-reveal" style="background: linear-gradient(135deg, rgba(191,87,0,0.1), rgba(247,142,30,0.1)); border-radius: 12px; padding: 1rem; border-left: 4px solid #BF5700; display: none;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #1A1A1A; font-weight: 600; margin-bottom: 0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
-                        <div style="font-size: 0.9rem; color: #666;">Solar canopies reduce surface temp by 10-20°C. Comfortable parking = happy customers = more business.</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: #BF5700; font-weight: 600; font-size: 0.9rem;">
-                        <span class="click-text">Click to see solution</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: currentColor; stroke-width: 2; transition: transform 0.3s;"><path d="M6 9l6 6 6-6"/></svg>
+                    <div style="background: linear-gradient(135deg, rgba(191,87,0,0.08), rgba(247,142,30,0.05)); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #BF5700; margin-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #BF5700; font-weight: 700; margin-bottom: 0.75rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
+                        <div style="font-size: 0.95rem; color: #333; line-height: 1.6;">Solar canopies reduce surface temp by 10-20°C. Comfortable parking = happy customers = more business.</div>
                     </div>
                 </div>
                 
                 <!-- Problem 3 -->
-                <div class="problem-card-interactive animate-on-scroll stagger-2" onclick="toggleProblem(this)" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.4s ease; border: 3px solid transparent; position: relative; overflow: hidden;">
+                <div class="problem-card-interactive animate-on-scroll stagger-2" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 2px solid rgba(191,87,0,0.1); position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
                         <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -526,68 +423,59 @@
                         <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">134 GW</div>
                     </div>
                     <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Data Centers Are Breaking the Grid</h3>
-                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.25rem; font-size: 0.95rem;">
+                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem;">
                         US data center demand will hit <strong style="color: #BF5700;">134 GW by 2030</strong>. The grid can't keep up. Blackouts are coming.
                     </p>
-                    <div class="solution-reveal" style="background: linear-gradient(135deg, rgba(191,87,0,0.1), rgba(247,142,30,0.1)); border-radius: 12px; padding: 1rem; border-left: 4px solid #BF5700; display: none;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #1A1A1A; font-weight: 600; margin-bottom: 0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
-                        <div style="font-size: 0.9rem; color: #666;">Distributed generation near load centers. Power data centers from their own parking lots. Grid resilience built-in.</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: #BF5700; font-weight: 600; font-size: 0.9rem;">
-                        <span class="click-text">Click to see solution</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: currentColor; stroke-width: 2; transition: transform 0.3s;"><path d="M6 9l6 6 6-6"/></svg>
+                    <div style="background: linear-gradient(135deg, rgba(191,87,0,0.08), rgba(247,142,30,0.05)); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #BF5700; margin-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #BF5700; font-weight: 700; margin-bottom: 0.75rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
+                        <div style="font-size: 0.95rem; color: #333; line-height: 1.6;">Distributed generation near load centers. Power data centers from their own parking lots. Grid resilience built-in.</div>
                     </div>
                 </div>
                 
-                <!-- Problem 4 -->
-                <div class="problem-card-interactive animate-on-scroll stagger-3" onclick="toggleProblem(this)" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.4s ease; border: 3px solid transparent; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
-                        <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                <polyline points="9 22 9 12 15 12 15 22"/>
-                            </svg>
+                <!-- Wrapper for last 2 cards to center them -->
+                <div style="grid-column: 1 / -1; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <!-- Problem 4 -->
+                    <div class="problem-card-interactive animate-on-scroll stagger-3" style="flex: 0 1 calc(33.333% - 1.33rem); min-width: 320px; background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 2px solid rgba(191,87,0,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+                            <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                    <polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">Dec 2025</div>
                         </div>
-                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">Dec 2025</div>
-                    </div>
-                    <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Rooftop Solar Credits Are Ending</h3>
-                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.25rem; font-size: 0.95rem;">
-                        OBBA ends in <strong style="color: #BF5700;">December 2025</strong>. 40M households will lose access to affordable solar. What then?
-                    </p>
-                    <div class="solution-reveal" style="background: linear-gradient(135deg, rgba(191,87,0,0.1), rgba(247,142,30,0.1)); border-radius: 12px; padding: 1rem; border-left: 4px solid #BF5700; display: none;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #1A1A1A; font-weight: 600; margin-bottom: 0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
-                        <div style="font-size: 0.9rem; color: #666;">Community solar credits from parking lot installations. No roof needed. Capture expiring tax benefits now.</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: #BF5700; font-weight: 600; font-size: 0.9rem;">
-                        <span class="click-text">Click to see solution</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: currentColor; stroke-width: 2; transition: transform 0.3s;"><path d="M6 9l6 6 6-6"/></svg>
-                    </div>
-                </div>
-                
-                <!-- Problem 5 -->
-                <div class="problem-card-interactive animate-on-scroll stagger-4" onclick="toggleProblem(this)" style="background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.4s ease; border: 3px solid transparent; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
-                        <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 6v6l4 2"/>
-                            </svg>
+                        <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Rooftop Solar Credits Are Ending</h3>
+                        <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                            OBBA ends in <strong style="color: #BF5700;">December 2025</strong>. 40M households will lose access to affordable solar. What then?
+                        </p>
+                        <div style="background: linear-gradient(135deg, rgba(191,87,0,0.08), rgba(247,142,30,0.05)); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #BF5700; margin-top: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #BF5700; font-weight: 700; margin-bottom: 0.75rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
+                            <div style="font-size: 0.95rem; color: #333; line-height: 1.6;">Community solar credits from parking lot installations. No roof needed. Capture expiring tax benefits now.</div>
                         </div>
-                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">30 min</div>
                     </div>
-                    <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Finding Parking Wastes Everyone's Time</h3>
-                    <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.25rem; font-size: 0.95rem;">
-                        On game days at UT, students circle for <strong style="color: #BF5700;">30+ minutes</strong> looking for parking. Wasted fuel. Wasted time. Frustration.
-                    </p>
-                    <div class="solution-reveal" style="background: linear-gradient(135deg, rgba(191,87,0,0.1), rgba(247,142,30,0.1)); border-radius: 12px; padding: 1rem; border-left: 4px solid #BF5700; display: none;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #1A1A1A; font-weight: 600; margin-bottom: 0.5rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
-                        <div style="font-size: 0.9rem; color: #666;">ParkUrban uses our canopy sensors for real-time availability. Find shaded spots instantly. Zero circling.</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; color: #BF5700; font-weight: 600; font-size: 0.9rem;">
-                        <span class="click-text">Click to see solution</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: currentColor; stroke-width: 2; transition: transform 0.3s;"><path d="M6 9l6 6 6-6"/></svg>
+                    
+                    <!-- Problem 5 -->
+                    <div class="problem-card-interactive animate-on-scroll stagger-4" style="flex: 0 1 calc(33.333% - 1.33rem); min-width: 320px; background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 2px solid rgba(191,87,0,0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #BF5700 0%, transparent 50%); opacity: 0.1;"></div>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+                            <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="stroke: #fff; stroke-width: 2;">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">10 min</div>
+                        </div>
+                        <h3 style="font-size: 1.35rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Finding Parking Wastes Everyone's Time</h3>
+                        <p class="problem-desc" style="color: #666; line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                            On game days at UT, students circle for <strong style="color: #BF5700;">10+ minutes</strong> looking for parking. Wasted fuel. Wasted time. Frustration.
+                        </p>
+                        <div style="background: linear-gradient(135deg, rgba(191,87,0,0.08), rgba(247,142,30,0.05)); border-radius: 12px; padding: 1.25rem; border-left: 4px solid #BF5700; margin-top: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #BF5700; font-weight: 700; margin-bottom: 0.75rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke: #BF5700; stroke-width: 2;"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Our Solution:</div>
+                            <div style="font-size: 0.95rem; color: #333; line-height: 1.6;">ParkUrban uses our canopy sensors for real-time availability. Find shaded spots instantly. Zero circling.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1279,14 +1167,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <div class="logo-icon">
-                            <div class="sun-icon">☀️</div>
-                            <div class="grid-lines">
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                                <div class="grid-line"></div>
-                            </div>
-                        </div>
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
                         <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
                     </div>
                     <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
@@ -1338,9 +1219,9 @@
             const heroCursor = document.getElementById('heroCursor');
             
             const textLines = [
-                { text: 'Solar', color: '#BF5700' },
-                { text: ' beyond', color: '#1A1A1A' },
-                { text: ' rooftops.', color: '#1A1A1A' }
+                { text: 'Energy', color: '#BF5700' },
+                { text: ' + Intelligence', color: '#1A1A1A' },
+                { text: ' for Urban America.', color: '#1A1A1A' }
             ];
             
             let lineIndex = 0;
@@ -1403,27 +1284,6 @@
                 animateValue('statCooling', 0, 20, 2000, '');
             }, 1000);
         });
-        
-        // Calculator
-        function updateCalculator() {
-            const lotSize = document.getElementById('lotSizeSlider').value;
-            const rate = document.getElementById('rateSlider').value / 100;
-            
-            document.getElementById('lotSizeValue').textContent = lotSize;
-            document.getElementById('rateValue').textContent = '$' + (rate).toFixed(2);
-            
-            const kwhPerAcre = 300000; // Annual kWh per acre
-            const sunurbanRate = 0.09;
-            const totalKwh = lotSize * kwhPerAcre;
-            const savings = totalKwh * (rate - sunurbanRate);
-            const twentyYearSavings = savings * 20;
-            const co2PerKwh = 0.00075; // tons CO2 per kWh
-            
-            document.getElementById('annualSavings').textContent = '$' + Math.round(savings).toLocaleString();
-            document.getElementById('twentyYearSavings').textContent = '$' + Math.round(twentyYearSavings / 1000) + 'K';
-            document.getElementById('kwhGenerated').textContent = Math.round(totalKwh / 1000) + 'K';
-            document.getElementById('co2Saved').textContent = Math.round(totalKwh * co2PerKwh);
-        }
         
         // Scroll animations
         document.addEventListener('DOMContentLoaded', function() {
@@ -1497,26 +1357,6 @@
         });
         
         // Toggle Problem Cards
-        function toggleProblem(card) {
-            const solution = card.querySelector('.solution-reveal');
-            const arrow = card.querySelector('svg');
-            const clickText = card.querySelector('.click-text');
-            const isOpen = solution.style.display !== 'none';
-            
-            if (isOpen) {
-                solution.style.display = 'none';
-                card.style.borderColor = 'transparent';
-                card.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
-                arrow.style.transform = 'rotate(0deg)';
-                clickText.textContent = 'Click to see solution';
-            } else {
-                solution.style.display = 'block';
-                card.style.borderColor = '#BF5700';
-                card.style.boxShadow = '0 12px 40px rgba(191,87,0,0.2)';
-                arrow.style.transform = 'rotate(180deg)';
-                clickText.textContent = 'Click to hide';
-            }
-        }
         
         // Toggle Challenge Accordion
         function toggleChallenge(header) {
@@ -1586,7 +1426,191 @@
             });
         }
     </script>
+
+    <!-- AI Chatbot Widget -->
+    <div id="chatbotWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; font-family: 'Inter', sans-serif;">
+        <!-- Chat Button -->
+        <button id="chatbotToggle" onclick="toggleChatbot()" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(191, 87, 0, 0.4); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-comments" id="chatbotIcon"></i>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatbotWindow" style="position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 600px; max-height: calc(100vh - 120px); background: #fff; border-radius: 20px; box-shadow: 0 8px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden;">
+            <!-- Chat Header -->
+            <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 1rem;">SunUrban AI Assistant</div>
+                        <div style="font-size: 0.75rem; opacity: 0.9;">Online now</div>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" style="background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatbotMessages" style="flex: 1; padding: 1.5rem; overflow-y: auto; background: #F5F5F5;">
+                <div class="chat-message bot-message" style="margin-bottom: 1rem; display: flex; gap: 0.75rem;">
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            Hi! I'm SunUrban's AI assistant. I can help you learn about our solar canopy solutions, parking intelligence, EV charging, and grid coordination services. What would you like to know?
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Replies -->
+            <div id="chatbotQuickReplies" style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="quick-reply-btn" onclick="sendQuickMessage('Tell me about solar canopies')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Solar Canopies</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('What is ParkUrban?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">ParkUrban</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('How much does it cost?')" style="padding: 0.5rem 1rem; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; color: #333;" onmouseover="this.style.background='#BF5700'; this.style.borderColor='#BF5700'; this.style.color='#fff'" onmouseout="this.style.background='#F5F5F5'; this.style.borderColor='#E0E0E0'; this.style.color='#333'">Pricing</button>
+            </div>
+
+            <!-- Chat Input -->
+            <div style="padding: 1rem 1.5rem; background: #fff; border-top: 1px solid #E0E0E0; display: flex; gap: 0.75rem;">
+                <input type="text" id="chatbotInput" placeholder="Type your message..." style="flex: 1; padding: 0.75rem 1rem; border: 1px solid #E0E0E0; border-radius: 25px; font-size: 0.9rem; outline: none; transition: all 0.3s ease;" onkeypress="handleChatbotKeyPress(event)" onfocus="this.style.borderColor='#BF5700'" onblur="this.style.borderColor='#E0E0E0'">
+                <button onclick="sendChatbotMessage()" style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #BF5700, #F78E1E); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot functionality
+        function toggleChatbot() {
+            const window = document.getElementById('chatbotWindow');
+            const icon = document.getElementById('chatbotIcon');
+            if (window.style.display === 'none' || window.style.display === '') {
+                window.style.display = 'flex';
+                icon.className = 'fas fa-times';
+            } else {
+                window.style.display = 'none';
+                icon.className = 'fas fa-comments';
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatbotInput').value = message;
+            sendChatbotMessage();
+        }
+
+        function handleChatbotKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatbotMessage();
+            }
+        }
+
+        function sendChatbotMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Simulate AI response (replace with actual API call)
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addChatMessage(response, 'bot');
+            }, 500);
+        }
+
+        function addChatMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.style.cssText = 'margin-bottom: 1rem; display: flex; gap: 0.75rem; animation: slideIn 0.3s ease;';
+            
+            if (sender === 'user') {
+                messageDiv.style.flexDirection = 'row-reverse';
+                messageDiv.innerHTML = `
+                    <div style="flex: 1; text-align: right;">
+                        <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff; padding: 0.75rem 1rem; border-radius: 12px; display: inline-block; max-width: 80%; box-shadow: 0 2px 8px rgba(191,87,0,0.2); line-height: 1.5;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-right: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.5; color: #333;">
+                            ${escapeHtml(text)}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #999; margin-top: 0.25rem; padding-left: 0.5rem;">Just now</div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Simple keyword-based responses (replace with actual AI API)
+            if (lowerMessage.includes('solar') || lowerMessage.includes('canopy')) {
+                return "SunUrban builds solar canopy infrastructure on parking lots. We install solar panels above parking spaces, providing shade while generating clean energy. The canopies reduce surface temperatures by 10-20°C and generate up to 1.4 MWh per kW per year. Would you like to know more about our installation process?";
+            } else if (lowerMessage.includes('parkurban') || lowerMessage.includes('parking')) {
+                return "ParkUrban is our smart parking intelligence platform. It provides real-time parking availability, predictive forecasting, and comfort-aware routing. Using sensors on our solar canopies, ParkUrban helps drivers find shaded spots instantly, reducing search time and improving the parking experience. It's perfect for campuses, malls, and large parking facilities.";
+            } else if (lowerMessage.includes('cost') || lowerMessage.includes('price') || lowerMessage.includes('pricing')) {
+                return "SunUrban offers zero upfront cost installations through our Power Purchase Agreement (PPA) model. We cover all installation and maintenance costs. You pay a fixed rate for the energy generated, typically 7.54¢/kWh, which is below retail rates. Plus, you receive a share of the revenue from Austin Energy. Would you like to see our pricing plans?";
+            } else if (lowerMessage.includes('ev') || lowerMessage.includes('charging') || lowerMessage.includes('electric')) {
+                return "ChargeUrban is our EV charging network integrated with solar canopies. We offer Level 2 and DC fast charging stations powered by clean solar energy. The charging infrastructure is included in our 500kW and 1MW canopy plans. This creates additional revenue streams while supporting electric mobility. Interested in learning more?";
+            } else if (lowerMessage.includes('grid') || lowerMessage.includes('gridurban')) {
+                return "GridUrban coordinates distributed energy resources (DERs) to provide grid services. Our platform uses AI to estimate flexibility and coordinate multiple solar installations as a virtual power plant. This helps stabilize the grid during peak demand and creates additional revenue through grid services. It's particularly valuable in ERCOT territory.";
+            } else if (lowerMessage.includes('data') || lowerMessage.includes('saas')) {
+                return "Our Data Layer provides valuable urban intelligence from our sensor network. We collect data on parking patterns, thermal conditions, EV charging behavior, and more. This data is licensed to city planners, researchers, and businesses. It's a scalable SaaS revenue stream that complements our energy infrastructure.";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello! I'm here to help you learn about SunUrban's energy and intelligence solutions. We transform parking lots into solar-powered infrastructure with parking intelligence, EV charging, and grid coordination. What interests you most?";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('get in touch')) {
+                return "You can reach us at info@solarcanopy.com or visit our contact page. We'd love to discuss how SunUrban can work for your property. Would you like me to help you find the contact form?";
+            } else {
+                return "That's a great question! SunUrban is an energy + SaaS platform that builds solar canopy infrastructure on parking lots, then layers on parking intelligence (ParkUrban), EV charging (ChargeUrban), and grid coordination (GridUrban). We're America's first near-load urban coordinated energy company. Would you like to know more about any specific aspect?";
+            }
+        }
+
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            #chatbotToggle:hover {
+                transform: scale(1.1);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
- 
+
+ 
  
