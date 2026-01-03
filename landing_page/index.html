@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
     <title>SunUrban - Turning Parking Lots into Power Lots</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" id="mainStylesheet">
+    <script>
+        // Immediate cache-busting for CSS
+        (function() {
+            const link = document.getElementById('mainStylesheet');
+            if (link) {
+                link.href = 'styles.css?v=' + Date.now();
+            }
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -1211,7 +1221,31 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Aggressive cache clearing on every page load
+        (function() {
+            const timestamp = Date.now();
+            
+            // Clear browser caches immediately
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(name => caches.delete(name));
+                });
+            }
+            
+            // Unregister service workers
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(registration => registration.unregister());
+                });
+            }
+            
+            // Add cache-busting to script.js
+            const script = document.createElement('script');
+            script.src = 'script.js?v=' + timestamp;
+            document.body.appendChild(script);
+        })();
+    </script>
     <script>
         // Hero Typing Animation
         document.addEventListener('DOMContentLoaded', function() {
