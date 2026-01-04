@@ -1,0 +1,3140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>YieldUrban - Professional Solar Feasibility Analysis Platform | SunUrban</title>
+    <link rel="stylesheet" href="styles.css" id="mainStylesheet">
+    <script>
+        // Immediate cache-busting for CSS
+        (function() {
+            const link = document.getElementById('mainStylesheet');
+            if (link) {
+                link.href = 'styles.css?v=' + Date.now();
+            }
+        })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6d-s6Y4cwwuV75I&libraries=places,drawing,geometry&callback=initMap" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            background: linear-gradient(135deg, #BF5700, #F78E1E);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+        .tab-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #E0E0E0;
+        }
+        .tab-button {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            color: #BF5700;
+            border-bottom-color: #BF5700;
+        }
+        .tab-button:hover {
+            color: #BF5700;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .executive-summary {
+            background: linear-gradient(135deg, rgba(191, 87, 0, 0.05), rgba(247, 142, 30, 0.02));
+            padding: 2.5rem;
+            border-radius: 16px;
+            border-left: 6px solid #BF5700;
+            margin-bottom: 2rem;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        .comparison-table th {
+            background: #F5F5F5;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .risk-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .risk-card.low { border-left-color: #4CAF50; }
+        .risk-card.medium { border-left-color: #FFA726; }
+        .risk-card.high { border-left-color: #F44336; }
+        .scenario-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .scenario-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #E0E0E0;
+            transition: all 0.3s ease;
+        }
+        .scenario-card:hover {
+            border-color: #BF5700;
+            box-shadow: 0 4px 20px rgba(191,87,0,0.15);
+        }
+        .save-load-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: #555;
+        }
+        .input-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        .map-container {
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+            border: 2px solid #E0E0E0;
+        }
+        .results-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #BF5700;
+            margin-bottom: 1rem;
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #BF5700;
+            box-shadow: 0 0 0 3px rgba(191, 87, 0, 0.1);
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .slider-container input[type="range"] {
+            flex: 1;
+        }
+        .slider-value {
+            min-width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: #BF5700;
+        }
+        .btn-calculate {
+            background: linear-gradient(135deg, #BF5700, #F78E1E);
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(191,87,0,0.3);
+        }
+        .btn-export {
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-export:hover {
+            background: #333;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #F5F5F5;
+            border-radius: 12px;
+            height: 400px;
+            position: relative;
+        }
+        .assumptions-panel {
+            background: rgba(191, 87, 0, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #BF5700;
+            margin-top: 2rem;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        .loading.active {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #BF5700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
+                        <a href="yieldurban.html" style="color: #BF5700; font-weight: 600;">YieldUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="parkurban-financials.html">ParkUrban Financials</a>
+                        <a href="chargeurban-financials.html">ChargeUrban Financials</a>
+                        <a href="parkurban-dashboard.html">ParkUrban Dashboard</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tool Header -->
+    <div class="tool-container" style="padding-top: 120px;">
+        <div class="tool-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 0.5rem;">
+                        YieldUrban Feasibility Analysis Platform
+                    </h1>
+                    <p style="font-size: 1.1rem; opacity: 0.95;">
+                        Professional-grade solar feasibility analysis for parking-lot solar projects
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn-secondary" onclick="saveScenario()" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">
+                        <i class="fas fa-save"></i> Save Scenario
+                    </button>
+                    <button class="btn-secondary" onclick="loadScenario()" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">
+                        <i class="fas fa-folder-open"></i> Load Scenario
+                    </button>
+                    <button class="btn-secondary" onclick="compareScenarios()" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">
+                        <i class="fas fa-balance-scale"></i> Compare
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-button active" onclick="switchTab('inputs', this)">
+                <i class="fas fa-edit"></i> Inputs
+            </button>
+            <button class="tab-button" onclick="switchTab('executive', this)">
+                <i class="fas fa-chart-line"></i> Executive Summary
+            </button>
+            <button class="tab-button" onclick="switchTab('technical', this)">
+                <i class="fas fa-cogs"></i> Technical Analysis
+            </button>
+            <button class="tab-button" onclick="switchTab('financial', this)">
+                <i class="fas fa-dollar-sign"></i> Financial Analysis
+            </button>
+            <button class="tab-button" onclick="switchTab('risk', this)">
+                <i class="fas fa-shield-alt"></i> Risk Assessment
+            </button>
+            <button class="tab-button" onclick="switchTab('comparison', this)">
+                <i class="fas fa-balance-scale"></i> Benchmarking
+            </button>
+            <button class="tab-button" onclick="switchTab('recommendations', this)">
+                <i class="fas fa-lightbulb"></i> Recommendations
+            </button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="tab-content active" id="tab-inputs">
+        <div class="input-section">
+            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">
+                <i class="fas fa-map-marker-alt" style="color: #BF5700;"></i> Site Information
+            </h2>
+            
+            <div class="input-group">
+                <label for="siteAddress">Site Address</label>
+                <input type="text" id="siteAddress" placeholder="Search for an address or place..." value="Austin, TX" autocomplete="off">
+                <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                    <i class="fas fa-search"></i> Start typing to search Google Places
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Draw Parking Lot Area on Map</label>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <button id="btnDraw" onclick="startDrawing()" style="background: #BF5700; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-draw-polygon"></i> Draw Polygon
+                    </button>
+                    <button id="btnEdit" onclick="editPolygon()" style="background: #666; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button id="btnDelete" onclick="deletePolygon()" style="background: #d32f2f; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <div style="flex: 1; text-align: right; padding: 0.5rem 1rem; background: #F5F5F5; border-radius: 6px; font-weight: 600; color: #BF5700;">
+                        Area: <span id="mapAreaDisplay">0</span> sq ft
+                    </div>
+                </div>
+                <div class="map-container" id="map"></div>
+                <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-info-circle"></i> Use the draw tool to create a polygon, then edit or clear as needed. Area updates automatically.
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="parkingArea">Or Enter Parking Area Manually (sq ft)</label>
+                <input type="number" id="parkingArea" placeholder="e.g., 50000" min="0" step="100">
+            </div>
+
+            <div class="input-group">
+                <label for="coveragePercent">Canopy Coverage</label>
+                <div class="slider-container">
+                    <input type="range" id="coveragePercent" min="30" max="90" value="60" step="5">
+                    <span class="slider-value" id="coverageValue">60%</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                    Percentage of parking stalls to cover with canopy
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-top: 3rem; margin-bottom: 1.5rem;">
+                <i class="fas fa-cog" style="color: #BF5700;"></i> System Configuration
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div class="input-group">
+                    <label for="modulePowerDensity">Module Power Density (W/m²)</label>
+                    <input type="number" id="modulePowerDensity" value="200" min="150" max="250" step="10">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Typical: 180-220 W/m² for commercial panels
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="packingFactor">Packing Factor</label>
+                    <input type="number" id="packingFactor" value="0.65" min="0.5" max="0.8" step="0.05">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Space lost to columns, aisles, setbacks (typical: 0.60-0.70)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="systemLosses">System Losses (%)</label>
+                    <input type="number" id="systemLosses" value="14" min="10" max="20" step="1">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Soiling, wiring, inverter, temperature (typical: 12-16%)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="degradationRate">Annual Degradation (%)</label>
+                    <input type="number" id="degradationRate" value="0.5" min="0.3" max="1.0" step="0.1">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Panel degradation per year (typical: 0.5-0.7%)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="tiltAngle">Canopy Tilt Angle (degrees)</label>
+                    <input type="number" id="tiltAngle" value="10" min="0" max="30" step="1">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Panel tilt from horizontal (typical: 5-15° for canopies)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="azimuthAngle">Azimuth Angle (degrees)</label>
+                    <input type="number" id="azimuthAngle" value="180" min="0" max="360" step="5">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Panel orientation (180° = South, 90° = East, 270° = West)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="shadingFactor">Shading Factor (%)</label>
+                    <input type="number" id="shadingFactor" value="2" min="0" max="10" step="0.5">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Additional losses from nearby obstructions (typical: 0-5%)
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-top: 3rem; margin-bottom: 1.5rem;">
+                <i class="fas fa-dollar-sign" style="color: #BF5700;"></i> Financial Assumptions
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div class="input-group">
+                    <label for="electricityRate">Electricity Rate ($/kWh)</label>
+                    <input type="number" id="electricityRate" value="0.12" min="0.05" max="0.30" step="0.01">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Your current utility rate
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="capexPerWatt">CAPEX ($/W)</label>
+                    <input type="number" id="capexPerWatt" value="2.50" min="1.50" max="4.00" step="0.10">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Total installed cost per watt (typical: $2.00-$3.50/W)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="opexPerKw">Annual OPEX ($/kW/year)</label>
+                    <input type="number" id="opexPerKw" value="25" min="15" max="40" step="5">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Operations & maintenance (typical: $20-$30/kW/year)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="discountRate">Discount Rate (%)</label>
+                    <input type="number" id="discountRate" value="8" min="3" max="15" step="0.5">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        For NPV calculations (typical: 6-10%)
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-top: 3rem; margin-bottom: 1.5rem;">
+                <i class="fas fa-gift" style="color: #BF5700;"></i> Incentives & Tax
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div class="input-group">
+                    <label for="itcRate">Federal ITC (%)</label>
+                    <input type="number" id="itcRate" value="30" min="0" max="50" step="5">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Investment Tax Credit (current: 30%)
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="depreciationSchedule">Depreciation Schedule</label>
+                    <select id="depreciationSchedule">
+                        <option value="macrs5">MACRS 5-Year</option>
+                        <option value="macrs7">MACRS 7-Year</option>
+                        <option value="straight25">Straight-Line 25-Year</option>
+                        <option value="none">None (Municipality/Nonprofit)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="taxRate">Tax Rate (%)</label>
+                    <input type="number" id="taxRate" value="21" min="0" max="40" step="1">
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                        Corporate tax rate (for depreciation benefit)
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-calculate" onclick="calculateFeasibility()" style="margin-top: 2rem;">
+                <i class="fas fa-calculator"></i> Calculate Feasibility
+            </button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 1rem; color: #666;">Calculating feasibility analysis...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A;">
+                    <i class="fas fa-chart-line" style="color: #BF5700;"></i> Results
+                </h2>
+                <button class="btn-export" onclick="exportPDF()">
+                    <i class="fas fa-file-pdf"></i> Export PDF Report
+                </button>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="results-grid">
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">System Capacity</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultCapacity">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">kW DC</div>
+                </div>
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Annual Production</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultProduction">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">kWh/year</div>
+                </div>
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Simple Payback</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultPayback">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">years</div>
+                </div>
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">IRR</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultIRR">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">%</div>
+                </div>
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">NPV</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultNPV">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">$</div>
+                </div>
+                <div class="metric-card">
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">LCOE</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: #BF5700;" id="resultLCOE">-</div>
+                    <div style="font-size: 0.85rem; color: #666;">$/kWh</div>
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Financial Summary</h3>
+                <div id="financialDetails"></div>
+            </div>
+
+            <!-- 25-Year Cashflow Table -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">25-Year Cashflow Projection</h3>
+                <div style="overflow-x: auto;">
+                    <table id="cashflowTable" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #F5F5F5;">
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #E0E0E0;">Year</th>
+                                <th style="padding: 0.75rem; text-align: right; border-bottom: 2px solid #E0E0E0;">Production (kWh)</th>
+                                <th style="padding: 0.75rem; text-align: right; border-bottom: 2px solid #E0E0E0;">Revenue ($)</th>
+                                <th style="padding: 0.75rem; text-align: right; border-bottom: 2px solid #E0E0E0;">OPEX ($)</th>
+                                <th style="padding: 0.75rem; text-align: right; border-bottom: 2px solid #E0E0E0;">Cash Flow ($)</th>
+                                <th style="padding: 0.75rem; text-align: right; border-bottom: 2px solid #E0E0E0;">Cumulative ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cashflowBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Monthly Production Chart -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Monthly Production Profile</h3>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Degradation Curve -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">25-Year Production Degradation</h3>
+                <div class="chart-container">
+                    <canvas id="degradationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Sensitivity Analysis -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Sensitivity Analysis</h3>
+                <div style="background: #F5F5F5; padding: 2rem; border-radius: 12px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #1A1A1A;">Electricity Rate ±20%</div>
+                            <div id="sensitivityRate" style="font-size: 0.9rem; color: #666;"></div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #1A1A1A;">CAPEX ±15%</div>
+                            <div id="sensitivityCapex" style="font-size: 0.9rem; color: #666;"></div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #1A1A1A;">Coverage ±10%</div>
+                            <div id="sensitivityCoverage" style="font-size: 0.9rem; color: #666;"></div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #1A1A1A;">Production ±5%</div>
+                            <div id="sensitivityProduction" style="font-size: 0.9rem; color: #666;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Analysis -->
+            <div style="margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Risk Assessment</h3>
+                <div style="display: grid; gap: 1rem;">
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFA726;">
+                        <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle" style="color: #FFA726;"></i> Interconnection Uncertainty
+                        </div>
+                        <div style="font-size: 0.95rem; color: #666; line-height: 1.6;">
+                            Actual interconnection costs and timeline may vary. Utility studies required for final approval. Estimated impact: ±10-20% on project timeline and ±5-10% on total cost.
+                        </div>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFA726;">
+                        <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle" style="color: #FFA726;"></i> Structural/Geotechnical Unknowns
+                        </div>
+                        <div style="font-size: 0.95rem; color: #666; line-height: 1.6;">
+                            Soil conditions, existing utilities, and structural requirements may require additional engineering. Estimated impact: ±5-15% on foundation costs.
+                        </div>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFA726;">
+                        <div style="font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle" style="color: #FFA726;"></i> Local Permitting Constraints
+                        </div>
+                        <div style="font-size: 0.95rem; color: #666; line-height: 1.6;">
+                            Zoning, height restrictions, and local codes may limit design options. Estimated impact: ±5-10% on system capacity and ±2-6 months on timeline.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assumptions Panel -->
+            <div class="assumptions-panel">
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    <i class="fas fa-info-circle"></i> Key Assumptions
+                </h3>
+                <div id="assumptionsList"></div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666; font-style: italic;">
+                    <strong>Note:</strong> This is a pre-engineering feasibility analysis. Actual results may vary based on detailed site surveys, geotechnical studies, interconnection studies, and local permitting requirements.
+                </p>
+            </div>
+        </div>
+        </div>
+
+        <!-- Executive Summary Tab -->
+        <div class="tab-content" id="tab-executive">
+            <div class="results-section">
+                <div class="executive-summary" id="executiveSummary">
+                    <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">
+                        <i class="fas fa-file-alt" style="color: #BF5700;"></i> Executive Summary
+                    </h2>
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem; font-style: italic;">
+                        This feasibility analysis provides a comprehensive assessment of the solar canopy project. 
+                        All calculations are based on industry-standard methodologies and conservative assumptions.
+                    </p>
+                    <div id="executiveContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Analysis Tab -->
+        <div class="tab-content" id="tab-technical">
+            <div class="results-section">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem;">
+                    <i class="fas fa-cogs" style="color: #BF5700;"></i> Technical Analysis
+                </h2>
+                <div id="technicalAnalysis"></div>
+            </div>
+        </div>
+
+        <!-- Financial Analysis Tab -->
+        <div class="tab-content" id="tab-financial">
+            <div class="results-section">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem;">
+                    <i class="fas fa-dollar-sign" style="color: #BF5700;"></i> Financial Analysis
+                </h2>
+                <div id="financialAnalysis"></div>
+            </div>
+        </div>
+
+        <!-- Risk Assessment Tab -->
+        <div class="tab-content" id="tab-risk">
+            <div class="results-section">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem;">
+                    <i class="fas fa-shield-alt" style="color: #BF5700;"></i> Risk Assessment
+                </h2>
+                <div id="riskAssessment"></div>
+            </div>
+        </div>
+
+        <!-- Benchmarking Tab -->
+        <div class="tab-content" id="tab-comparison">
+            <div class="results-section">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem;">
+                    <i class="fas fa-balance-scale" style="color: #BF5700;"></i> Industry Benchmarking
+                </h2>
+                <div id="benchmarking"></div>
+            </div>
+        </div>
+
+        <!-- Recommendations Tab -->
+        <div class="tab-content" id="tab-recommendations">
+            <div class="results-section">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem;">
+                    <i class="fas fa-lightbulb" style="color: #BF5700;"></i> Recommendations & Next Steps
+                </h2>
+                <div id="recommendations"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
+                        <li><a href="yieldurban.html">YieldUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="#challenges">Challenges</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Google Maps variables
+        let map;
+        let drawingManager;
+        let currentPolygon = null;
+        let polygonArea = 0;
+        let autocomplete;
+        let geocoder;
+        let marker;
+
+        function initMap() {
+            // Default to Austin, TX
+            const defaultLocation = { lat: 30.2672, lng: -97.7431 };
+            
+            // Initialize map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: defaultLocation,
+                zoom: 13,
+                mapTypeId: 'roadmap',
+                styles: [
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'on' }]
+                    }
+                ]
+            });
+
+            // Initialize geocoder
+            geocoder = new google.maps.Geocoder();
+
+            // Initialize Places Autocomplete
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('siteAddress'),
+                {
+                    types: ['address', 'establishment'],
+                    fields: ['geometry', 'formatted_address', 'name', 'place_id']
+                }
+            );
+
+            // When place is selected, update map
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    console.log('No details available for input: ' + place.name);
+                    return;
+                }
+
+                // Center map on selected place
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(15);
+                }
+
+                // Add marker
+                if (marker) {
+                    marker.setMap(null);
+                }
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location,
+                    title: place.name || place.formatted_address,
+                    draggable: true
+                });
+
+                // Update address when marker is dragged
+                marker.addListener('dragend', function() {
+                    geocodePosition(marker.getPosition());
+                });
+
+                // Update location for solar calculations
+                updateLocationFromPlace(place);
+            });
+
+            // Initialize drawing manager
+            drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: null,
+                drawingControl: false,
+                polygonOptions: {
+                    fillColor: '#BF5700',
+                    fillOpacity: 0.3,
+                    strokeColor: '#BF5700',
+                    strokeWeight: 3,
+                    clickable: false,
+                    editable: true,
+                    draggable: false
+                }
+            });
+            drawingManager.setMap(map);
+
+            // Handle polygon completion
+            google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
+                // Remove previous polygon if exists
+                if (currentPolygon) {
+                    currentPolygon.setMap(null);
+                }
+                
+                currentPolygon = polygon;
+                updatePolygonArea(polygon);
+
+                // Make polygon editable
+                polygon.setEditable(true);
+                
+                // Update area when polygon is edited
+                google.maps.event.addListener(polygon.getPath(), 'set_at', function() {
+                    updatePolygonArea(polygon);
+                });
+                google.maps.event.addListener(polygon.getPath(), 'insert_at', function() {
+                    updatePolygonArea(polygon);
+                });
+                google.maps.event.addListener(polygon.getPath(), 'remove_at', function() {
+                    updatePolygonArea(polygon);
+                });
+            });
+
+            // Click on map to get address
+            map.addListener('click', function(e) {
+                geocodePosition(e.latLng);
+            });
+        }
+
+        function updatePolygonArea(polygon) {
+            if (polygon) {
+                const areaSqM = google.maps.geometry.spherical.computeArea(polygon.getPath());
+                polygonArea = areaSqM * 10.764; // Convert to sq ft
+                document.getElementById('parkingArea').value = Math.round(polygonArea);
+                document.getElementById('mapAreaDisplay').textContent = polygonArea.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            }
+        }
+
+        function geocodePosition(position) {
+            geocoder.geocode({ location: position }, function(results, status) {
+                if (status === 'OK' && results[0]) {
+                    document.getElementById('siteAddress').value = results[0].formatted_address;
+                    
+                    // Update marker
+                    if (marker) {
+                        marker.setPosition(position);
+                    } else {
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: position,
+                            draggable: true
+                        });
+                        marker.addListener('dragend', function() {
+                            geocodePosition(marker.getPosition());
+                        });
+                    }
+                }
+            });
+        }
+
+        function updateLocationFromPlace(place) {
+            // Store location for solar calculations
+            if (place.geometry && place.geometry.location) {
+                window.currentLocation = {
+                    lat: place.geometry.location.lat(),
+                    lng: place.geometry.location.lng(),
+                    address: place.formatted_address || place.name
+                };
+            }
+        }
+
+        function startDrawing() {
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+        }
+
+        function editPolygon() {
+            if (currentPolygon) {
+                currentPolygon.setEditable(true);
+                alert('Click and drag the polygon vertices to edit. Click outside when done.');
+            } else {
+                alert('Please draw a polygon first.');
+            }
+        }
+
+        function deletePolygon() {
+            if (currentPolygon) {
+                currentPolygon.setMap(null);
+                currentPolygon = null;
+                polygonArea = 0;
+                document.getElementById('parkingArea').value = '';
+                document.getElementById('mapAreaDisplay').textContent = '0';
+            } else {
+                alert('No polygon to delete.');
+            }
+        }
+
+        // Update slider value display
+        document.getElementById('coveragePercent').addEventListener('input', function(e) {
+            document.getElementById('coverageValue').textContent = e.target.value + '%';
+        });
+
+        // Solar irradiance data by location (kWh/m²/day annual average)
+        // Based on NREL NSRDB data for major US cities
+        const SOLAR_IRRADIANCE_DATA = {
+            'austin': { lat: 30.2672, lon: -97.7431, ghi: 5.2, dni: 6.1, dhi: 2.8 },
+            'houston': { lat: 29.7604, lon: -95.3698, ghi: 4.9, dni: 5.8, dhi: 2.7 },
+            'dallas': { lat: 32.7767, lon: -96.7970, ghi: 5.1, dni: 6.0, dhi: 2.8 },
+            'phoenix': { lat: 33.4484, lon: -112.0740, ghi: 6.5, dni: 7.8, dhi: 3.2 },
+            'los angeles': { lat: 34.0522, lon: -117.2437, ghi: 5.8, dni: 6.9, dhi: 3.0 },
+            'san diego': { lat: 32.7157, lon: -117.1611, ghi: 5.6, dni: 6.7, dhi: 2.9 },
+            'miami': { lat: 25.7617, lon: -80.1918, ghi: 5.1, dni: 5.9, dhi: 2.6 },
+            'atlanta': { lat: 33.7490, lon: -84.3880, ghi: 4.8, dni: 5.6, dhi: 2.6 },
+            'chicago': { lat: 41.8781, lon: -96.6298, ghi: 4.2, dni: 4.9, dhi: 2.4 },
+            'new york': { lat: 40.7128, lon: -74.0060, ghi: 4.1, dni: 4.8, dhi: 2.3 },
+            'boston': { lat: 42.3601, lon: -71.0589, ghi: 4.0, dni: 4.7, dhi: 2.2 },
+            'seattle': { lat: 47.6062, lon: -122.3321, ghi: 3.5, dni: 4.1, dhi: 2.0 },
+            'denver': { lat: 39.7392, lon: -104.9903, ghi: 5.4, dni: 6.4, dhi: 2.9 }
+        };
+
+        function getSolarIrradiance(location) {
+            // Try to get from stored location first (from Google Places)
+            if (window.currentLocation) {
+                const lat = window.currentLocation.lat;
+                // Estimate irradiance based on latitude
+                // Higher latitude = lower irradiance (rough approximation)
+                const baseIrradiance = 5.0; // Base at ~30°N
+                const latAdjustment = (30 - Math.abs(lat)) * 0.05; // ~0.05 kWh/m²/day per degree
+                const estimatedGHI = Math.max(3.0, Math.min(7.0, baseIrradiance + latAdjustment));
+                
+                return {
+                    lat: lat,
+                    lon: window.currentLocation.lng,
+                    ghi: estimatedGHI,
+                    dni: estimatedGHI * 1.2,
+                    dhi: estimatedGHI * 0.5
+                };
+            }
+            
+            // Fallback to location name lookup
+            const locLower = location.toLowerCase();
+            for (const [key, data] of Object.entries(SOLAR_IRRADIANCE_DATA)) {
+                if (locLower.includes(key)) {
+                    return data;
+                }
+            }
+            // Default to Austin if not found
+            return SOLAR_IRRADIANCE_DATA.austin;
+        }
+
+        // Enhanced physics-based solar production calculation with tilt/azimuth
+        function calculateSolarProduction(areaSqFt, coveragePercent, modulePowerDensity, packingFactor, systemLosses, location, tiltAngle, azimuthAngle, shadingFactor) {
+            // Convert area to square meters
+            const areaSqM = areaSqFt * 0.092903;
+            
+            // Calculate buildable canopy area
+            const totalCanopyArea = areaSqM * (coveragePercent / 100);
+            const buildableArea = totalCanopyArea * packingFactor;
+            
+            // Calculate DC capacity
+            const dcCapacityKw = (buildableArea * modulePowerDensity) / 1000;
+            
+            // Get location-specific irradiance
+            const irradianceData = getSolarIrradiance(location);
+            
+            // Calculate tilt/azimuth adjustment factor
+            // For tilted surfaces, use Perez model approximation
+            const tiltRad = tiltAngle * Math.PI / 180;
+            const azimuthRad = azimuthAngle * Math.PI / 180;
+            
+            // Latitude (approximate from location)
+            const lat = irradianceData.lat * Math.PI / 180;
+            
+            // Tilt factor: accounts for better capture at optimal tilt
+            // Simplified model: optimal tilt ≈ latitude
+            const optimalTilt = lat * 180 / Math.PI;
+            const tiltFactor = 1 + 0.1 * Math.cos((tiltAngle - optimalTilt) * Math.PI / 180);
+            
+            // Azimuth factor: south-facing (180°) is optimal
+            const azimuthDeviation = Math.abs(azimuthAngle - 180);
+            const azimuthFactor = 1 - 0.15 * (azimuthDeviation / 180) * (azimuthDeviation / 180);
+            
+            // Combined orientation factor
+            const orientationFactor = tiltFactor * azimuthFactor;
+            
+            // Adjusted irradiance (accounting for tilt/azimuth)
+            const adjustedIrradiance = irradianceData.ghi * orientationFactor;
+            
+            // Apply shading losses
+            const shadingLoss = shadingFactor / 100;
+            const shadingAdjustedIrradiance = adjustedIrradiance * (1 - shadingLoss);
+            
+            // Calculate annual production
+            // Production = Area × Irradiance × (1 - System Losses) × Days per year
+            const systemEfficiency = 1 - (systemLosses / 100);
+            const annualProductionKwh = buildableArea * shadingAdjustedIrradiance * systemEfficiency * 365;
+            
+            // Capacity factor
+            const capacityFactor = (annualProductionKwh / (dcCapacityKw * 8760)) * 100;
+            
+            return {
+                dcCapacityKw: dcCapacityKw,
+                buildableArea: buildableArea,
+                annualProductionKwh: annualProductionKwh,
+                capacityFactor: capacityFactor,
+                orientationFactor: orientationFactor,
+                monthlyProduction: calculateMonthlyProduction(buildableArea, systemEfficiency, location, tiltAngle, azimuthAngle, shadingFactor),
+                cashflows: [] // Will be populated by financial calculations
+            };
+        }
+
+        function calculateMonthlyProduction(areaSqM, systemEfficiency, location, tiltAngle, azimuthAngle, shadingFactor) {
+            // Monthly irradiance factors (normalized to annual average)
+            // Based on typical US solar patterns
+            const monthlyFactors = {
+                'austin': [0.70, 0.75, 0.90, 1.05, 1.10, 1.15, 1.20, 1.15, 1.00, 0.90, 0.75, 0.70],
+                'houston': [0.68, 0.73, 0.88, 1.03, 1.08, 1.13, 1.18, 1.13, 0.98, 0.88, 0.73, 0.68],
+                'dallas': [0.72, 0.77, 0.92, 1.07, 1.12, 1.17, 1.22, 1.17, 1.02, 0.92, 0.77, 0.72],
+                'phoenix': [0.75, 0.85, 1.05, 1.20, 1.25, 1.30, 1.25, 1.20, 1.10, 0.95, 0.80, 0.70],
+                'default': [0.70, 0.75, 0.90, 1.05, 1.10, 1.15, 1.20, 1.15, 1.00, 0.90, 0.75, 0.70]
+            };
+            
+            const locLower = location.toLowerCase();
+            let factors = monthlyFactors.default;
+            for (const [key, data] of Object.entries(monthlyFactors)) {
+                if (locLower.includes(key)) {
+                    factors = data;
+                    break;
+                }
+            }
+            
+            const irradianceData = getSolarIrradiance(location);
+            const baseDaily = irradianceData.ghi;
+            
+            // Apply orientation and shading factors
+            const lat = irradianceData.lat * Math.PI / 180;
+            const optimalTilt = lat * 180 / Math.PI;
+            const tiltFactor = 1 + 0.1 * Math.cos((tiltAngle - optimalTilt) * Math.PI / 180);
+            const azimuthDeviation = Math.abs(azimuthAngle - 180);
+            const azimuthFactor = 1 - 0.15 * (azimuthDeviation / 180) * (azimuthDeviation / 180);
+            const orientationFactor = tiltFactor * azimuthFactor;
+            const shadingAdjustment = 1 - (shadingFactor / 100);
+            
+            const monthly = [];
+            for (let i = 0; i < 12; i++) {
+                const daysInMonth = new Date(2024, i + 1, 0).getDate();
+                const monthlyKwh = areaSqM * baseDaily * factors[i] * systemEfficiency * orientationFactor * shadingAdjustment * daysInMonth;
+                monthly.push(monthlyKwh);
+            }
+            
+            return monthly;
+        }
+
+        // Financial calculations
+        function calculateFinancials(annualProductionKwh, electricityRate, capexPerWatt, dcCapacityKw, opexPerKw, 
+                                     itcRate, depreciationSchedule, taxRate, discountRate, degradationRate) {
+            // Calculate CAPEX
+            const totalCapex = dcCapacityKw * 1000 * capexPerWatt;
+            const itcCredit = totalCapex * (itcRate / 100);
+            const netCapex = totalCapex - itcCredit;
+            
+            // Annual revenue (assuming PPA rate = electricity rate)
+            const annualRevenue = annualProductionKwh * electricityRate;
+            
+            // Annual OPEX
+            const annualOpex = dcCapacityKw * opexPerKw;
+            
+            // Calculate depreciation benefit
+            let depreciationBenefit = 0;
+            if (depreciationSchedule !== 'none') {
+                depreciationBenefit = calculateDepreciationBenefit(totalCapex, depreciationSchedule, taxRate);
+            }
+            
+            // 25-year cashflow
+            const cashflows = [];
+            let cumulativeCashflow = -netCapex;
+            let currentProduction = annualProductionKwh;
+            
+            for (let year = 1; year <= 25; year++) {
+                // Apply degradation
+                if (year > 1) {
+                    currentProduction = currentProduction * (1 - degradationRate / 100);
+                }
+                
+                const yearRevenue = currentProduction * electricityRate;
+                const yearOpex = annualOpex;
+                const yearCashflow = yearRevenue - yearOpex;
+                
+                // Add depreciation benefit in early years
+                if (year <= 7 && depreciationBenefit > 0) {
+                    const depBenefit = depreciationBenefit[year - 1] || 0;
+                    cumulativeCashflow += yearCashflow + depBenefit;
+                } else {
+                    cumulativeCashflow += yearCashflow;
+                }
+                
+                cashflows.push({
+                    year: year,
+                    production: currentProduction,
+                    revenue: yearRevenue,
+                    opex: yearOpex,
+                    cashflow: yearCashflow,
+                    cumulative: cumulativeCashflow
+                });
+            }
+            
+            // Calculate metrics
+            const totalRevenue = cashflows.reduce((sum, cf) => sum + cf.revenue, 0);
+            const totalOpex = cashflows.reduce((sum, cf) => sum + cf.opex, 0);
+            const totalCashflow = totalRevenue - totalOpex;
+            
+            // Simple payback
+            const annualCashflow = annualRevenue - annualOpex;
+            const paybackYears = annualCashflow > 0 ? netCapex / annualCashflow : Infinity;
+            
+            // NPV
+            let npv = -netCapex;
+            cashflows.forEach(cf => {
+                npv += cf.cashflow / Math.pow(1 + discountRate / 100, cf.year);
+            });
+            
+            // IRR (binary search)
+            let irr = calculateIRR(netCapex, cashflows);
+            
+            // LCOE
+            const totalProduction = cashflows.reduce((sum, cf) => sum + cf.production, 0);
+            const lcoe = (netCapex + totalOpex) / totalProduction;
+            
+            return {
+                totalCapex: totalCapex,
+                itcCredit: itcCredit,
+                netCapex: netCapex,
+                annualRevenue: annualRevenue,
+                annualOpex: annualOpex,
+                annualCashflow: annualCashflow,
+                paybackYears: paybackYears,
+                npv: npv,
+                irr: irr,
+                lcoe: lcoe,
+                cashflows: cashflows,
+                totalRevenue: totalRevenue,
+                totalOpex: totalOpex
+            };
+        }
+
+        function calculateDepreciationBenefit(capex, schedule, taxRate) {
+            // MACRS 5-year schedule
+            const macrs5 = [0.20, 0.32, 0.192, 0.1152, 0.1152, 0.0576];
+            // MACRS 7-year schedule
+            const macrs7 = [0.1429, 0.2449, 0.1749, 0.1249, 0.0893, 0.0892, 0.0893, 0.0446];
+            // Straight-line 25-year
+            const straight25 = Array(25).fill(1/25);
+            
+            let scheduleArray;
+            if (schedule === 'macrs5') scheduleArray = macrs5;
+            else if (schedule === 'macrs7') scheduleArray = macrs7;
+            else if (schedule === 'straight25') scheduleArray = straight25;
+            else return [];
+            
+            return scheduleArray.map(rate => capex * rate * (taxRate / 100));
+        }
+
+        function calculateIRR(initialInvestment, cashflows) {
+            // Binary search for IRR
+            let low = -0.99;
+            let high = 2.0;
+            let tolerance = 0.0001;
+            let iterations = 0;
+            let maxIterations = 100;
+            
+            while (iterations < maxIterations) {
+                const testRate = (low + high) / 2;
+                let npv = -initialInvestment;
+                
+                cashflows.forEach(cf => {
+                    npv += cf.cashflow / Math.pow(1 + testRate, cf.year);
+                });
+                
+                if (Math.abs(npv) < tolerance) {
+                    return testRate * 100; // Return as percentage
+                }
+                
+                if (npv > 0) {
+                    low = testRate;
+                } else {
+                    high = testRate;
+                }
+                
+                iterations++;
+            }
+            
+            return ((low + high) / 2) * 100;
+        }
+
+        // Main calculation function
+        function calculateFeasibility() {
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('resultsSection').style.display = 'none';
+            
+            // Get inputs
+            const address = document.getElementById('siteAddress').value;
+            const parkingAreaSqFt = parseFloat(document.getElementById('parkingArea').value) || polygonArea;
+            const coveragePercent = parseFloat(document.getElementById('coveragePercent').value);
+            const modulePowerDensity = parseFloat(document.getElementById('modulePowerDensity').value);
+            const packingFactor = parseFloat(document.getElementById('packingFactor').value);
+            const systemLosses = parseFloat(document.getElementById('systemLosses').value);
+            const degradationRate = parseFloat(document.getElementById('degradationRate').value);
+            const tiltAngle = parseFloat(document.getElementById('tiltAngle').value);
+            const azimuthAngle = parseFloat(document.getElementById('azimuthAngle').value);
+            const shadingFactor = parseFloat(document.getElementById('shadingFactor').value);
+            const electricityRate = parseFloat(document.getElementById('electricityRate').value);
+            const capexPerWatt = parseFloat(document.getElementById('capexPerWatt').value);
+            const opexPerKw = parseFloat(document.getElementById('opexPerKw').value);
+            const discountRate = parseFloat(document.getElementById('discountRate').value);
+            const itcRate = parseFloat(document.getElementById('itcRate').value);
+            const depreciationSchedule = document.getElementById('depreciationSchedule').value;
+            const taxRate = parseFloat(document.getElementById('taxRate').value);
+            
+            // Validate inputs
+            if (!parkingAreaSqFt || parkingAreaSqFt <= 0) {
+                alert('Please enter or draw a parking lot area.');
+                document.getElementById('loading').classList.remove('active');
+                return;
+            }
+            
+            // Simulate calculation delay
+            setTimeout(() => {
+                // Calculate solar production
+                const solarResults = calculateSolarProduction(
+                    parkingAreaSqFt, coveragePercent, modulePowerDensity, 
+                    packingFactor, systemLosses, address, tiltAngle, azimuthAngle, shadingFactor
+                );
+                
+                // Calculate financials
+                const financialResults = calculateFinancials(
+                    solarResults.annualProductionKwh,
+                    electricityRate,
+                    capexPerWatt,
+                    solarResults.dcCapacityKw,
+                    opexPerKw,
+                    itcRate,
+                    depreciationSchedule,
+                    taxRate,
+                    discountRate,
+                    degradationRate
+                );
+                
+                // Display results
+                displayResults(solarResults, financialResults, {
+                    address, parkingAreaSqFt, coveragePercent, modulePowerDensity,
+                    packingFactor, systemLosses, degradationRate, tiltAngle, azimuthAngle, shadingFactor,
+                    electricityRate, capexPerWatt, opexPerKw, discountRate, itcRate, depreciationSchedule, taxRate
+                });
+                
+                // Auto-switch to Executive Summary tab
+                setTimeout(() => {
+                    const execButton = document.querySelector('.tab-button[onclick*="executive"]');
+                    switchTab('executive', execButton);
+                }, 500);
+                
+                // Hide loading, show results
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('resultsSection').style.display = 'block';
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+
+        // Chart instances
+        let monthlyChart = null;
+        let degradationChart = null;
+
+        function displayResults(solar, financial, inputs) {
+            // Key metrics
+            document.getElementById('resultCapacity').textContent = 
+                solar.dcCapacityKw.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('resultProduction').textContent = 
+                solar.annualProductionKwh.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('resultPayback').textContent = 
+                financial.paybackYears.toFixed(1);
+            document.getElementById('resultIRR').textContent = 
+                financial.irr.toFixed(1) + '%';
+            document.getElementById('resultNPV').textContent = 
+                '$' + (financial.npv / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 }) + 'k';
+            document.getElementById('resultLCOE').textContent = 
+                '$' + financial.lcoe.toFixed(3);
+            
+            // Create monthly production chart
+            createMonthlyChart(solar.monthlyProduction);
+            
+            // Create degradation chart
+            createDegradationChart(solar.annualProductionKwh, inputs.degradationRate);
+            
+            // Calculate and display sensitivity analysis
+            calculateSensitivityAnalysis(solar, financial, inputs);
+            
+            // Financial details
+            const financialDetails = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">Total CAPEX</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            $${(financial.totalCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">ITC Credit</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            $${(financial.itcCredit / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">Net CAPEX</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            $${(financial.netCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">Annual Revenue</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            $${(financial.annualRevenue / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">Annual OPEX</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            $${(financial.annualOpex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k
+                        </div>
+                    </div>
+                    <div style="padding: 1rem; background: #F5F5F5; border-radius: 8px;">
+                        <div style="font-size: 0.9rem; color: #666;">Capacity Factor</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">
+                            ${solar.capacityFactor.toFixed(1)}%
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('financialDetails').innerHTML = financialDetails;
+            
+            // Cashflow table
+            const tbody = document.getElementById('cashflowBody');
+            tbody.innerHTML = '';
+            financial.cashflows.forEach(cf => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = cf.year;
+                row.insertCell(1).textContent = cf.production.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                row.insertCell(2).textContent = '$' + cf.revenue.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                row.insertCell(3).textContent = '$' + cf.opex.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                row.insertCell(4).textContent = '$' + cf.cashflow.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                row.insertCell(5).textContent = '$' + cf.cumulative.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                
+                // Style cells
+                Array.from(row.cells).forEach(cell => {
+                    cell.style.padding = '0.75rem';
+                    cell.style.borderBottom = '1px solid #E0E0E0';
+                });
+                row.cells[1].style.textAlign = 'right';
+                row.cells[2].style.textAlign = 'right';
+                row.cells[3].style.textAlign = 'right';
+                row.cells[4].style.textAlign = 'right';
+                row.cells[5].style.textAlign = 'right';
+            });
+            
+            // Assumptions
+            const assumptions = `
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; line-height: 1.8; color: #333;">
+                    <li>• <strong>Location:</strong> ${inputs.address}</li>
+                    <li>• <strong>Parking Area:</strong> ${inputs.parkingAreaSqFt.toLocaleString('en-US')} sq ft</li>
+                    <li>• <strong>Canopy Coverage:</strong> ${inputs.coveragePercent}%</li>
+                    <li>• <strong>Buildable Area:</strong> ${(solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 })} sq ft</li>
+                    <li>• <strong>Module Power Density:</strong> ${inputs.modulePowerDensity} W/m²</li>
+                    <li>• <strong>Packing Factor:</strong> ${(inputs.packingFactor * 100).toFixed(0)}%</li>
+                    <li>• <strong>Tilt Angle:</strong> ${inputs.tiltAngle}°</li>
+                    <li>• <strong>Azimuth Angle:</strong> ${inputs.azimuthAngle}°</li>
+                    <li>• <strong>Shading Factor:</strong> ${inputs.shadingFactor}%</li>
+                    <li>• <strong>System Losses:</strong> ${inputs.systemLosses}%</li>
+                    <li>• <strong>Annual Degradation:</strong> ${inputs.degradationRate}%/year</li>
+                    <li>• <strong>Electricity Rate:</strong> $${inputs.electricityRate.toFixed(3)}/kWh</li>
+                    <li>• <strong>CAPEX:</strong> $${inputs.capexPerWatt.toFixed(2)}/W</li>
+                    <li>• <strong>OPEX:</strong> $${inputs.opexPerKw}/kW/year</li>
+                    <li>• <strong>ITC Rate:</strong> ${inputs.itcRate}%</li>
+                    <li>• <strong>Depreciation:</strong> ${inputs.depreciationSchedule}</li>
+                    <li>• <strong>Discount Rate:</strong> ${inputs.discountRate}%</li>
+                    <li>• <strong>Orientation Factor:</strong> ${(solar.orientationFactor * 100).toFixed(1)}%</li>
+                </ul>
+            `;
+            document.getElementById('assumptionsList').innerHTML = assumptions;
+            
+            // Store results for PDF export
+            window.yieldUrbanResults = { solar, financial, inputs };
+        }
+
+        function createMonthlyChart(monthlyData) {
+            const ctx = document.getElementById('monthlyChart');
+            if (monthlyChart) {
+                monthlyChart.destroy();
+            }
+            
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            monthlyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthNames,
+                    datasets: [{
+                        label: 'Monthly Production (kWh)',
+                        data: monthlyData,
+                        backgroundColor: 'rgba(191, 87, 0, 0.6)',
+                        borderColor: '#BF5700',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Production (kWh)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createDegradationChart(initialProduction, degradationRate) {
+            const ctx = document.getElementById('degradationChart');
+            if (degradationChart) {
+                degradationChart.destroy();
+            }
+            
+            const years = [];
+            const production = [];
+            let currentProduction = initialProduction;
+            
+            for (let year = 0; year <= 25; year++) {
+                years.push(year);
+                production.push(currentProduction);
+                currentProduction = currentProduction * (1 - degradationRate / 100);
+            }
+            
+            degradationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Annual Production (kWh)',
+                        data: production,
+                        borderColor: '#BF5700',
+                        backgroundColor: 'rgba(191, 87, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Production (kWh/year)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function calculateSensitivityAnalysis(solar, financial, inputs) {
+            // Electricity rate ±20%
+            const rateLow = inputs.electricityRate * 0.8;
+            const rateHigh = inputs.electricityRate * 1.2;
+            const revenueLow = solar.annualProductionKwh * rateLow;
+            const revenueHigh = solar.annualProductionKwh * rateHigh;
+            const cashflowLow = revenueLow - financial.annualOpex;
+            const cashflowHigh = revenueHigh - financial.annualOpex;
+            const paybackLow = financial.netCapex / cashflowHigh;
+            const paybackHigh = financial.netCapex / cashflowLow;
+            
+            document.getElementById('sensitivityRate').innerHTML = `
+                <div>IRR: ${(financial.irr * 0.8).toFixed(1)}% to ${(financial.irr * 1.2).toFixed(1)}%</div>
+                <div>Payback: ${paybackLow.toFixed(1)} to ${paybackHigh.toFixed(1)} years</div>
+            `;
+            
+            // CAPEX ±15%
+            const capexLow = inputs.capexPerWatt * 0.85;
+            const capexHigh = inputs.capexPerWatt * 1.15;
+            const netCapexLow = (solar.dcCapacityKw * 1000 * capexLow) * (1 - inputs.itcRate / 100);
+            const netCapexHigh = (solar.dcCapacityKw * 1000 * capexHigh) * (1 - inputs.itcRate / 100);
+            const paybackCapexLow = netCapexLow / financial.annualCashflow;
+            const paybackCapexHigh = netCapexHigh / financial.annualCashflow;
+            
+            document.getElementById('sensitivityCapex').innerHTML = `
+                <div>Net CAPEX: $${(netCapexLow / 1000).toFixed(0)}k to $${(netCapexHigh / 1000).toFixed(0)}k</div>
+                <div>Payback: ${paybackCapexLow.toFixed(1)} to ${paybackCapexHigh.toFixed(1)} years</div>
+            `;
+            
+            // Coverage ±10%
+            const coverageLow = inputs.coveragePercent * 0.9;
+            const coverageHigh = inputs.coveragePercent * 1.1;
+            const productionLow = solar.annualProductionKwh * 0.9;
+            const productionHigh = solar.annualProductionKwh * 1.1;
+            const revenueCoverageLow = productionLow * inputs.electricityRate;
+            const revenueCoverageHigh = productionHigh * inputs.electricityRate;
+            const cashflowCoverageLow = revenueCoverageLow - financial.annualOpex;
+            const cashflowCoverageHigh = revenueCoverageHigh - financial.annualOpex;
+            const paybackCoverageLow = financial.netCapex / cashflowCoverageHigh;
+            const paybackCoverageHigh = financial.netCapex / cashflowCoverageLow;
+            
+            document.getElementById('sensitivityCoverage').innerHTML = `
+                <div>Production: ${(productionLow / 1000).toFixed(0)}k to ${(productionHigh / 1000).toFixed(0)}k kWh/year</div>
+                <div>Payback: ${paybackCoverageLow.toFixed(1)} to ${paybackCoverageHigh.toFixed(1)} years</div>
+            `;
+            
+            // Production ±5%
+            const productionVarLow = solar.annualProductionKwh * 0.95;
+            const productionVarHigh = solar.annualProductionKwh * 1.05;
+            const revenueProdLow = productionVarLow * inputs.electricityRate;
+            const revenueProdHigh = productionVarHigh * inputs.electricityRate;
+            const cashflowProdLow = revenueProdLow - financial.annualOpex;
+            const cashflowProdHigh = revenueProdHigh - financial.annualOpex;
+            const paybackProdLow = financial.netCapex / cashflowProdHigh;
+            const paybackProdHigh = financial.netCapex / cashflowProdLow;
+            
+            document.getElementById('sensitivityProduction').innerHTML = `
+                <div>Revenue: $${(revenueProdLow / 1000).toFixed(0)}k to $${(revenueProdHigh / 1000).toFixed(0)}k/year</div>
+                <div>Payback: ${paybackProdLow.toFixed(1)} to ${paybackProdHigh.toFixed(1)} years</div>
+            `;
+        }
+
+        function exportPDF() {
+            if (!window.yieldUrbanResults) {
+                alert('Please calculate feasibility first.');
+                return;
+            }
+            
+            const { solar, financial, inputs } = window.yieldUrbanResults;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.width;
+            const pageHeight = doc.internal.pageSize.height;
+            let y = 20;
+            
+            // Helper function to add page numbers
+            function addPageNumber(pageNum) {
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text(`Page ${pageNum}`, pageWidth - 20, pageHeight - 10, { align: 'right' });
+            }
+            
+            // ========== COVER PAGE ==========
+            // Draw header line
+            doc.setDrawColor(191, 87, 0);
+            doc.setLineWidth(3);
+            doc.line(20, 15, pageWidth - 20, 15);
+            
+            y = 40;
+            doc.setFontSize(32);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('YieldUrban', pageWidth / 2, y, { align: 'center' });
+            
+            y += 15;
+            doc.setFontSize(20);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.text('Solar Feasibility Analysis Report', pageWidth / 2, y, { align: 'center' });
+            
+            y += 30;
+            doc.setFontSize(14);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Professional Pre-Engineering Assessment', pageWidth / 2, y, { align: 'center' });
+            
+            y += 40;
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.5);
+            doc.line(40, y, pageWidth - 40, y);
+            
+            y += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`Site Location: ${inputs.address}`, pageWidth / 2, y, { align: 'center' });
+            y += 10;
+            doc.text(`Analysis Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageWidth / 2, y, { align: 'center' });
+            y += 10;
+            doc.text(`Prepared by: YieldUrban Platform`, pageWidth / 2, y, { align: 'center' });
+            y += 10;
+            doc.text(`SunUrban Energy Solutions`, pageWidth / 2, y, { align: 'center' });
+            
+            y += 30;
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('This report contains a comprehensive feasibility analysis including technical,', pageWidth / 2, y, { align: 'center' });
+            y += 6;
+            doc.text('financial, and risk assessments for a parking-lot solar canopy installation.', pageWidth / 2, y, { align: 'center' });
+            
+            addPageNumber(1);
+            
+            // ========== EXECUTIVE SUMMARY ==========
+            doc.addPage();
+            y = 20;
+            
+            // Section header
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Executive Summary', 20, y);
+            
+            y += 15;
+            doc.setDrawColor(191, 87, 0);
+            doc.setLineWidth(1);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 10;
+            
+            // Recommendation box
+            const goNoGo = financial.irr >= 8 ? 'GO' : financial.irr >= 6 ? 'CONDITIONAL GO' : 'NO-GO';
+            const goNoGoColor = financial.irr >= 8 ? [76, 175, 80] : financial.irr >= 6 ? [255, 167, 38] : [244, 67, 54];
+            
+            doc.setFillColor(...goNoGoColor);
+            doc.roundedRect(20, y, pageWidth - 40, 25, 3, 3, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text(`RECOMMENDATION: ${goNoGo}`, 30, y + 16);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            
+            y += 35;
+            doc.setFontSize(11);
+            doc.text(`Based on ${financial.irr.toFixed(1)}% IRR, ${financial.paybackYears.toFixed(1)}-year payback, and ${financial.npv >= 0 ? 'positive' : 'negative'} NPV`, 20, y);
+            
+            y += 20;
+            doc.setFontSize(14);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Key Metrics', 20, y);
+            y += 10;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Metric', 'Value', 'Notes']],
+                body: [
+                    ['System Capacity', solar.dcCapacityKw.toFixed(0) + ' kW DC', 'DC capacity at STC'],
+                    ['Annual Production (Year 1)', (solar.annualProductionKwh / 1000).toFixed(0) + ' MWh', 'First year output'],
+                    ['25-Year Total Production', (financial.cashflows.reduce((sum, cf) => sum + cf.production, 0) / 1000).toFixed(0) + ' MWh', 'Lifetime total'],
+                    ['Simple Payback Period', financial.paybackYears.toFixed(1) + ' years', 'Years to recover investment'],
+                    ['Internal Rate of Return (IRR)', financial.irr.toFixed(1) + '%', '25-year project IRR'],
+                    ['Net Present Value (NPV)', '$' + (financial.npv / 1000).toFixed(0) + 'k', `@ ${inputs.discountRate}% discount rate`],
+                    ['Levelized Cost of Energy (LCOE)', '$' + financial.lcoe.toFixed(3) + '/kWh', 'All-in cost per kWh'],
+                    ['Net CAPEX (after ITC)', '$' + (financial.netCapex / 1000).toFixed(0) + 'k', `After ${inputs.itcRate}% ITC`],
+                    ['Annual Cash Flow (Year 1)', '$' + (financial.annualCashflow / 1000).toFixed(0) + 'k', 'Revenue - OPEX'],
+                    ['Capacity Factor', solar.capacityFactor.toFixed(1) + '%', 'Actual vs. rated capacity']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 60 },
+                    1: { cellWidth: 50, halign: 'right' },
+                    2: { cellWidth: 80, fontSize: 8, textColor: [100, 100, 100] }
+                }
+            });
+            
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Key Findings', 20, y);
+            y += 8;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            
+            const findings = [
+                `• System Size: ${solar.dcCapacityKw.toLocaleString('en-US', { maximumFractionDigits: 0 })} kW DC capacity on ${(solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 })} sq ft of canopy area`,
+                `• Energy Production: ${(solar.annualProductionKwh / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })} MWh/year (Year 1), declining to ${((solar.annualProductionKwh * Math.pow(1 - inputs.degradationRate/100, 24)) / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })} MWh/year (Year 25)`,
+                `• Financial Performance: ${financial.irr.toFixed(1)}% IRR, ${financial.paybackYears.toFixed(1)}-year payback, $${(financial.npv / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k NPV`,
+                `• Investment Required: $${(financial.netCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k net CAPEX (after ${inputs.itcRate}% ITC credit of $${(financial.itcCredit / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k)`,
+                `• Annual Cash Flow: $${(financial.annualCashflow / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k/year (Year 1)`,
+                `• Cost Competitiveness: LCOE of $${financial.lcoe.toFixed(3)}/kWh vs. utility rate of $${inputs.electricityRate.toFixed(3)}/kWh`
+            ];
+            
+            findings.forEach(finding => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(finding, 25, y, { maxWidth: pageWidth - 50 });
+                y += 8;
+            });
+            
+            addPageNumber(2);
+            
+            // ========== FINANCIAL ANALYSIS ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Financial Analysis', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            // CAPEX Breakdown
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Capital Expenditure (CAPEX)', 20, y);
+            y += 10;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Component', 'Amount', '% of Total']],
+                body: [
+                    ['Total CAPEX (before ITC)', '$' + (financial.totalCapex / 1000).toFixed(0) + 'k', '100%'],
+                    ['ITC Credit (' + inputs.itcRate + '%)', '-$' + (financial.itcCredit / 1000).toFixed(0) + 'k', '-' + inputs.itcRate + '%'],
+                    ['Net CAPEX (after ITC)', '$' + (financial.netCapex / 1000).toFixed(0) + 'k', (100 - inputs.itcRate).toFixed(0) + '%'],
+                    ['Cost per kW', '$' + inputs.capexPerWatt.toFixed(2), '-']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 10 }
+            });
+            
+            // Revenue & OPEX
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Revenue & Operating Expenses', 20, y);
+            y += 10;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Component', 'Annual Amount', '25-Year Total']],
+                body: [
+                    ['Annual Revenue (Year 1)', '$' + (financial.annualRevenue / 1000).toFixed(0) + 'k', '$' + (financial.totalRevenue / 1000).toFixed(0) + 'k'],
+                    ['Annual OPEX', '$' + (financial.annualOpex / 1000).toFixed(0) + 'k', '$' + (financial.totalOpex / 1000).toFixed(0) + 'k'],
+                    ['Annual Cash Flow (Year 1)', '$' + (financial.annualCashflow / 1000).toFixed(0) + 'k', '-']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 10 }
+            });
+            
+            // 25-Year Cashflow Table
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('25-Year Cashflow Projection', 20, y);
+            y += 10;
+            
+            const cashflowData = financial.cashflows.map(cf => [
+                cf.year.toString(),
+                (cf.production / 1000).toFixed(0),
+                '$' + (cf.revenue / 1000).toFixed(0) + 'k',
+                '$' + (cf.opex / 1000).toFixed(0) + 'k',
+                '$' + (cf.cashflow / 1000).toFixed(0) + 'k',
+                '$' + (cf.cumulative / 1000).toFixed(0) + 'k'
+            ]);
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Year', 'Production (MWh)', 'Revenue', 'OPEX', 'Cash Flow', 'Cumulative']],
+                body: cashflowData,
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 8 },
+                columnStyles: {
+                    0: { cellWidth: 15 },
+                    1: { cellWidth: 30, halign: 'right' },
+                    2: { cellWidth: 30, halign: 'right' },
+                    3: { cellWidth: 30, halign: 'right' },
+                    4: { cellWidth: 30, halign: 'right' },
+                    5: { cellWidth: 30, halign: 'right' }
+                }
+            });
+            
+            addPageNumber(3);
+            
+            // ========== TECHNICAL ANALYSIS ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Technical Analysis', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('System Design Parameters', 20, y);
+            y += 10;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Parameter', 'Value', 'Unit', 'Notes']],
+                body: [
+                    ['Parking Lot Area', inputs.parkingAreaSqFt.toLocaleString('en-US'), 'sq ft', 'Total parking lot footprint'],
+                    ['Canopy Coverage', inputs.coveragePercent + '%', '-', 'Percentage of stalls covered'],
+                    ['Buildable Canopy Area', (solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 }), 'sq ft', `After ${(inputs.packingFactor * 100).toFixed(0)}% packing factor`],
+                    ['DC System Capacity', solar.dcCapacityKw.toFixed(0), 'kW', 'At Standard Test Conditions (STC)'],
+                    ['Module Power Density', inputs.modulePowerDensity, 'W/m²', 'Panel efficiency × area'],
+                    ['Tilt Angle', inputs.tiltAngle + '°', 'degrees', 'From horizontal'],
+                    ['Azimuth Angle', inputs.azimuthAngle + '°', 'degrees', '180° = South (optimal)'],
+                    ['Orientation Factor', (solar.orientationFactor * 100).toFixed(1) + '%', '-', 'Performance vs. optimal orientation'],
+                    ['Shading Factor', inputs.shadingFactor + '%', '-', 'Additional losses from obstructions']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 50 },
+                    1: { cellWidth: 35, halign: 'right' },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 80, fontSize: 8, textColor: [100, 100, 100] }
+                }
+            });
+            
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Performance Modeling', 20, y);
+            y += 10;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Parameter', 'Value', 'Unit', 'Methodology']],
+                body: [
+                    ['Annual Irradiance', getSolarIrradiance(inputs.address).ghi.toFixed(1), 'kWh/m²/day', 'Location-specific (NREL NSRDB)'],
+                    ['System Losses', inputs.systemLosses + '%', '-', 'Soiling, wiring, inverter, temperature'],
+                    ['Shading Losses', inputs.shadingFactor + '%', '-', 'Nearby obstructions'],
+                    ['Annual Production (Year 1)', (solar.annualProductionKwh / 1000).toFixed(0), 'MWh', 'First year output'],
+                    ['Capacity Factor', solar.capacityFactor.toFixed(1) + '%', '-', 'Actual vs. rated capacity'],
+                    ['Annual Degradation', inputs.degradationRate + '%', '/year', 'Panel performance decline'],
+                    ['25-Year Total Production', (financial.cashflows.reduce((sum, cf) => sum + cf.production, 0) / 1000).toFixed(0), 'MWh', 'Lifetime total']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 50 },
+                    1: { cellWidth: 35, halign: 'right' },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 80, fontSize: 8, textColor: [100, 100, 100] }
+                }
+            });
+            
+            addPageNumber(4);
+            
+            // ========== SENSITIVITY ANALYSIS ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Sensitivity Analysis', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.text('The following analysis shows how key financial metrics change with variations in critical assumptions.', 20, y);
+            y += 15;
+            
+            // Calculate sensitivity scenarios
+            const rateLow = inputs.electricityRate * 0.8;
+            const rateHigh = inputs.electricityRate * 1.2;
+            const revenueLow = solar.annualProductionKwh * rateLow;
+            const revenueHigh = solar.annualProductionKwh * rateHigh;
+            const cashflowLow = revenueLow - financial.annualOpex;
+            const cashflowHigh = revenueHigh - financial.annualOpex;
+            const paybackRateLow = financial.netCapex / cashflowHigh;
+            const paybackRateHigh = financial.netCapex / cashflowLow;
+            
+            const capexLow = inputs.capexPerWatt * 0.85;
+            const capexHigh = inputs.capexPerWatt * 1.15;
+            const netCapexLow = (solar.dcCapacityKw * 1000 * capexLow) * (1 - inputs.itcRate / 100);
+            const netCapexHigh = (solar.dcCapacityKw * 1000 * capexHigh) * (1 - inputs.itcRate / 100);
+            const paybackCapexLow = netCapexLow / financial.annualCashflow;
+            const paybackCapexHigh = netCapexHigh / financial.annualCashflow;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Scenario', 'IRR Impact', 'Payback Impact', 'NPV Impact']],
+                body: [
+                    ['Electricity Rate -20%', `${(financial.irr * 0.8).toFixed(1)}%`, `${paybackRateHigh.toFixed(1)} years`, 'Reduced'],
+                    ['Electricity Rate +20%', `${(financial.irr * 1.2).toFixed(1)}%`, `${paybackRateLow.toFixed(1)} years`, 'Increased'],
+                    ['CAPEX -15%', `${(financial.irr * 1.15).toFixed(1)}%`, `${paybackCapexLow.toFixed(1)} years`, 'Improved'],
+                    ['CAPEX +15%', `${(financial.irr * 0.85).toFixed(1)}%`, `${paybackCapexHigh.toFixed(1)} years`, 'Reduced'],
+                    ['Coverage -10%', `${(financial.irr * 0.9).toFixed(1)}%`, `${(financial.paybackYears * 1.1).toFixed(1)} years`, 'Reduced'],
+                    ['Coverage +10%', `${(financial.irr * 1.1).toFixed(1)}%`, `${(financial.paybackYears * 0.9).toFixed(1)} years`, 'Improved']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 }
+            });
+            
+            addPageNumber(5);
+            
+            // ========== RISK ASSESSMENT ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Risk Assessment', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            const riskScore = calculateRiskScore(financial, inputs);
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text(`Overall Risk Score: ${riskScore.score}/10 (${riskScore.label})`, 20, y);
+            y += 15;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Risk Category', 'Level', 'Description', 'Mitigation']],
+                body: [
+                    ['Financial Risk', financial.irr >= 8 ? 'Low' : financial.irr >= 6 ? 'Medium' : 'High', `IRR: ${financial.irr.toFixed(1)}%`, financial.irr >= 8 ? 'Strong returns' : 'Consider cost reduction'],
+                    ['Technical Risk', 'Low-Medium', 'Proven technology', 'Conduct site survey, geotechnical study'],
+                    ['Regulatory Risk', 'Medium', 'Interconnection, permitting', 'Engage utility early, review local codes'],
+                    ['Operational Risk', 'Low', 'Standard O&M, 25+ year lifespan', 'Standard maintenance contracts'],
+                    ['Market Risk', 'Medium', 'Electricity rate stability', 'Lock in PPA rates, diversify revenue'],
+                    ['Technology Risk', 'Low', 'Mature solar PV technology', 'Proven supply chains']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 40 },
+                    1: { cellWidth: 25 },
+                    2: { cellWidth: 70, fontSize: 8 },
+                    3: { cellWidth: 55, fontSize: 8 }
+                }
+            });
+            
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Risk Mitigation Strategies', 20, y);
+            y += 10;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            
+            const mitigations = [
+                '• Interconnection: Engage utility early, budget 10-20% contingency for interconnection costs',
+                '• Geotechnical: Conduct soil surveys before final design, budget 5-15% for foundation variations',
+                '• Permitting: Review local codes early, engage with planning department, allow 2-6 months for approvals',
+                '• Revenue: Lock in PPA rates, diversify revenue streams, consider long-term contracts',
+                '• Construction: Secure equipment pricing, allow for weather delays, maintain 10% project contingency'
+            ];
+            
+            mitigations.forEach(mitigation => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(mitigation, 25, y, { maxWidth: pageWidth - 50 });
+                y += 8;
+            });
+            
+            addPageNumber(6);
+            
+            // ========== INDUSTRY BENCHMARKING ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Industry Benchmarking', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            doc.text('Comparison of project metrics against industry standards for commercial solar, infrastructure, and utility-scale projects.', 20, y);
+            y += 15;
+            
+            doc.autoTable({
+                startY: y,
+                head: [['Metric', 'This Project', 'Commercial Solar', 'Infrastructure', 'Utility Scale']],
+                body: [
+                    ['IRR', financial.irr.toFixed(1) + '%', '8-12%', '5-8%', '6-9%'],
+                    ['Payback Period', financial.paybackYears.toFixed(1) + ' years', '6-8 years', '10-15 years', '8-12 years'],
+                    ['CAPEX ($/W)', '$' + inputs.capexPerWatt.toFixed(2), '$2.00-3.50', '$2.50-4.00', '$1.50-2.50'],
+                    ['LCOE ($/kWh)', '$' + financial.lcoe.toFixed(3), '$0.08-0.12', '$0.10-0.15', '$0.05-0.08']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [191, 87, 0], textColor: [255, 255, 255], fontStyle: 'bold' },
+                styles: { fontSize: 9 }
+            });
+            
+            y = doc.lastAutoTable.finalY + 15;
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Investor Suitability', 20, y);
+            y += 10;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            
+            const suitability = [
+                `• Commercial Solar Investors: ${financial.irr >= 8 ? 'YES' : financial.irr >= 7 ? 'BORDERLINE' : 'NO'} (${financial.irr.toFixed(1)}% ${financial.irr >= 8 ? 'meets' : financial.irr >= 7 ? 'near' : 'below'} 8%+ target)`,
+                `• Infrastructure/ESG Investors: ${financial.irr >= 6 ? 'YES' : 'BORDERLINE'} (${financial.irr.toFixed(1)}% ${financial.irr >= 6 ? 'acceptable' : 'below typical threshold'})`,
+                `• Utility-Scale Investors: ${financial.irr >= 7 ? 'YES' : financial.irr >= 6 ? 'BORDERLINE' : 'NO'} (${financial.irr.toFixed(1)}% ${financial.irr >= 7 ? 'competitive' : 'below'} utility-scale benchmarks)`
+            ];
+            
+            suitability.forEach(item => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(item, 25, y, { maxWidth: pageWidth - 50 });
+                y += 8;
+            });
+            
+            addPageNumber(7);
+            
+            // ========== RECOMMENDATIONS ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Recommendations & Next Steps', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Project Advancement', 20, y);
+            y += 10;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            
+            const nextSteps = [
+                '1. Conduct detailed site survey and geotechnical study',
+                '2. Engage utility for interconnection study and cost estimate',
+                '3. Review local zoning and permitting requirements',
+                '4. Obtain quotes from 2-3 qualified EPC contractors',
+                '5. Secure financing commitments or investor interest',
+                '6. Develop detailed project timeline (6-12 months to NTP)',
+                '7. Lock in equipment pricing with suppliers',
+                '8. Finalize revenue contracts (PPA, grid services)'
+            ];
+            
+            nextSteps.forEach(step => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(step, 25, y, { maxWidth: pageWidth - 50 });
+                y += 8;
+            });
+            
+            y += 10;
+            if (y > 270) {
+                doc.addPage();
+                y = 20;
+                addPageNumber(doc.internal.getNumberOfPages());
+            }
+            
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Decision Framework', 20, y);
+            y += 10;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            
+            const decisionFramework = [
+                `Go Decision: IRR ≥ 8%, Payback ≤ 10 years, NPV > $0, acceptable risk profile`,
+                `Conditional Go: IRR 6-8%, requires cost reduction or revenue enhancement, acceptable with alternative financing`,
+                `No-Go: IRR < 6%, payback > 15 years, high risk factors, or site constraints`,
+                ``,
+                `Current Project Status: ${financial.irr >= 8 ? 'GO' : financial.irr >= 6 ? 'CONDITIONAL GO' : 'NO-GO'}`,
+                `Rationale: ${financial.irr.toFixed(1)}% IRR, ${financial.paybackYears.toFixed(1)}-year payback, ${financial.npv >= 0 ? 'positive' : 'negative'} NPV`
+            ];
+            
+            decisionFramework.forEach(item => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(item, 25, y, { maxWidth: pageWidth - 50 });
+                y += 8;
+            });
+            
+            addPageNumber(8);
+            
+            // ========== ASSUMPTIONS ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(18);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Key Assumptions', 20, y);
+            y += 10;
+            doc.setDrawColor(191, 87, 0);
+            doc.line(20, y, pageWidth - 20, y);
+            y += 15;
+            
+            doc.setFontSize(9);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            
+            const assumptions = [
+                `Site Information:`,
+                `  • Location: ${inputs.address}`,
+                `  • Parking Area: ${inputs.parkingAreaSqFt.toLocaleString('en-US')} sq ft`,
+                `  • Canopy Coverage: ${inputs.coveragePercent}%`,
+                ``,
+                `System Configuration:`,
+                `  • Buildable Area: ${(solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 })} sq ft`,
+                `  • Module Power Density: ${inputs.modulePowerDensity} W/m²`,
+                `  • Packing Factor: ${(inputs.packingFactor * 100).toFixed(0)}%`,
+                `  • Tilt Angle: ${inputs.tiltAngle}°`,
+                `  • Azimuth Angle: ${inputs.azimuthAngle}°`,
+                `  • Shading Factor: ${inputs.shadingFactor}%`,
+                `  • System Losses: ${inputs.systemLosses}%`,
+                `  • Annual Degradation: ${inputs.degradationRate}%/year`,
+                ``,
+                `Financial Assumptions:`,
+                `  • Electricity Rate: $${inputs.electricityRate.toFixed(3)}/kWh`,
+                `  • CAPEX: $${inputs.capexPerWatt.toFixed(2)}/W`,
+                `  • OPEX: $${inputs.opexPerKw}/kW/year`,
+                `  • ITC Rate: ${inputs.itcRate}%`,
+                `  • Depreciation: ${inputs.depreciationSchedule}`,
+                `  • Tax Rate: ${inputs.taxRate}%`,
+                `  • Discount Rate: ${inputs.discountRate}%`,
+                ``,
+                `Performance Assumptions:`,
+                `  • Annual Irradiance: ${getSolarIrradiance(inputs.address).ghi.toFixed(1)} kWh/m²/day (location-specific)`,
+                `  • Orientation Factor: ${(solar.orientationFactor * 100).toFixed(1)}%`,
+                `  • Capacity Factor: ${solar.capacityFactor.toFixed(1)}%`
+            ];
+            
+            assumptions.forEach(assumption => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                if (assumption.startsWith('  •')) {
+                    doc.text(assumption, 25, y, { maxWidth: pageWidth - 50 });
+                } else if (assumption === '') {
+                    // Skip empty lines
+                } else {
+                    doc.setFont(undefined, 'bold');
+                    doc.text(assumption, 20, y, { maxWidth: pageWidth - 50 });
+                    doc.setFont(undefined, 'normal');
+                }
+                y += 6;
+            });
+            
+            addPageNumber(9);
+            
+            // ========== DISCLAIMER PAGE ==========
+            doc.addPage();
+            y = 20;
+            doc.setFontSize(16);
+            doc.setTextColor(191, 87, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('Important Disclaimers', 20, y);
+            y += 15;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'normal');
+            
+            const disclaimers = [
+                'This feasibility analysis is a pre-engineering assessment based on industry-standard methodologies and',
+                'conservative assumptions. Actual project results may vary based on:',
+                '',
+                '• Detailed site surveys and geotechnical studies',
+                '• Interconnection studies and utility requirements',
+                '• Local permitting and zoning constraints',
+                '• Final engineering design and equipment selection',
+                '• Market conditions and equipment pricing at time of procurement',
+                '• Actual weather patterns and solar irradiance',
+                '• Operational performance and maintenance practices',
+                '',
+                'This analysis should be used for preliminary decision-making and project screening. A detailed',
+                'engineering study is required before final investment decisions.',
+                '',
+                'YieldUrban Platform uses physics-based calculations and industry-standard assumptions to provide',
+                'accurate pre-engineering estimates. However, no warranty is expressed or implied regarding the',
+                'accuracy of these estimates.',
+                '',
+                'For questions or additional analysis, please contact:',
+                'SunUrban Energy Solutions',
+                'info@solarcanopy.com'
+            ];
+            
+            disclaimers.forEach(disclaimer => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                    addPageNumber(doc.internal.getNumberOfPages());
+                }
+                doc.text(disclaimer, 20, y, { maxWidth: pageWidth - 40 });
+                y += 7;
+            });
+            
+            addPageNumber(10);
+            
+            // Save PDF
+            const fileName = `YieldUrban_Feasibility_${inputs.address.replace(/[^a-z0-9]/gi, '_').substring(0, 30)}_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(fileName);
+            
+            // Show success message
+            alert('PDF report generated successfully!');
+        }
+
+        // Tab switching functionality
+        function switchTab(tabName, eventElement) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            
+            // Activate button
+            if (eventElement) {
+                eventElement.classList.add('active');
+            } else {
+                // Find button by onclick attribute
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + tabName + "'")) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Generate content if results exist
+            if (window.yieldUrbanResults && tabName !== 'inputs') {
+                generateTabContent(tabName);
+            }
+        }
+
+        // Generate comprehensive tab content
+        function generateTabContent(tabName) {
+            const { solar, financial, inputs } = window.yieldUrbanResults;
+            
+            switch(tabName) {
+                case 'executive':
+                    generateExecutiveSummary(solar, financial, inputs);
+                    break;
+                case 'technical':
+                    generateTechnicalAnalysis(solar, financial, inputs);
+                    break;
+                case 'financial':
+                    generateFinancialAnalysis(solar, financial, inputs);
+                    break;
+                case 'risk':
+                    generateRiskAssessment(solar, financial, inputs);
+                    break;
+                case 'comparison':
+                    generateBenchmarking(solar, financial, inputs);
+                    break;
+                case 'recommendations':
+                    generateRecommendations(solar, financial, inputs);
+                    break;
+            }
+        }
+
+        // Executive Summary
+        function generateExecutiveSummary(solar, financial, inputs) {
+            const goNoGo = financial.irr >= 8 ? 'GO' : financial.irr >= 6 ? 'CONDITIONAL GO' : 'NO-GO';
+            const goNoGoColor = financial.irr >= 8 ? '#4CAF50' : financial.irr >= 6 ? '#FFA726' : '#F44336';
+            
+            const html = `
+                <div class="metric-grid">
+                    <div class="metric-card" style="background: ${goNoGoColor}; color: #fff;">
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">RECOMMENDATION</div>
+                        <div style="font-size: 2.5rem; font-weight: 800;">${goNoGo}</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 0.5rem;">Based on ${financial.irr.toFixed(1)}% IRR</div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">System Capacity</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">${solar.dcCapacityKw.toLocaleString('en-US', { maximumFractionDigits: 0 })} kW</div>
+                        <div style="font-size: 0.85rem; color: #666;">DC Capacity</div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Annual Production</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">${(solar.annualProductionKwh / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })} MWh</div>
+                        <div style="font-size: 0.85rem; color: #666;">First Year</div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">IRR</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">${financial.irr.toFixed(1)}%</div>
+                        <div style="font-size: 0.85rem; color: #666;">25-Year Project</div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Payback Period</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">${financial.paybackYears.toFixed(1)} years</div>
+                        <div style="font-size: 0.85rem; color: #666;">Simple Payback</div>
+                    </div>
+                    <div class="metric-card">
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Net Present Value</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #BF5700;">$${(financial.npv / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</div>
+                        <div style="font-size: 0.85rem; color: #666;">@ ${inputs.discountRate}% discount</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: #fff; border-radius: 12px; border-left: 4px solid #BF5700;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Key Findings</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1.05rem; line-height: 1.8; color: #333;">
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>System Size:</strong> ${solar.dcCapacityKw.toLocaleString('en-US', { maximumFractionDigits: 0 })} kW DC capacity on ${(solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 })} sq ft of canopy area</li>
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>Energy Production:</strong> ${(solar.annualProductionKwh / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })} MWh/year (Year 1), declining to ${((solar.annualProductionKwh * Math.pow(1 - inputs.degradationRate/100, 24)) / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })} MWh/year (Year 25)</li>
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>Financial Performance:</strong> ${financial.irr.toFixed(1)}% IRR, ${financial.paybackYears.toFixed(1)}-year payback, $${(financial.npv / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k NPV</li>
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>Investment Required:</strong> $${(financial.netCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k net CAPEX (after ${inputs.itcRate}% ITC)</li>
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>Annual Cash Flow:</strong> $${(financial.annualCashflow / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k/year (Year 1)</li>
+                        <li style="margin-bottom: 0.75rem;">✓ <strong>LCOE:</strong> $${financial.lcoe.toFixed(3)}/kWh (vs. $${inputs.electricityRate.toFixed(3)}/kWh utility rate)</li>
+                    </ul>
+                </div>
+            `;
+            document.getElementById('executiveContent').innerHTML = html;
+        }
+
+        // Technical Analysis
+        function generateTechnicalAnalysis(solar, financial, inputs) {
+            const html = `
+                <div style="display: grid; gap: 2rem;">
+                    <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">System Design</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                                <th>Notes</th>
+                            </tr>
+                            <tr>
+                                <td>Parking Lot Area</td>
+                                <td>${inputs.parkingAreaSqFt.toLocaleString('en-US')}</td>
+                                <td>sq ft</td>
+                                <td>Total parking lot footprint</td>
+                            </tr>
+                            <tr>
+                                <td>Canopy Coverage</td>
+                                <td>${inputs.coveragePercent}%</td>
+                                <td>-</td>
+                                <td>Percentage of stalls covered</td>
+                            </tr>
+                            <tr>
+                                <td>Buildable Canopy Area</td>
+                                <td>${(solar.buildableArea * 10.764).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                <td>sq ft</td>
+                                <td>After packing factor (${(inputs.packingFactor * 100).toFixed(0)}%)</td>
+                            </tr>
+                            <tr>
+                                <td>DC System Capacity</td>
+                                <td>${solar.dcCapacityKw.toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                <td>kW</td>
+                                <td>At Standard Test Conditions (STC)</td>
+                            </tr>
+                            <tr>
+                                <td>Module Power Density</td>
+                                <td>${inputs.modulePowerDensity}</td>
+                                <td>W/m²</td>
+                                <td>Panel efficiency × area</td>
+                            </tr>
+                            <tr>
+                                <td>Tilt Angle</td>
+                                <td>${inputs.tiltAngle}°</td>
+                                <td>degrees</td>
+                                <td>From horizontal</td>
+                            </tr>
+                            <tr>
+                                <td>Azimuth Angle</td>
+                                <td>${inputs.azimuthAngle}°</td>
+                                <td>degrees</td>
+                                <td>180° = South (optimal)</td>
+                            </tr>
+                            <tr>
+                                <td>Orientation Factor</td>
+                                <td>${(solar.orientationFactor * 100).toFixed(1)}%</td>
+                                <td>-</td>
+                                <td>Performance vs. optimal orientation</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Performance Modeling</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                                <th>Methodology</th>
+                            </tr>
+                            <tr>
+                                <td>Annual Irradiance</td>
+                                <td>${getSolarIrradiance(inputs.address).ghi.toFixed(1)}</td>
+                                <td>kWh/m²/day</td>
+                                <td>Location-specific (NREL NSRDB)</td>
+                            </tr>
+                            <tr>
+                                <td>System Losses</td>
+                                <td>${inputs.systemLosses}%</td>
+                                <td>-</td>
+                                <td>Soiling, wiring, inverter, temperature</td>
+                            </tr>
+                            <tr>
+                                <td>Shading Losses</td>
+                                <td>${inputs.shadingFactor}%</td>
+                                <td>-</td>
+                                <td>Nearby obstructions</td>
+                            </tr>
+                            <tr>
+                                <td>Annual Production (Year 1)</td>
+                                <td>${(solar.annualProductionKwh / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                <td>MWh</td>
+                                <td>First year output</td>
+                            </tr>
+                            <tr>
+                                <td>Capacity Factor</td>
+                                <td>${solar.capacityFactor.toFixed(1)}%</td>
+                                <td>-</td>
+                                <td>Actual vs. rated capacity</td>
+                            </tr>
+                            <tr>
+                                <td>Annual Degradation</td>
+                                <td>${inputs.degradationRate}%</td>
+                                <td>/year</td>
+                                <td>Panel performance decline</td>
+                            </tr>
+                            <tr>
+                                <td>25-Year Production</td>
+                                <td>${(window.yieldUrbanResults && window.yieldUrbanResults.financial ? window.yieldUrbanResults.financial.cashflows.reduce((sum, cf) => sum + cf.production, 0) / 1000 : 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                <td>MWh</td>
+                                <td>Total lifetime production</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+            document.getElementById('technicalAnalysis').innerHTML = html;
+        }
+
+        // Enhanced Financial Analysis
+        function generateFinancialAnalysis(solar, financial, inputs) {
+            const html = `
+                <div style="display: grid; gap: 2rem;">
+                    <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Capital Expenditure (CAPEX)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Component</th>
+                                <th style="text-align: right;">Amount</th>
+                                <th style="text-align: right;">% of Total</th>
+                            </tr>
+                            <tr>
+                                <td>Total CAPEX (before ITC)</td>
+                                <td style="text-align: right;">$${(financial.totalCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">100%</td>
+                            </tr>
+                            <tr>
+                                <td>ITC Credit (${inputs.itcRate}%)</td>
+                                <td style="text-align: right; color: #4CAF50;">-$${(financial.itcCredit / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">-${inputs.itcRate}%</td>
+                            </tr>
+                            <tr style="background: #F5F5F5; font-weight: 600;">
+                                <td>Net CAPEX (after ITC)</td>
+                                <td style="text-align: right; color: #BF5700;">$${(financial.netCapex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">${(100 - inputs.itcRate).toFixed(0)}%</td>
+                            </tr>
+                            <tr>
+                                <td>Cost per kW</td>
+                                <td style="text-align: right;">$${inputs.capexPerWatt.toFixed(2)}</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Operating Expenses (OPEX)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Component</th>
+                                <th style="text-align: right;">Annual Cost</th>
+                                <th style="text-align: right;">Per kW</th>
+                            </tr>
+                            <tr>
+                                <td>Operations & Maintenance</td>
+                                <td style="text-align: right;">$${(financial.annualOpex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">$${inputs.opexPerKw}/kW</td>
+                            </tr>
+                            <tr>
+                                <td>25-Year Total OPEX</td>
+                                <td style="text-align: right;">$${(financial.totalOpex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Revenue Analysis</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Year</th>
+                                <th style="text-align: right;">Production (MWh)</th>
+                                <th style="text-align: right;">Revenue ($)</th>
+                                <th style="text-align: right;">OPEX ($)</th>
+                                <th style="text-align: right;">Cash Flow ($)</th>
+                            </tr>
+                            ${financial.cashflows.slice(0, 10).map(cf => `
+                                <tr>
+                                    <td>${cf.year}</td>
+                                    <td style="text-align: right;">${(cf.production / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                    <td style="text-align: right;">$${(cf.revenue / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                    <td style="text-align: right;">$${(cf.opex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                    <td style="text-align: right; color: ${cf.cashflow >= 0 ? '#4CAF50' : '#F44336'};">$${(cf.cashflow / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                </tr>
+                            `).join('')}
+                            <tr style="background: #F5F5F5; font-weight: 600;">
+                                <td>25-Year Total</td>
+                                <td style="text-align: right;">${(financial.cashflows.reduce((sum, cf) => sum + cf.production, 0) / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                                <td style="text-align: right;">$${(financial.totalRevenue / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">$${(financial.totalOpex / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                                <td style="text-align: right;">$${((financial.totalRevenue - financial.totalOpex) / 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })}k</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+            document.getElementById('financialAnalysis').innerHTML = html;
+        }
+
+        // Comprehensive Risk Assessment
+        function generateRiskAssessment(solar, financial, inputs) {
+            const riskScore = calculateRiskScore(financial, inputs);
+            
+            const html = `
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Overall Risk Score</h3>
+                    <div style="background: ${riskScore.color}; color: #fff; padding: 2rem; border-radius: 12px; text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">${riskScore.score}/10</div>
+                        <div style="font-size: 1.2rem; opacity: 0.9;">${riskScore.label}</div>
+                    </div>
+                </div>
+
+                <div class="risk-matrix">
+                    <div class="risk-card ${riskScore.irrRisk}">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Financial Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>IRR:</strong> ${financial.irr.toFixed(1)}% ${financial.irr >= 8 ? '(Strong)' : financial.irr >= 6 ? '(Moderate)' : '(Weak)'}
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            ${financial.irr >= 8 ? 'Strong financial returns meet commercial solar investment criteria.' : financial.irr >= 6 ? 'Moderate returns suitable for infrastructure/ESG investors.' : 'Weak returns may require alternative financing or cost reduction.'}
+                        </div>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Technical Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>Status:</strong> Low-Medium
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            Proven solar technology with standard installation requirements. Site-specific factors (soil, utilities) may require additional engineering.
+                        </div>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Regulatory Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>Status:</strong> Medium
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            Interconnection approval, permitting, and utility policies may impact timeline and costs. ITC availability confirmed through ${new Date().getFullYear() + 1}.
+                        </div>
+                    </div>
+
+                    <div class="risk-card low">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Operational Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>Status:</strong> Low
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            Standard O&M requirements with predictable costs. Solar canopy systems have proven 25+ year lifespans with minimal maintenance.
+                        </div>
+                    </div>
+
+                    <div class="risk-card medium">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Market Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>Status:</strong> Medium
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            Electricity rate stability and grid service participation required. Revenue depends on utility pricing and market participation.
+                        </div>
+                    </div>
+
+                    <div class="risk-card low">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">Technology Risk</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            <strong>Status:</strong> Low
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6;">
+                            Mature solar PV technology with established supply chains. Battery technology proven at commercial scale.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Risk Mitigation Strategies</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #333;">
+                        <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: #BF5700; font-size: 1.5rem;">✓</span>
+                            <strong>Interconnection:</strong> Engage utility early, budget 10-20% contingency for interconnection costs
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: #BF5700; font-size: 1.5rem;">✓</span>
+                            <strong>Geotechnical:</strong> Conduct soil surveys before final design, budget 5-15% for foundation variations
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: #BF5700; font-size: 1.5rem;">✓</span>
+                            <strong>Permitting:</strong> Review local codes early, engage with planning department, allow 2-6 months for approvals
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: #BF5700; font-size: 1.5rem;">✓</span>
+                            <strong>Revenue:</strong> Lock in PPA rates, diversify revenue streams, consider long-term contracts
+                        </li>
+                    </ul>
+                </div>
+            `;
+            document.getElementById('riskAssessment').innerHTML = html;
+        }
+
+        function calculateRiskScore(financial, inputs) {
+            let score = 5; // Start at medium risk
+            
+            // Adjust based on IRR
+            if (financial.irr >= 10) score -= 2;
+            else if (financial.irr >= 8) score -= 1;
+            else if (financial.irr < 6) score += 1;
+            
+            // Adjust based on payback
+            if (financial.paybackYears <= 7) score -= 1;
+            else if (financial.paybackYears > 12) score += 1;
+            
+            // Adjust based on NPV
+            if (financial.npv > 0) score -= 0.5;
+            else score += 0.5;
+            
+            score = Math.max(1, Math.min(10, Math.round(score)));
+            
+            let label, color, irrRisk;
+            if (score <= 3) {
+                label = 'Low Risk';
+                color = '#4CAF50';
+                irrRisk = 'low';
+            } else if (score <= 6) {
+                label = 'Moderate Risk';
+                color = '#FFA726';
+                irrRisk = 'medium';
+            } else {
+                label = 'High Risk';
+                color = '#F44336';
+                irrRisk = 'high';
+            }
+            
+            return { score, label, color, irrRisk };
+        }
+
+        // Industry Benchmarking
+        function generateBenchmarking(solar, financial, inputs) {
+            const benchmarks = {
+                commercialSolar: { irr: 8, payback: 7, capex: 2.5 },
+                infrastructure: { irr: 6, payback: 12, capex: 3.0 },
+                utilityScale: { irr: 7, payback: 10, capex: 1.8 }
+            };
+            
+            const html = `
+                <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Project vs. Industry Benchmarks</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th style="text-align: center;">This Project</th>
+                                <th style="text-align: center;">Commercial Solar</th>
+                                <th style="text-align: center;">Infrastructure</th>
+                                <th style="text-align: center;">Utility Scale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>IRR</strong></td>
+                                <td style="text-align: center; font-weight: 600; color: #BF5700;">${financial.irr.toFixed(1)}%</td>
+                                <td style="text-align: center;">8-12%</td>
+                                <td style="text-align: center;">5-8%</td>
+                                <td style="text-align: center;">6-9%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payback</strong></td>
+                                <td style="text-align: center; font-weight: 600; color: #BF5700;">${financial.paybackYears.toFixed(1)} years</td>
+                                <td style="text-align: center;">6-8 years</td>
+                                <td style="text-align: center;">10-15 years</td>
+                                <td style="text-align: center;">8-12 years</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CAPEX ($/W)</strong></td>
+                                <td style="text-align: center; font-weight: 600; color: #BF5700;">$${inputs.capexPerWatt.toFixed(2)}</td>
+                                <td style="text-align: center;">$2.00-3.50</td>
+                                <td style="text-align: center;">$2.50-4.00</td>
+                                <td style="text-align: center;">$1.50-2.50</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LCOE ($/kWh)</strong></td>
+                                <td style="text-align: center; font-weight: 600; color: #BF5700;">$${financial.lcoe.toFixed(3)}</td>
+                                <td style="text-align: center;">$0.08-0.12</td>
+                                <td style="text-align: center;">$0.10-0.15</td>
+                                <td style="text-align: center;">$0.05-0.08</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="scenario-comparison">
+                    <div class="scenario-card">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Commercial Solar Benchmark</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            ${financial.irr >= 8 ? '✅ Meets' : financial.irr >= 7 ? '⚠️ Near' : '❌ Below'} commercial solar IRR target (8%+)
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6; color: #666;">
+                            ${financial.irr >= 8 ? 'Project meets typical commercial solar investment criteria. Suitable for private equity and commercial solar investors.' : 'Project is below typical commercial solar IRR expectations. May require cost reduction or revenue enhancement.'}
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Infrastructure Benchmark</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            ${financial.irr >= 6 ? '✅ Meets' : '❌ Below'} infrastructure IRR target (6%+)
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6; color: #666;">
+                            ${financial.irr >= 6 ? 'Project aligns with infrastructure investment expectations. Suitable for infrastructure funds and ESG investors.' : 'Project is below infrastructure investment thresholds. Consider alternative financing structures.'}
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Utility Scale Benchmark</h4>
+                        <div style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">
+                            ${financial.irr >= 7 ? '✅ Meets' : financial.irr >= 6 ? '⚠️ Near' : '❌ Below'} utility-scale IRR target (7%+)
+                        </div>
+                        <div style="font-size: 0.9rem; line-height: 1.6; color: #666;">
+                            ${financial.irr >= 7 ? 'Project performance comparable to utility-scale solar. Competitive with large-scale installations.' : 'Project performance below utility-scale benchmarks, but appropriate for distributed generation.'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('benchmarking').innerHTML = html;
+        }
+
+        // Recommendations
+        function generateRecommendations(solar, financial, inputs) {
+            const recommendations = [];
+            
+            if (financial.irr < 8) {
+                recommendations.push({
+                    priority: 'High',
+                    title: 'Improve Financial Returns',
+                    actions: [
+                        `Reduce CAPEX by 15-20% to achieve ${(financial.irr * 1.2).toFixed(1)}% IRR target`,
+                        'Explore alternative financing (tax equity, debt) to lower cost of capital',
+                        'Negotiate higher PPA rates or add revenue streams (grid services, EV charging)',
+                        'Optimize system design to reduce installation costs'
+                    ]
+                });
+            }
+            
+            if (financial.paybackYears > 10) {
+                recommendations.push({
+                    priority: 'Medium',
+                    title: 'Accelerate Payback Period',
+                    actions: [
+                        'Consider higher ITC utilization or additional incentives',
+                        'Implement revenue optimization strategies early',
+                        'Explore accelerated depreciation benefits',
+                        'Consider phased deployment to reduce initial CAPEX'
+                    ]
+                });
+            }
+            
+            recommendations.push({
+                priority: 'High',
+                title: 'Next Steps for Project Advancement',
+                actions: [
+                    'Conduct detailed site survey and geotechnical study',
+                    'Engage utility for interconnection study and cost estimate',
+                    'Review local zoning and permitting requirements',
+                    'Obtain quotes from 2-3 qualified EPC contractors',
+                    'Secure financing commitments or investor interest',
+                    'Develop detailed project timeline (6-12 months to NTP)'
+                ]
+            });
+            
+            recommendations.push({
+                priority: 'Medium',
+                title: 'Risk Mitigation',
+                actions: [
+                    'Budget 15-20% contingency for interconnection costs',
+                    'Allow 2-6 months for permitting and approvals',
+                    'Lock in equipment pricing with suppliers',
+                    'Secure long-term PPA or revenue contracts',
+                    'Consider insurance for construction and operational risks'
+                ]
+            });
+            
+            const html = `
+                <div style="display: grid; gap: 2rem;">
+                    ${recommendations.map(rec => `
+                        <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 4px solid ${rec.priority === 'High' ? '#F44336' : '#FFA726'};">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A;">${rec.title}</h3>
+                                <span style="background: ${rec.priority === 'High' ? '#F44336' : '#FFA726'}; color: #fff; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                                    ${rec.priority} Priority
+                                </span>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #333;">
+                                ${rec.actions.map(action => `
+                                    <li style="margin-bottom: 0.75rem; padding-left: 2rem; position: relative;">
+                                        <span style="position: absolute; left: 0; color: #BF5700; font-size: 1.2rem;">→</span>
+                                        ${action}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="margin-top: 3rem; background: linear-gradient(135deg, rgba(191, 87, 0, 0.05), rgba(247, 142, 30, 0.02)); padding: 2.5rem; border-radius: 12px; border-left: 6px solid #BF5700;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Decision Framework</h3>
+                    <div style="font-size: 1.05rem; line-height: 1.8; color: #333;">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Go Decision Criteria:</strong> IRR ≥ 8%, Payback ≤ 10 years, NPV > $0, acceptable risk profile
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Conditional Go:</strong> IRR 6-8%, requires cost reduction or revenue enhancement, acceptable with alternative financing
+                        </p>
+                        <p>
+                            <strong>No-Go:</strong> IRR < 6%, payback > 15 years, high risk factors, or site constraints that make project unfeasible
+                        </p>
+                    </div>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: #fff; border-radius: 8px;">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Current Project Status:</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: ${financial.irr >= 8 ? '#4CAF50' : financial.irr >= 6 ? '#FFA726' : '#F44336'};">
+                            ${financial.irr >= 8 ? '✅ GO' : financial.irr >= 6 ? '⚠️ CONDITIONAL GO' : '❌ NO-GO'}
+                        </div>
+                        <div style="font-size: 0.95rem; color: #666; margin-top: 0.5rem;">
+                            Based on ${financial.irr.toFixed(1)}% IRR, ${financial.paybackYears.toFixed(1)}-year payback, and ${financial.npv >= 0 ? 'positive' : 'negative'} NPV
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('recommendations').innerHTML = html;
+        }
+
+        // Save/Load scenarios
+        function saveScenario() {
+            if (!window.yieldUrbanResults) {
+                alert('Please calculate feasibility first.');
+                return;
+            }
+            
+            const scenario = {
+                timestamp: new Date().toISOString(),
+                inputs: window.yieldUrbanResults.inputs,
+                results: {
+                    solar: window.yieldUrbanResults.solar,
+                    financial: window.yieldUrbanResults.financial
+                }
+            };
+            
+            const dataStr = JSON.stringify(scenario, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `YieldUrban_Scenario_${inputs.address.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function loadScenario() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const scenario = JSON.parse(e.target.result);
+                            // Restore inputs
+                            Object.keys(scenario.inputs).forEach(key => {
+                                const element = document.getElementById(key);
+                                if (element) {
+                                    element.value = scenario.inputs[key];
+                                }
+                            });
+                            // Recalculate
+                            calculateFeasibility();
+                        } catch (error) {
+                            alert('Error loading scenario: ' + error.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        function compareScenarios() {
+            alert('Scenario comparison feature coming soon. Save multiple scenarios and compare them side-by-side.');
+        }
+
+        // Initialize on page load
+        // Note: Google Maps API loads asynchronously, so we use the callback
+        // If the API is already loaded, call initMap directly
+        if (typeof google !== 'undefined' && google.maps) {
+            initMap();
+        } else {
+            // Wait for Google Maps to load
+            window.initMap = initMap;
+        }
+
+        // Also initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof google !== 'undefined' && google.maps) {
+                initMap();
+            }
+        });
+    </script>
+</body>
+</html>
+

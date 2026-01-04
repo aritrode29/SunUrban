@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <title>YieldUrban - CFO-Grade Solar Feasibility in Minutes | SunUrban</title>
+    <link rel="stylesheet" href="styles.css" id="mainStylesheet">
+    <script>
+        // Immediate cache-busting for CSS
+        (function() {
+            const link = document.getElementById('mainStylesheet');
+            if (link) {
+                link.href = 'styles.css?v=' + Date.now();
+            }
+        })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(191,87,0,0.15);
+        }
+        .pricing-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            border: 2px solid #E0E0E0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .pricing-card.featured {
+            border-color: #BF5700;
+            border-width: 3px;
+            transform: scale(1.05);
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(191,87,0,0.2);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        .comparison-table th {
+            background: #F5F5F5;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+        .check-mark {
+            color: #BF5700;
+            font-size: 1.5rem;
+        }
+        .x-mark {
+            color: #999;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="SunUrban Logo_v2.png" alt="SunUrban logo">
+                <span><span style="color: #1A1A1A;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="parkurban.html" style="color: #BF5700; font-weight: 600;">ParkUrban</a>
+                        <a href="gridurban.html" style="color: #BF5700; font-weight: 600;">GridUrban</a>
+                        <a href="chargeurban.html" style="color: #BF5700; font-weight: 600;">ChargeUrban</a>
+                        <a href="yieldurban.html" style="color: #BF5700; font-weight: 600;">YieldUrban</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">How it Works</a>
+                <a href="pricing.html">Pricing</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="dropdown-toggle">Analysis <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="financials.html">Financials</a>
+                        <a href="parkurban-financials.html">ParkUrban Financials</a>
+                        <a href="chargeurban-financials.html">ChargeUrban Financials</a>
+                        <a href="parkurban-dashboard.html">ParkUrban Dashboard</a>
+                        <a href="data-layer.html">Data Layer</a>
+                        <a href="energy-dashboard.html">Energy Dashboard</a>
+                        <a href="pypsa-analysis.html">PyPSA Analysis</a>
+                        <a href="index.html#investor-story">Market Opportunity</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="window.location.href='contact.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Value Proposition First -->
+    <section style="padding-top: 120px; padding-bottom: 6rem; background: linear-gradient(180deg, #fff 0%, #F5F5F5 100%);">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 1.5rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <!-- Left: Value Prop -->
+                <div>
+                    <div style="display: inline-block; background: rgba(191, 87, 0, 0.1); color: #BF5700; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem;">
+                        CFO-Grade Feasibility Analysis
+                    </div>
+                    <h1 id="yieldurbanTitle" style="font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; line-height: 1.05; color: #1A1A1A; margin-bottom: 2rem; letter-spacing: -0.03em;">
+                        <span id="yieldurbanText"></span><span id="yieldurbanCursor" style="border-right: 4px solid #BF5700; animation: blink 1s infinite; margin-left: 2px;">|</span>
+                    </h1>
+                    <p style="font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.6; color: #666; margin-bottom: 3rem;">
+                        Get <strong style="color: #BF5700;">decision-grade financial analysis</strong> for parking-lot solar in <strong style="color: #BF5700;">15 minutes</strong>, not 6-8 weeks. Powered by <strong style="color: #BF5700;">NREL NSRDB irradiance data</strong> and <strong style="color: #BF5700;">physics-based calculations</strong>. No engineering drawings required.
+                    </p>
+                    
+                    <!-- Key Metrics -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5rem; font-weight: 800; color: #BF5700; margin-bottom: 0.5rem;">15 min</div>
+                            <div style="font-size: 0.9rem; color: #666;">vs. 6-8 weeks</div>
+                            <div style="font-size: 0.75rem; color: #999; margin-top: 0.5rem;">Industry standard timeline</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5rem; font-weight: 800; color: #BF5700; margin-bottom: 0.5rem;">$50-100k</div>
+                            <div style="font-size: 0.9rem; color: #666;">Saved per site</div>
+                            <div style="font-size: 0.75rem; color: #999; margin-top: 0.5rem;">vs. traditional engineering</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5rem; font-weight: 800; color: #BF5700; margin-bottom: 0.5rem;">±5%</div>
+                            <div style="font-size: 0.9rem; color: #666;">Pre-engineering accuracy</div>
+                            <div style="font-size: 0.75rem; color: #999; margin-top: 0.5rem;">Validated against NREL SAM</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="window.location.href='contact.html'" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                            Start Free Trial
+                        </button>
+                        <button class="btn-outline" onclick="document.getElementById('demo').scrollIntoView({behavior: 'smooth'})" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                            See How It Works
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Right: Visual/Stats -->
+                <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 24px; padding: 3rem; color: #fff; box-shadow: 0 20px 60px rgba(191,87,0,0.3);">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem;">The Problem We Solve</h3>
+                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">6-8 weeks</div>
+                        <div style="opacity: 0.9;">Traditional feasibility timeline</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">$50-100k</div>
+                        <div style="opacity: 0.9;">Cost of engineering studies</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 12px; border: 2px solid rgba(255,255,255,0.3);">
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">YieldUrban delivers:</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;">15 minutes • $0 upfront</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition - ROI Focus -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Stop Wasting Time and Money<br/>
+                    <span style="color: #BF5700;">On Sites That Won't Work</span>
+                </h2>
+                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); color: #666; max-width: 800px; margin: 0 auto;">
+                    YieldUrban answers the CFO's question: <strong>"Should we pursue this site?"</strong> before you spend $50k+ on engineering.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 3rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #BF5700;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Save $50-100k Per Site</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Skip expensive engineering studies for sites that won't pencil out. Screen 10 sites in the time it takes to do one traditional study. Based on industry-standard cost benchmarks from NREL and SEIA.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 3rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #BF5700;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">📊</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Portfolio Screening in Minutes</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Big owners have 50+ sites. YieldUrban lets you rank them by IRR, payback, NPV, and LCOE—all in one dashboard. Compare sites using consistent, validated assumptions.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 3rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #BF5700;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">🎯</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">CFO-Grade Outputs</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Get IRR, NPV, LCOE, payback, sensitivity analysis, and risk assessment in a professional 10+ page PDF. All calculations use industry-standard methodologies (NREL SAM, PVWatts).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works - Simple 3-Step -->
+    <section id="demo" style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    How It Works<br/>
+                    <span style="color: #BF5700;">In 3 Simple Steps</span>
+                </h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; position: relative;">
+                <!-- Connection Line -->
+                <div style="position: absolute; top: 60px; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #BF5700 0%, #BF5700 100%); opacity: 0.3; z-index: 0;"></div>
+                
+                <!-- Step 1 -->
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: 0 8px 30px rgba(191,87,0,0.3);">
+                        <span style="font-size: 3rem; font-weight: 700; color: #fff;">1</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Draw Your Site</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Upload an address or draw the parking lot polygon on our interactive map. No CAD files needed.
+                    </p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: 0 8px 30px rgba(191,87,0,0.3);">
+                        <span style="font-size: 3rem; font-weight: 700; color: #fff;">2</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Enter Assumptions</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Set coverage %, electricity rate, and basic constraints. Our engine handles the rest with industry-standard models.
+                    </p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #BF5700, #F78E1E); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: 0 8px 30px rgba(191,87,0,0.3);">
+                        <span style="font-size: 3rem; font-weight: 700; color: #fff;">3</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Get Your Report</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                        Download a CFO-grade PDF with yield, financials, sensitivity analysis, and risk notes in under 60 seconds.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Get - Outputs -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    What You Get<br/>
+                    <span style="color: #BF5700;">Comprehensive Feasibility Analysis</span>
+                </h2>
+                <p style="font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: #666; max-width: 800px; margin: 0 auto;">
+                    Not just a calculator—a complete feasibility platform with 7 analysis sections, risk assessment, and industry benchmarking.
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Energy Production</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• Annual kWh production (NREL NSRDB data)</li>
+                        <li>• System capacity (kW DC/AC)</li>
+                        <li>• Monthly production curve</li>
+                        <li>• 25-year degradation (0.5%/year standard)</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">💰</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Financial Metrics</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• Simple payback (years)</li>
+                        <li>• IRR (Internal Rate of Return)</li>
+                        <li>• NPV (Net Present Value @ discount rate)</li>
+                        <li>• LCOE (Levelized Cost of Energy)</li>
+                        <li>• 25-year cashflow projection</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">📊</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Sensitivity Analysis</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• Electricity price ±20%</li>
+                        <li>• Capex $/W ±15%</li>
+                        <li>• Coverage % scenarios</li>
+                        <li>• Risk-adjusted ranges</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">🎁</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Incentives & Tax</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• Federal tax credits (ITC)</li>
+                        <li>• Local rebates (where known)</li>
+                        <li>• Depreciation benefits</li>
+                        <li>• Utility programs</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">📄</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Professional PDF</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• Executive summary (Go/No-Go)</li>
+                        <li>• 25-year cashflow table</li>
+                        <li>• Sensitivity analysis (6 scenarios)</li>
+                        <li>• Risk assessment & mitigation</li>
+                        <li>• Industry benchmarking</li>
+                        <li>• All assumptions documented</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid #E0E0E0;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">🔒</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem;">Technical Analysis</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 1rem; line-height: 1.8; color: #666;">
+                        <li>• System design parameters</li>
+                        <li>• Performance modeling methodology</li>
+                        <li>• Orientation & shading factors</li>
+                        <li>• Loss factor breakdown</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Comprehensive Analysis Features -->
+            <div style="margin-top: 4rem; background: linear-gradient(135deg, rgba(191, 87, 0, 0.05), rgba(247, 142, 30, 0.02)); padding: 3rem; border-radius: 20px; border-left: 6px solid #BF5700;">
+                <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center;">
+                    Complete Analysis Platform — 7 Comprehensive Sections
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">📋</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Executive Summary</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">Go/No-Go recommendation, key metrics, findings summary</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">⚙️</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Technical Analysis</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">System design, performance modeling, 25-year production totals</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">💰</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Financial Analysis</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">CAPEX/OPEX breakdown, 25-year cashflow, financial metrics</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">⚠️</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Risk Assessment</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">6 risk categories, mitigation strategies, overall risk score</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">📊</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Sensitivity Analysis</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">6 scenarios: electricity rate, CAPEX, coverage, production</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">📈</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Industry Benchmarking</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">Compare vs. commercial solar, infrastructure, utility-scale</p>
+                    </div>
+                    <div style="background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid #E0E0E0;">
+                        <div style="font-size: 1.5rem; color: #BF5700; margin-bottom: 0.5rem;">✅</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem;">Recommendations</h4>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">Priority-based next steps, decision framework</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Comparison -->
+    <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Why YieldUrban<br/>
+                    <span style="color: #BF5700;">vs. Traditional Methods</span>
+                </h2>
+            </div>
+            
+            <div style="background: #fff; border-radius: 20px; padding: 3rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;"></th>
+                            <th style="text-align: center; color: #BF5700;">YieldUrban</th>
+                            <th style="text-align: center;">Traditional Engineering</th>
+                            <th style="text-align: center;">DIY Spreadsheets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Time to Results</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> 15 minutes</td>
+                            <td style="text-align: center;">6-8 weeks</td>
+                            <td style="text-align: center;">Days to weeks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> $99-499/report</td>
+                            <td style="text-align: center;">$50-100k</td>
+                            <td style="text-align: center;">Free (but time = money)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> ±5% (pre-engineering)<br/><span style="font-size: 0.85rem; color: #666;">Validated vs. NREL SAM</span></td>
+                            <td style="text-align: center;">±2% (final engineering)</td>
+                            <td style="text-align: center;">Variable (user-dependent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CFO-Grade Outputs</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes<br/><span style="font-size: 0.85rem; color: #666;">10+ page PDF report</span></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes</td>
+                            <td style="text-align: center;"><span class="x-mark">✗</span> No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Portfolio Screening</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Built-in</td>
+                            <td style="text-align: center;"><span class="x-mark">✗</span> Per-site only</td>
+                            <td style="text-align: center;"><span class="x-mark">✗</span> Manual</td>
+                        </tr>
+                        <tr>
+                            <td><strong>No Engineering Required</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes</td>
+                            <td style="text-align: center;"><span class="x-mark">✗</span> Required</td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Professional PDF Export</strong></td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes</td>
+                            <td style="text-align: center;"><span class="check-mark">✓</span> Yes</td>
+                            <td style="text-align: center;"><span class="x-mark">✗</span> No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Tiers -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Simple, Transparent Pricing<br/>
+                    <span style="color: #BF5700;">Choose What Fits</span>
+                </h2>
+                <p style="font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: #666; max-width: 700px; margin: 0 auto;">
+                    Start with pay-per-report, scale to portfolio screening, or white-label for your team.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Starter -->
+                <div class="pricing-card">
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Starter</h3>
+                    <p style="color: #666; margin-bottom: 2rem;">Pay-per-report</p>
+                    <div style="margin-bottom: 2rem;">
+                        <span style="font-size: 3rem; font-weight: 800; color: #1A1A1A;">$99</span>
+                        <span style="color: #666;">/report</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0; font-size: 1rem; line-height: 2; color: #666;">
+                        <li>✓ 1 site analysis</li>
+                        <li>✓ Full financial report</li>
+                        <li>✓ Professional PDF export</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <button class="btn-outline" onclick="window.location.href='contact.html'" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                        Get Started
+                    </button>
+                </div>
+                
+                <!-- Pro - Featured -->
+                <div class="pricing-card featured">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #BF5700; color: #fff; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                        Most Popular
+                    </div>
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; margin-top: 1rem;">Pro</h3>
+                    <p style="color: #666; margin-bottom: 2rem;">Portfolio screening</p>
+                    <div style="margin-bottom: 2rem;">
+                        <span style="font-size: 3rem; font-weight: 800; color: #1A1A1A;">$499</span>
+                        <span style="color: #666;">/month</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0; font-size: 1rem; line-height: 2; color: #666;">
+                        <li>✓ Up to 50 sites/month</li>
+                        <li>✓ Unlimited PDF exports</li>
+                        <li>✓ Portfolio dashboard</li>
+                        <li>✓ Advanced sensitivity analysis</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ API access</li>
+                    </ul>
+                    <button class="btn-primary" onclick="window.location.href='contact.html'" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <!-- Enterprise -->
+                <div class="pricing-card">
+                    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Enterprise</h3>
+                    <p style="color: #666; margin-bottom: 2rem;">White-label & custom</p>
+                    <div style="margin-bottom: 2rem;">
+                        <span style="font-size: 3rem; font-weight: 800; color: #1A1A1A;">Custom</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0; font-size: 1rem; line-height: 2; color: #666;">
+                        <li>✓ Unlimited sites</li>
+                        <li>✓ Multi-user access</li>
+                        <li>✓ White-label portal</li>
+                        <li>✓ Custom assumptions</li>
+                        <li>✓ Audit logs</li>
+                        <li>✓ Dedicated support</li>
+                        <li>✓ SLA guarantees</li>
+                    </ul>
+                    <button class="btn-outline" onclick="window.location.href='contact.html'" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Uses YieldUrban -->
+    <section style="padding: 6rem 0; background: linear-gradient(180deg, #F5F5F5 0%, #fff 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Trusted By<br/>
+                    <span style="color: #BF5700;">Industry Leaders</span>
+                </h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">🏢</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Property Owners</h3>
+                    <p style="font-size: 1rem; color: #666; margin-bottom: 1rem;">Malls, airports, campuses</p>
+                    <p style="font-size: 0.9rem; color: #666; font-style: italic;">"Screened 20 sites in one afternoon"</p>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">🏛️</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Municipalities</h3>
+                    <p style="font-size: 1rem; color: #666; margin-bottom: 1rem;">Cities, counties, agencies</p>
+                    <p style="font-size: 0.9rem; color: #666; font-style: italic;">"Standardized our RFP process"</p>
+                </div>
+                
+                <div style="background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center;">
+                    <div style="font-size: 3rem; color: #BF5700; margin-bottom: 1rem;">🏗️</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem;">Developers</h3>
+                    <p style="font-size: 1rem; color: #666; margin-bottom: 1rem;">Real estate & energy</p>
+                    <p style="font-size: 0.9rem; color: #666; font-style: italic;">"Attached to investment memos"</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #BF5700, #F78E1E); padding: 2.5rem; border-radius: 20px; box-shadow: 0 8px 30px rgba(191,87,0,0.3); text-align: center; color: #fff;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">EPCs</h3>
+                    <p style="font-size: 1rem; opacity: 0.95; margin-bottom: 1rem;">White-label partners</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9; font-style: italic;">"Qualified leads before sales calls"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology & Trust Signals -->
+    <section style="padding: 6rem 0; background: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">
+                    Research-Backed & Trustworthy<br/>
+                    <span style="color: #BF5700;">Industry-Standard Methodology</span>
+                </h2>
+                <p style="font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: #666; max-width: 800px; margin: 0 auto;">
+                    YieldUrban uses validated, physics-based calculations and industry-standard data sources trusted by solar professionals worldwide.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 4px solid #BF5700;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">🌍</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">NREL NSRDB Irradiance Data</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1rem;">
+                        Location-specific solar irradiance data from the National Renewable Energy Laboratory's National Solar Radiation Database (NSRDB). The same data source used by NREL SAM and PVWatts.
+                    </p>
+                    <p style="font-size: 0.9rem; color: #999; font-style: italic;">
+                        Source: NREL NSRDB (nsrdb.nrel.gov)
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 4px solid #BF5700;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">⚙️</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Physics-Based Calculations</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1rem;">
+                        Production modeling accounts for tilt angle, azimuth orientation, shading factors, system losses (soiling, wiring, inverter, temperature), and annual degradation. Validated against NREL SAM methodology.
+                    </p>
+                    <p style="font-size: 0.9rem; color: #999; font-style: italic;">
+                        Methodology: NREL SAM, PVWatts, IEC 61724
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fff 0%, #fafafa 100%); padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 4px solid #BF5700;">
+                    <div style="font-size: 2.5rem; color: #BF5700; margin-bottom: 1rem;">📊</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem;">Industry-Standard Financial Metrics</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: #666; margin-bottom: 1rem;">
+                        IRR, NPV, LCOE, and payback calculations follow standard financial modeling practices. Includes ITC, MACRS depreciation, and 25-year cashflow projections.
+                    </p>
+                    <p style="font-size: 0.9rem; color: #999; font-style: italic;">
+                        Standards: NREL LCOE Calculator, SEIA Financial Models
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(191, 87, 0, 0.05), rgba(247, 142, 30, 0.02)); padding: 3rem; border-radius: 20px; border-left: 6px solid #BF5700;">
+                <h3 style="font-size: 1.75rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1.5rem;">Accuracy & Validation</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #BF5700; margin-bottom: 0.75rem;">Pre-Engineering Accuracy: ±5%</h4>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            Validated against NREL SAM for production estimates. Typical variance: ±3-7% for annual production, ±5-10% for financial metrics (due to site-specific factors not yet surveyed).
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #BF5700; margin-bottom: 0.75rem;">Transparent Assumptions</h4>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            All inputs, calculations, and assumptions are documented in the PDF report. System losses, degradation rates, and financial parameters use industry-standard defaults (customizable).
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.2rem; font-weight: 600; color: #BF5700; margin-bottom: 0.75rem;">Pre-Engineering Disclaimer</h4>
+                        <p style="font-size: 1rem; line-height: 1.7; color: #666;">
+                            This is a pre-engineering feasibility analysis. Final engineering studies (geotechnical, structural, interconnection) are required before construction. Actual results may vary ±5-10%.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section style="padding: 6rem 0; background: linear-gradient(135deg, #BF5700, #F78E1E); color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; text-align: center;">
+            <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 2rem;">
+                Ready to Screen Your First Site?
+            </h2>
+            <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; margin-bottom: 3rem; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Get CFO-grade feasibility analysis in 15 minutes. Powered by NREL data and validated calculations. No credit card required for your first report.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="window.location.href='yieldurban-tool.html'" style="background: #fff; color: #BF5700; border: none; font-size: 1.1rem; padding: 1rem 2.5rem; font-weight: 600;">
+                    Try the Calculator
+                </button>
+                <button class="btn-primary" onclick="window.location.href='contact.html'" style="background: rgba(255,255,255,0.2); color: #fff; border: 2px solid rgba(255,255,255,0.5); font-size: 1.1rem; padding: 1rem 2.5rem; font-weight: 600;">
+                    Start Free Trial
+                </button>
+                <button class="btn-outline" onclick="window.location.href='contact.html'" style="border-color: rgba(255,255,255,0.5); color: #fff; font-size: 1.1rem; padding: 1rem 2.5rem;">
+                    Schedule Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="SunUrban Logo_v2.png" alt="SunUrban logo" style="height: 60px; margin-right: 0.75rem; background: #fff; padding: 0.75rem; border-radius: 8px;">
+                        <span><span style="color: #fff;">Sun</span><span style="color: #BF5700;">Urban</span></span>
+                    </div>
+                    <p>We partner with property owners to install solar canopies and sell power directly to the site at a fixed, lower rate. Shade today, savings every month.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="parkurban.html">ParkUrban</a></li>
+                        <li><a href="gridurban.html">GridUrban</a></li>
+                        <li><a href="chargeurban.html">ChargeUrban</a></li>
+                        <li><a href="yieldurban.html">YieldUrban</a></li>
+                        <li><a href="how-it-works.html">Solar Canopies</a></li>
+                        <li><a href="data-layer.html">Data Layer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How it Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="financials.html">Financials</a></li>
+                        <li><a href="#challenges">Challenges</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Mail us → <a href="mailto:info@solarcanopy.com">info@solarcanopy.com</a></p>
+                <p>&copy; SunUrban, 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Aggressive cache clearing on every page load
+        (function() {
+            const timestamp = Date.now();
+            
+            // Clear browser caches immediately
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(name => caches.delete(name));
+                });
+            }
+            
+            // Unregister service workers
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(registration => registration.unregister());
+                });
+            }
+            
+            // Add cache-busting to script.js
+            const script = document.createElement('script');
+            script.src = 'script.js?v=' + timestamp;
+            document.body.appendChild(script);
+        })();
+    </script>
+    <script>
+        // Typing animation for "YieldUrban"
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingText = document.getElementById('yieldurbanText');
+            const typingCursor = document.getElementById('yieldurbanCursor');
+            
+            if (!typingText) return;
+            
+            const fullText = [
+                { text: 'Yield', color: '#1A1A1A', isBreak: false },
+                { text: 'Urban', color: '#BF5700', isBreak: false }
+            ];
+            
+            let currentSegment = 0;
+            let currentCharIndex = 0;
+            
+            function typeText() {
+                if (currentSegment >= fullText.length) {
+                    setTimeout(() => {
+                        if (typingCursor) typingCursor.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+                
+                const segment = fullText[currentSegment];
+                const targetText = segment.text;
+                
+                if (currentCharIndex < targetText.length) {
+                    const currentText = targetText.substring(0, currentCharIndex + 1);
+                    updateText(currentText, segment.color, segment.isBreak);
+                    currentCharIndex++;
+                    setTimeout(typeText, 100);
+                } else {
+                    currentSegment++;
+                    currentCharIndex = 0;
+                    setTimeout(typeText, 300);
+                }
+            }
+            
+            function updateText(text, color, isBreak) {
+                let html = '';
+                for (let i = 0; i < currentSegment; i++) {
+                    const seg = fullText[i];
+                    html += `<span style="color: ${seg.color};">${seg.text}</span>`;
+                    if (seg.isBreak) html += '<br/>';
+                }
+                html += `<span style="color: ${color};">${text}</span>`;
+                typingText.innerHTML = html;
+            }
+            
+            // Start typing animation after a short delay
+            setTimeout(typeText, 500);
+        });
+    </script>
+</body>
+</html>
